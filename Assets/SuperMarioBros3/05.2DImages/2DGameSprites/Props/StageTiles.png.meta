@@ -1900,22 +1900,22 @@ TextureImporter:
     second: StageTiles_631
   - first:
       213: 6218084718624226574
-    second: StageTiles_632
+    second: block0_1
   - first:
       213: 930685839049861586
-    second: StageTiles_633
+    second: block0_2
   - first:
       213: 7596743539322927026
-    second: StageTiles_634
+    second: block0_3
   - first:
       213: 8147190799821885716
-    second: StageTiles_635
+    second: block1_1
   - first:
       213: 7006239102010241784
-    second: StageTiles_636
+    second: block1_2
   - first:
       213: -975261153018276244
-    second: StageTiles_637
+    second: block1_3
   - first:
       213: -4009635445625146555
     second: StageTiles_638
@@ -2119,22 +2119,22 @@ TextureImporter:
     second: StageTiles_704
   - first:
       213: -7088353020565845661
-    second: StageTiles_705
+    second: block0_4
   - first:
       213: 2755607949767293336
-    second: StageTiles_706
+    second: block0_5
   - first:
       213: 99042466393341972
-    second: StageTiles_707
+    second: block0_6
   - first:
       213: 6143779746495624105
-    second: StageTiles_708
+    second: block1_4
   - first:
       213: -3546840887699097489
-    second: StageTiles_709
+    second: block1_5
   - first:
       213: 8709583975502459343
-    second: StageTiles_710
+    second: block1_6
   - first:
       213: 1409858537918482883
     second: StageTiles_711
@@ -2338,22 +2338,22 @@ TextureImporter:
     second: StageTiles_777
   - first:
       213: -670390140639683105
-    second: StageTiles_778
+    second: block0_7
   - first:
       213: 6416181093516676021
-    second: StageTiles_779
+    second: block0_8
   - first:
       213: 2787728853265408564
-    second: StageTiles_780
+    second: block0_9
   - first:
       213: 1019112572141255113
-    second: StageTiles_781
+    second: block1_7
   - first:
       213: -4121247075639775702
-    second: StageTiles_782
+    second: block1_8
   - first:
       213: -3045656929722687501
-    second: StageTiles_783
+    second: block1_9
   - first:
       213: -5942447781560479347
     second: StageTiles_784
@@ -2557,22 +2557,22 @@ TextureImporter:
     second: StageTiles_850
   - first:
       213: -1641283055765918583
-    second: StageTiles_851
+    second: block2_1
   - first:
       213: 9218127440158258144
-    second: StageTiles_852
+    second: block2_2
   - first:
       213: -6968096983280305752
-    second: StageTiles_853
+    second: block2_3
   - first:
       213: 8347962336215692216
-    second: StageTiles_854
+    second: block3_1
   - first:
       213: 8311374977193915669
-    second: StageTiles_855
+    second: block3_2
   - first:
       213: 3865089679836426393
-    second: StageTiles_856
+    second: block3_3
   - first:
       213: -1671243867472075043
     second: StageTiles_857
@@ -2776,28 +2776,28 @@ TextureImporter:
     second: StageTiles_923
   - first:
       213: -2983132463845292540
-    second: StageTiles_924
+    second: block2_4
   - first:
       213: -5898744812466099452
-    second: StageTiles_925
+    second: block2_5
   - first:
       213: 8595588565519274751
-    second: StageTiles_926
+    second: block2_6
   - first:
       213: -8488243643550155670
-    second: StageTiles_927
+    second: block3_4
   - first:
       213: -5050778692132278585
-    second: StageTiles_928
+    second: block3_5
   - first:
       213: 6744199580143486106
-    second: StageTiles_929
+    second: block3_6
   - first:
       213: -2168573468613267065
     second: StageTiles_930
   - first:
       213: 6837658088379476009
-    second: StageTiles_931
+    second: blockshadow0_2
   - first:
       213: -1476070083054783976
     second: StageTiles_932
@@ -2995,22 +2995,22 @@ TextureImporter:
     second: StageTiles_996
   - first:
       213: -5562556498935160954
-    second: StageTiles_997
+    second: block2_7
   - first:
       213: -7724080339644482031
-    second: StageTiles_998
+    second: block2_8
   - first:
       213: 9212634592812358295
-    second: StageTiles_999
+    second: block2_9
   - first:
       213: 8724659605944192019
-    second: StageTiles_1000
+    second: block3_7
   - first:
       213: 3173715847103609110
-    second: StageTiles_1001
+    second: block3_8
   - first:
       213: -8549934277740614672
-    second: StageTiles_1002
+    second: block3_9
   - first:
       213: -4260124634176514950
     second: StageTiles_1003
@@ -3238,7 +3238,7 @@ TextureImporter:
     second: StageTiles_1077
   - first:
       213: -854346039241458163
-    second: StageTiles_1078
+    second: blockshadow0_1
   - first:
       213: 2605619373076685726
     second: StageTiles_1079
@@ -3676,7 +3676,7 @@ TextureImporter:
     second: StageTiles_1223
   - first:
       213: 3992016219783986104
-    second: StageTiles_1224
+    second: blockshadow0_3
   - first:
       213: 171491100471322711
     second: StageTiles_1225
@@ -17964,7 +17964,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_632
+      name: block0_1
       rect:
         serializedVersion: 2
         x: 1836
@@ -17985,7 +17985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_633
+      name: block0_2
       rect:
         serializedVersion: 2
         x: 1870
@@ -18006,7 +18006,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_634
+      name: block0_3
       rect:
         serializedVersion: 2
         x: 1904
@@ -18027,7 +18027,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_635
+      name: block1_1
       rect:
         serializedVersion: 2
         x: 1938
@@ -18048,7 +18048,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_636
+      name: block1_2
       rect:
         serializedVersion: 2
         x: 1972
@@ -18069,7 +18069,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_637
+      name: block1_3
       rect:
         serializedVersion: 2
         x: 2006
@@ -19497,7 +19497,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_705
+      name: block0_4
       rect:
         serializedVersion: 2
         x: 1836
@@ -19518,7 +19518,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_706
+      name: block0_5
       rect:
         serializedVersion: 2
         x: 1870
@@ -19539,7 +19539,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_707
+      name: block0_6
       rect:
         serializedVersion: 2
         x: 1904
@@ -19560,7 +19560,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_708
+      name: block1_4
       rect:
         serializedVersion: 2
         x: 1938
@@ -19581,7 +19581,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_709
+      name: block1_5
       rect:
         serializedVersion: 2
         x: 1972
@@ -19602,7 +19602,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_710
+      name: block1_6
       rect:
         serializedVersion: 2
         x: 2006
@@ -21030,7 +21030,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_778
+      name: block0_7
       rect:
         serializedVersion: 2
         x: 1836
@@ -21051,7 +21051,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_779
+      name: block0_8
       rect:
         serializedVersion: 2
         x: 1870
@@ -21072,7 +21072,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_780
+      name: block0_9
       rect:
         serializedVersion: 2
         x: 1904
@@ -21093,7 +21093,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_781
+      name: block1_7
       rect:
         serializedVersion: 2
         x: 1938
@@ -21114,7 +21114,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_782
+      name: block1_8
       rect:
         serializedVersion: 2
         x: 1972
@@ -21135,7 +21135,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_783
+      name: block1_9
       rect:
         serializedVersion: 2
         x: 2006
@@ -22563,7 +22563,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_851
+      name: block2_1
       rect:
         serializedVersion: 2
         x: 1836
@@ -22584,7 +22584,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_852
+      name: block2_2
       rect:
         serializedVersion: 2
         x: 1870
@@ -22605,7 +22605,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_853
+      name: block2_3
       rect:
         serializedVersion: 2
         x: 1904
@@ -22626,7 +22626,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_854
+      name: block3_1
       rect:
         serializedVersion: 2
         x: 1938
@@ -22647,7 +22647,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_855
+      name: block3_2
       rect:
         serializedVersion: 2
         x: 1972
@@ -22668,7 +22668,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_856
+      name: block3_3
       rect:
         serializedVersion: 2
         x: 2006
@@ -24096,7 +24096,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_924
+      name: block2_4
       rect:
         serializedVersion: 2
         x: 1836
@@ -24117,7 +24117,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_925
+      name: block2_5
       rect:
         serializedVersion: 2
         x: 1870
@@ -24138,7 +24138,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_926
+      name: block2_6
       rect:
         serializedVersion: 2
         x: 1904
@@ -24159,7 +24159,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_927
+      name: block3_4
       rect:
         serializedVersion: 2
         x: 1938
@@ -24180,7 +24180,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_928
+      name: block3_5
       rect:
         serializedVersion: 2
         x: 1972
@@ -24201,7 +24201,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_929
+      name: block3_6
       rect:
         serializedVersion: 2
         x: 2006
@@ -24243,13 +24243,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_931
+      name: blockshadow0_2
       rect:
         serializedVersion: 2
-        x: 2074
-        y: 273.90475
-        width: 34.027397
-        height: 34.095238
+        x: 2075
+        y: 277
+        width: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -25629,7 +25629,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_997
+      name: block2_7
       rect:
         serializedVersion: 2
         x: 1836
@@ -25650,7 +25650,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_998
+      name: block2_8
       rect:
         serializedVersion: 2
         x: 1870
@@ -25671,7 +25671,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_999
+      name: block2_9
       rect:
         serializedVersion: 2
         x: 1904
@@ -25692,7 +25692,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1000
+      name: block3_7
       rect:
         serializedVersion: 2
         x: 1938
@@ -25713,7 +25713,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1001
+      name: block3_8
       rect:
         serializedVersion: 2
         x: 1972
@@ -25734,7 +25734,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1002
+      name: block3_9
       rect:
         serializedVersion: 2
         x: 2006
@@ -27330,13 +27330,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1078
+      name: blockshadow0_1
       rect:
         serializedVersion: 2
-        x: 2108
-        y: 205.90475
-        width: 34.027397
-        height: 34.095238
+        x: 2111
+        y: 207
+        width: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -30396,13 +30396,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1224
+      name: blockshadow0_3
       rect:
         serializedVersion: 2
-        x: 2108
-        y: 137.90475
-        width: 34.027397
-        height: 34.095238
+        x: 2111
+        y: 137
+        width: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
