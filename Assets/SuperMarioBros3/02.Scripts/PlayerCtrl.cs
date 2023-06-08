@@ -25,6 +25,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private bool grounded;                  // 땅 밟았는지 체크
     public Transform groundCheck;           // 땅 밟았는지 체크
 
+    public float velocityY;
+    private bool fallDown;                  // 지금 추락하고 있는지 체크
 
 // 오디오 ==================================
     public AudioClip jumpClip;
@@ -41,7 +43,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Transform thirdChild = transform.GetChild(2);
 
         anim = firstChild.GetComponent<Animator>();
-        Rbody = GetComponent<Rigidbody2D>();
+        Rbody = firstChild.GetComponent<Rigidbody2D>();
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기
 
@@ -54,7 +56,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     void Update()
     {  
         // 땅 밟았는지 체크
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"));
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
+                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"));
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
         if(Input.GetButtonDown("Jump") && grounded && (playerState != MODE_STATE.HURT))     
@@ -63,18 +66,20 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
             anim.SetTrigger("Jump");                                    // 애니메이션
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
+        }
 
-            // 점프하는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
+        if(fallDown)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경
+        {
             level1Obj.layer = 11;
             level2Obj.layer = 11;
             level3Obj.layer = 11;
         }
-
-        if(!jump)   // 점프 안 할 땐, 다시 부딪히는 레이어로 변경
+        else
         {
-            level1Obj.layer = 12;
-            level2Obj.layer = 12;
-            level3Obj.layer = 12;
+            // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
+            level1Obj.layer = 10;
+            level2Obj.layer = 10;
+            level3Obj.layer = 10;
         }
     }
 
@@ -94,8 +99,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(jump)
         {
             Rbody.AddForce(Vector2.up * jumpForce);
-
             jumpTimer += Time.deltaTime;
+
+            if(fallDown)            // 블록->블록으로 점프하고 있는 경우 고려
+                fallDown = false;   // 점프하고 있을 때 = 추락하고 있지 않을 때
 
             if(!Input.GetButton("Jump") || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락
             {
@@ -103,6 +110,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 jumpTimer = 0f;
             }
         }
+        
+
+        if(Rbody.velocity.y <0 && !fallDown)    // 추락하고 있을 때
+        {
+            fallDown = true;    
+            Debug.Log("#1 fallDown = true");
+        }    
     }
 
     void Flip() // 플레이어 바라보는 방향 
