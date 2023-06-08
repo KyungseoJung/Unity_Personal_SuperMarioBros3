@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - LargeBlock
+  - Player
+  - JumpPlayer
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 4119604101
     locked: 0
-  - name: Obstacle
+  - name: Foreground
     uniqueID: 1362865801
+    locked: 0
+  - name: Character
+    uniqueID: 2786871529
     locked: 0

@@ -3670,10 +3670,10 @@ TextureImporter:
     second: StageTiles_1221
   - first:
       213: -1844482126100073039
-    second: StageTiles_1222
+    second: blockshadow0_4
   - first:
       213: 4601334816485347879
-    second: StageTiles_1223
+    second: blockshadow0_5
   - first:
       213: 3992016219783986104
     second: blockshadow0_3
@@ -5537,7 +5537,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1430
         y: 682
-        width: 32
+        width: 31
         height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -5556,10 +5556,10 @@ TextureImporter:
       name: cloud0_2
       rect:
         serializedVersion: 2
-        x: 1462
-        y: 681.9048
-        width: 34.027397
-        height: 34.095238
+        x: 1464
+        y: 682
+        width: 32
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5577,10 +5577,10 @@ TextureImporter:
       name: cloud0_3
       rect:
         serializedVersion: 2
-        x: 1496
-        y: 681.9048
-        width: 34.027397
-        height: 34.095238
+        x: 1498
+        y: 682
+        width: 32
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7049,8 +7049,8 @@ TextureImporter:
         serializedVersion: 2
         x: 1430
         y: 648
-        width: 32
-        height: 34
+        width: 31
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7068,10 +7068,10 @@ TextureImporter:
       name: cloud0_5
       rect:
         serializedVersion: 2
-        x: 1462
-        y: 647.9048
-        width: 34.027397
-        height: 34.095238
+        x: 1464
+        y: 648
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7089,10 +7089,10 @@ TextureImporter:
       name: cloud0_6
       rect:
         serializedVersion: 2
-        x: 1496
-        y: 647.9048
-        width: 34.027397
-        height: 34.095238
+        x: 1498
+        y: 648
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -30354,13 +30354,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1222
+      name: blockshadow0_4
       rect:
         serializedVersion: 2
-        x: 2040
-        y: 137.90475
-        width: 34.027397
-        height: 34.095238
+        x: 2043
+        y: 137
+        width: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -30375,13 +30375,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_1223
+      name: blockshadow0_5
       rect:
         serializedVersion: 2
-        x: 2074
-        y: 137.90475
-        width: 34.027397
-        height: 34.095238
+        x: 2077
+        y: 137
+        width: 31
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
