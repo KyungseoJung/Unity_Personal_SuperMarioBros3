@@ -807,6 +807,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 65678135}
+  - component: {fileID: 65678138}
   - component: {fileID: 65678137}
   - component: {fileID: 65678136}
   m_Layer: 8
@@ -907,6 +908,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &65678138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65678134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &76326570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +2496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 160507164}
+  - component: {fileID: 160507167}
   - component: {fileID: 160507166}
   - component: {fileID: 160507165}
   m_Layer: 8
@@ -2578,6 +2597,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &160507167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160507163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &224412099
 GameObject:
   m_ObjectHideFlags: 0
@@ -3963,6 +3999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 249242071}
+  - component: {fileID: 249242074}
   - component: {fileID: 249242073}
   - component: {fileID: 249242072}
   m_Layer: 8
@@ -4063,6 +4100,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &249242074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249242070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &335947852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4072,6 +4126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335947853}
+  - component: {fileID: 335947856}
   - component: {fileID: 335947855}
   - component: {fileID: 335947854}
   m_Layer: 8
@@ -4172,6 +4227,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &335947856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335947852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &345283780
 GameObject:
   m_ObjectHideFlags: 0
@@ -7340,6 +7412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 702754826}
+  - component: {fileID: 702754829}
   - component: {fileID: 702754828}
   - component: {fileID: 702754827}
   m_Layer: 0
@@ -7440,6 +7513,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &702754829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702754825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &748722550
 GameObject:
   m_ObjectHideFlags: 0
@@ -8717,6 +8807,7 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 1710643972}
+  - {fileID: 1979752008}
   m_Father: {fileID: 1511701807}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8846,6 +8937,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 902382973}
+  - component: {fileID: 902382976}
   - component: {fileID: 902382975}
   - component: {fileID: 902382974}
   m_Layer: 0
@@ -8946,6 +9038,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &902382976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902382972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &979187868
 GameObject:
   m_ObjectHideFlags: 0
@@ -14304,6 +14413,63 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 0.1}
   m_EdgeRadius: 0
+--- !u!1 &1979752007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979752008}
+  - component: {fileID: 1979752009}
+  m_Layer: 10
+  m_Name: headCheck
+  m_TagString: HeadCheck
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1979752008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979752007}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 884121563}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1979752009
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979752007}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.05}
+  m_EdgeRadius: 0
 --- !u!1 &2011492829
 GameObject:
   m_ObjectHideFlags: 0
@@ -17201,6 +17367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2109754918}
+  - component: {fileID: 2109754921}
   - component: {fileID: 2109754920}
   - component: {fileID: 2109754919}
   m_Layer: 0
@@ -17301,6 +17468,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2109754921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109754917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &2111865821
 GameObject:
   m_ObjectHideFlags: 0
@@ -17310,6 +17494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2111865822}
+  - component: {fileID: 2111865825}
   - component: {fileID: 2111865824}
   - component: {fileID: 2111865823}
   m_Layer: 8
@@ -17410,6 +17595,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2111865825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111865821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
+    type: 3}
+  blockClips:
+  - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
 --- !u!1 &2126643984
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private float jumpTimer;
     private float jumpTimeLimit = 0.3f;
-    private bool jump;                      // 점프 가능한지 체크
+    private bool isJumping;                      // 점프 가능한지 체크
     public float jumpForce = 70f;           // 점프 가속도. 누르는 동안 더해지는 높이
     public float minJump = 100f;            // 최소 점프 높이
 
@@ -43,7 +43,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Transform thirdChild = transform.GetChild(2);
 
         anim = firstChild.GetComponent<Animator>();
-        Rbody = firstChild.GetComponent<Rigidbody2D>();
+        Rbody = firstChild.GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기
 
@@ -62,9 +62,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
         if(Input.GetButtonDown("Jump") && grounded && (playerState != MODE_STATE.HURT))     
         {
-            jump = true;
+            isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
-            anim.SetTrigger("Jump");                                    // 애니메이션
+            // anim.SetTrigger("Jump");                                    // 애니메이션
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
 
@@ -87,7 +87,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {   
     //달리기 가속도 ===============================
         float h = Input.GetAxis("Horizontal");
-        anim.SetFloat("Speed", Mathf.Abs(h));
+        // anim.SetFloat("Speed", Mathf.Abs(h));
 
         if(h*Rbody.velocity.x < maxSpeed) //최고 속도 도달하기 전이면, 속도 계속 증가
             Rbody.AddForce(Vector2.right * h * moveForce);
@@ -96,7 +96,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
 
     //점프 가속도 ===============================
-        if(jump)
+        if(isJumping)
         {
             Rbody.AddForce(Vector2.up * jumpForce);
             jumpTimer += Time.deltaTime;
@@ -106,7 +106,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             if(!Input.GetButton("Jump") || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락
             {
-                jump = false;
+                isJumping = false;
                 jumpTimer = 0f;
             }
         }
