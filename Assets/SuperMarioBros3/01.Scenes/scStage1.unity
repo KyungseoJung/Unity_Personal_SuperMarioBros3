@@ -925,6 +925,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &76326570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,6 +2617,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &224412099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,7 +2784,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 0.1}
+  m_Size: {x: 6.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &236900151
 GameObject:
@@ -4117,6 +4123,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &335947852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4244,6 +4253,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &345283780
 GameObject:
   m_ObjectHideFlags: 0
@@ -7530,6 +7542,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &748722550
 GameObject:
   m_ObjectHideFlags: 0
@@ -7858,7 +7873,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.1}
+  m_Size: {x: 3.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &796694712
 GameObject:
@@ -8900,10 +8915,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 4.5
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -9055,6 +9070,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &979187868
 GameObject:
   m_ObjectHideFlags: 0
@@ -9469,7 +9487,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 0.1}
+  m_Size: {x: 5.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1200979918
 GameObject:
@@ -10190,7 +10208,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.1}
+  m_Size: {x: 2.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1376913082
 GameObject:
@@ -10356,7 +10374,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.1}
+  m_Size: {x: 4.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1412164122
 GameObject:
@@ -10413,7 +10431,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.1}
+  m_Size: {x: 2.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1458042049
 GameObject:
@@ -10470,7 +10488,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.1}
+  m_Size: {x: 2.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1463126424
 GameObject:
@@ -11229,7 +11247,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 0.1}
+  m_Size: {x: 6.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1619971923
 GameObject:
@@ -14411,7 +14429,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.1}
+  m_Size: {x: 3.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1979752007
 GameObject:
@@ -14468,7 +14486,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.05}
+  m_Size: {x: 0.01, y: 0.01}
   m_EdgeRadius: 0
 --- !u!1 &2011492829
 GameObject:
@@ -17122,7 +17140,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.1}
+  m_Size: {x: 2.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &2079492533
 GameObject:
@@ -17485,6 +17503,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &2111865821
 GameObject:
   m_ObjectHideFlags: 0
@@ -17612,6 +17633,9 @@ MonoBehaviour:
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
+  coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
+  mushroom: {fileID: 0}
+  leaf: {fileID: 0}
 --- !u!1 &2126643984
 GameObject:
   m_ObjectHideFlags: 0
@@ -17667,7 +17691,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 0.1}
+  m_Size: {x: 6.8, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &2133948712
 GameObject:

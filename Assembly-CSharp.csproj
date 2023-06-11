@@ -37,6 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Block.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\Destructor.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\Instantiator.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerCtrl.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerLife.cs" />
     <Reference Include="UnityEngine">
