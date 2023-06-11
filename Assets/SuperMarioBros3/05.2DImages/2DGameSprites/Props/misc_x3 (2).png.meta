@@ -127,10 +127,10 @@ TextureImporter:
     second: misc_x3 (2)_40
   - first:
       213: 6031745112366630297
-    second: misc_x3 (2)_41
+    second: Item_Mushroom
   - first:
       213: 5546791404165925803
-    second: misc_x3 (2)_42
+    second: Item_Leaf
   - first:
       213: 6152135693424113331
     second: misc_x3 (2)_43
@@ -1341,7 +1341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_41
+      name: Item_Mushroom
       rect:
         serializedVersion: 2
         x: 467
@@ -1362,7 +1362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_42
+      name: Item_Leaf
       rect:
         serializedVersion: 2
         x: 539

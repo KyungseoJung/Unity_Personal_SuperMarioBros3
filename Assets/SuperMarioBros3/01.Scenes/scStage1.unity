@@ -920,14 +920,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 1
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &76326570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,14 +2614,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 1
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &224412099
 GameObject:
   m_ObjectHideFlags: 0
@@ -4118,14 +4122,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 1
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &335947852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4248,14 +4254,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 1
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &345283780
 GameObject:
   m_ObjectHideFlags: 0
@@ -7537,14 +7545,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 2
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &748722550
 GameObject:
   m_ObjectHideFlags: 0
@@ -9065,14 +9075,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 2
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &979187868
 GameObject:
   m_ObjectHideFlags: 0
@@ -10810,7 +10822,7 @@ GameObject:
   - component: {fileID: 1511701808}
   m_Layer: 0
   m_Name: MainPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10858,7 +10870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb83cd707f1a52a439e9556f849aa939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerType: 1
+  playerLevel: 1
   playerState: 1
   jumpForce: 70
   minJump: 100
@@ -17498,14 +17510,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 2
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &2111865821
 GameObject:
   m_ObjectHideFlags: 0
@@ -17628,14 +17642,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e956440c011624439102e8e1e060b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 1
   brokenBlock: {fileID: 3618071539887620254, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}
   blockClips:
   - {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
   - {fileID: 8300000, guid: 9e94f8634a5d0934f90ef10e90149f95, type: 3}
   coinUi: {fileID: 8992424453891309269, guid: 4321b67f8e7ff0f4e84db4b95682df76, type: 3}
-  mushroom: {fileID: 0}
-  leaf: {fileID: 0}
+  mushroomObj: {fileID: 1640908912486903780, guid: 9f709b1e7e7564c4c895884c302f6f32,
+    type: 3}
+  leafObj: {fileID: 0}
 --- !u!1 &2126643984
 GameObject:
   m_ObjectHideFlags: 0

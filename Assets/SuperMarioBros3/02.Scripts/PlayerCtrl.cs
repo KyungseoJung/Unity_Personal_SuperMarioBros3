@@ -9,7 +9,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public enum MODE_TYPE {LEVEL1 = 1, LEVEL2, LEVEL3 };      // 플레이어 타입
     public enum MODE_STATE {IDLE = 1, HURT, LEVELCHANGE};
         // 다친 상태인지 체크 - 다친 상태라면 점프 불가능, 일정 시간동안 공격 안 받음
-    public MODE_TYPE playerType = MODE_TYPE.LEVEL1;
+    public MODE_TYPE playerLevel = MODE_TYPE.LEVEL1;
     public MODE_STATE playerState = MODE_STATE.IDLE;
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
 

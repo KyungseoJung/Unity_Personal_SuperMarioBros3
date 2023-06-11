@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Block : MonoBehaviour  // 물음표 블록
 {
-    private enum BLOCK_TYPE {COIN = 1, ITEM };      // 블록 타입
-    private BLOCK_TYPE blockType;
-    
+    public enum BLOCK_TYPE {COIN = 1, ITEM };      // 블록 타입
+    public BLOCK_TYPE blockType;
+
 // #2 블록 업다운
     private Vector3 startPos;
     private Vector3 destPos;
@@ -15,7 +15,13 @@ public class Block : MonoBehaviour  // 물음표 블록
     private float downTimer = 0.4f;
 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용
-
+/*
+    Lerp()함수를 사용할 때, curve 적용한 목적 : 보간 값에 변화를 주기 위한 목적
+    더 다양한 움직임 표현 가능
+    (1) : 부드러운 움직임 - 선형 곡선이기 때문에
+    (2) : 물리적인 효과 흉내 (중력, 탄성처럼 자연스럽고 현실적이게)
+    (3) : 다양한 움직임 패턴 (특정 구간에서 속도 조절 가능)
+*/
 // 블록 부딪힐 때
     public Sprite brokenBlock;  // 부숴진 블록 이미지
     private bool isTouched = false; // 플레이어 headCheck와 블록이 닿았는지 확인용
@@ -23,9 +29,17 @@ public class Block : MonoBehaviour  // 물음표 블록
 
 // 코인 or 아이템 등장
     public GameObject coinUi;   // #3 코인 UI가 사라진 뒤에 자동으로 100pointsUi 등장함 (애니메이터에서 설정함)
-    public GameObject mushroom;
-    public GameObject leaf;
+    public GameObject mushroomObj; // #4
+    public GameObject leafObj;
 
+
+// 플레이어 Level 상태 확인
+    private PlayerCtrl playerCtrl;
+
+    void Awake()
+    {
+        playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+    }
     void Start()
     {
         startPos = transform.position;
@@ -40,25 +54,18 @@ public class Block : MonoBehaviour  // 물음표 블록
             StartCoroutine(BlockUpDown());
 
             transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
-            
-            // #3 코인 UI 등장
-            Vector3 coinPos;                // 생성 위치 설정
-            coinPos = transform.position;
-            coinPos.y += 1f;
-
-            Instantiate(coinUi, coinPos, Quaternion.identity);  // 생성
-            Debug.Log("#3 코인 UI 생성 위치 : " + coinPos);
-            
         }
     }
     
+
+
     IEnumerator BlockUpDown()   // #2 블록 업다운 함수
     {
         isTouched = true;
-        int i=1;
+        // int i=1;
         while(true)
         {
-            Debug.Log( "#2 " + i++ +"번째 블록 업다운 : " + moveTimer);
+            // Debug.Log( "#2 " + i++ +"번째 블록 업다운 : " + moveTimer);
 
             if(moveTimer <= upTimer)
                 transform.localPosition = Vector3.Lerp(startPos, destPos, curve.Evaluate(moveTimer/upTimer));
@@ -85,15 +92,49 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COIN : 
                 AudioSource.PlayClipAtPoint(blockClips[0], transform.position);
+
+                // #3 코인 UI 등장  // 원래는 블록이 부딪히자마자 코인이 등장하지만, 가독성을 위해 블록이 제자리로 돌아온 후 코인이 등장하도록 설정 
+                Vector3 coinPos;                // 생성 위치 설정
+                coinPos = transform.position;
+                coinPos.y += 1f;
+
+                Instantiate(coinUi, coinPos, Quaternion.identity);  // 생성
+                // Debug.Log("#3 코인 UI 생성 위치 : " + coinPos);
+
                 break;
             case BLOCK_TYPE.ITEM : 
+            {
                 AudioSource.PlayClipAtPoint(blockClips[1], transform.position);
+                switch(playerCtrl.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
+                {
+                    case PlayerCtrl.MODE_TYPE.LEVEL1 : 
+                        ItemAppears(Item.ITEM_TYPE.MUSHROOM);
+                        break;
+                    case PlayerCtrl.MODE_TYPE.LEVEL2 : 
+                        ItemAppears(Item.ITEM_TYPE.LEAF);
+                        break;
+                    case PlayerCtrl.MODE_TYPE.LEVEL3 :
+                        ItemAppears(Item.ITEM_TYPE.LEAF); 
+                        break;                    
+                }
+            }
                 break;
         }
     }
 
-    void ItemAppears()
+    void ItemAppears(Item.ITEM_TYPE _type)  // #4 #5 아이템(버섯 or 나뭇잎) 등장
     {
-
+        switch(_type)
+        {
+            case Item.ITEM_TYPE.MUSHROOM : 
+                Instantiate(mushroomObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
+                break;
+            case Item.ITEM_TYPE.LEAF : 
+                Instantiate(leafObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
+                break;
+        }
     }
+
+
+
 }
