@@ -50,10 +50,11 @@ public class Block : MonoBehaviour  // 물음표 블록
     {       // 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
         if(other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
         {   
-            Debug.Log("#2 HeadCheck");
+            // Debug.Log("#2 HeadCheck");
             StartCoroutine(BlockUpDown());
-
+    
             transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
+            BlockIsTouched();    // 코인 또는 아이템 등장
         }
     }
     
@@ -73,8 +74,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                 transform.localPosition = Vector3.Lerp(destPos, startPos, curve.Evaluate(moveTimer/downTimer));
             else    // 시간이 모두 지났으면(0.4초 후에) = 업다운 마치고 원위치로 돌아온 후
             {
-                Debug.Log("#2 블록 부숴짐");
-                BlockIsBroken();
+                // Debug.Log("#2 블록 부숴짐");
                 moveTimer = 0f; // 다시 원상복구
 
                 yield break;    // 코루틴 탈출
@@ -86,14 +86,14 @@ public class Block : MonoBehaviour  // 물음표 블록
         }
     }
 
-    void BlockIsBroken()    // #2 플레이어 headCheck와 블록 부딪힌 후 작동
+    void BlockIsTouched()    // #2 플레이어 headCheck와 블록 부딪힌 후 작동
     {
         switch(blockType)   // 블록 타입에 따라 다르게 작동
         {
             case BLOCK_TYPE.COIN : 
                 AudioSource.PlayClipAtPoint(blockClips[0], transform.position);
 
-                // #3 코인 UI 등장  // 원래는 블록이 부딪히자마자 코인이 등장하지만, 가독성을 위해 블록이 제자리로 돌아온 후 코인이 등장하도록 설정 
+                // #3 코인 UI 등장  
                 Vector3 coinPos;                // 생성 위치 설정
                 coinPos = transform.position;
                 coinPos.y += 1f;
@@ -108,13 +108,13 @@ public class Block : MonoBehaviour  // 물음표 블록
                 switch(playerCtrl.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
                 {
                     case PlayerCtrl.MODE_TYPE.LEVEL1 : 
-                        ItemAppears(Item.ITEM_TYPE.MUSHROOM);
+                        StartCoroutine(ItemAppears(Item.ITEM_TYPE.MUSHROOM));   // #2 보완 - 코루틴 활용 - 코루틴은 항상 생성 or 소멸에만 사용하라고 배운 기억
                         break;
                     case PlayerCtrl.MODE_TYPE.LEVEL2 : 
-                        ItemAppears(Item.ITEM_TYPE.LEAF);
+                        StartCoroutine(ItemAppears(Item.ITEM_TYPE.LEAF));
                         break;
                     case PlayerCtrl.MODE_TYPE.LEVEL3 :
-                        ItemAppears(Item.ITEM_TYPE.LEAF); 
+                        StartCoroutine(ItemAppears(Item.ITEM_TYPE.LEAF)); 
                         break;                    
                 }
             }
@@ -122,8 +122,10 @@ public class Block : MonoBehaviour  // 물음표 블록
         }
     }
 
-    void ItemAppears(Item.ITEM_TYPE _type)  // #4 #5 아이템(버섯 or 나뭇잎) 등장
+    IEnumerator ItemAppears(Item.ITEM_TYPE _type)  // #4 #5 아이템(버섯 or 나뭇잎) 등장
     {
+        yield return new WaitForSeconds(downTimer); // #2 #4 블록이 완전히 다 내려온 뒤에 버섯 등장하도록 
+
         switch(_type)
         {
             case Item.ITEM_TYPE.MUSHROOM : 
