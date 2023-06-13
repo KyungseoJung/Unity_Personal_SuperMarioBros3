@@ -23375,6 +23375,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6305940481535030493, guid: a55d79ba79ea1594fa1a9eb2f7a472ba,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305940481535030493, guid: a55d79ba79ea1594fa1a9eb2f7a472ba,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8544682594714255334, guid: a55d79ba79ea1594fa1a9eb2f7a472ba,
         type: 3}
       propertyPath: m_RootOrder
