@@ -13,7 +13,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
     private Vector3 startPos;
     private Vector3 destPos;
     private float moveTimer = 0f;       // #4 아이템 자연스럽게 등장하도록(Lerp 함수 이용)
-    private float comeUpTimer = 1f;   // #4 
+    private float comeUpTimer;   // #4 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // #4 커브 처리를 이용해 업 다운 적용
 
     private CircleCollider2D itemColl;         
@@ -26,7 +26,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         */
 // 아이템 이동
     private bool dirRight = true;      // #4 이동 방향 - Block.cs에서 결정해주도록
-    private float moveSpeed = 0.3f;    // #4 이동 속도
+    private float moveSpeed;    // #4 이동 속도
 /* 
     디테일 : 
     플레이어 headCheck가 물음표 박스 중심보다 왼쪽에서 치면, 버섯은 오른쪽으로 이동
@@ -44,24 +44,50 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
     void Start()
     {
-        startPos = transform.position;          // #4 버섯 등장하기
-        destPos = transform.position;
-        destPos.y += 1f;    
 
-        if(!dirRight)   // 만약 처음 이동 방향이 왼쪽이라면, 왼쪽 방향부터 이동 시작하도록 설정
-            Flip();
+        switch(itemType)
+        {
+            case ITEM_TYPE.MUSHROOM :
+                comeUpTimer = 1f;       // 다 올라오는 데 1초 걸림       
+                moveSpeed = 0.3f;
 
-        StartCoroutine(ItemComeUp(itemType));
+                startPos = transform.position;          // #4 버섯 등장하기
+                destPos = transform.position;
+                destPos.y += 1f;    
+
+                if(!dirRight)   // 만약 처음 이동 방향이 왼쪽이라면, 왼쪽 방향부터 이동 시작하도록 설정
+                    Flip();                
+                break;
+            
+            case ITEM_TYPE.LEAF :
+                comeUpTimer = 0.3f;     // 다 올라오는 데 0.3초 걸림
+                moveSpeed = 5f;         // 살랑거리는 움직임 연출
+
+                break;
+        }
+
+        StartCoroutine(ItemComeUp(itemType));           // #4 #5 아이템 등장 모습
+
+
     }
 
     void FixedUpdate()
     {
-        //#4 장애물과 충돌하면 방향 바꾸도록
-
-        if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
+        switch(itemType)
         {
-            rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
+            case ITEM_TYPE.MUSHROOM :
+                //#4 장애물과 충돌하면 방향 바꾸도록
+
+                if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
+                {
+                    rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
+                }
+                break;
+
+            case ITEM_TYPE.LEAF :       // #5
+                break;
         }
+
     }
 
     void Flip() // #4 이동 방향 바꿈
@@ -71,22 +97,53 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         transform.localScale = itemScale;
     }
 
-    IEnumerator ItemComeUp(ITEM_TYPE _type) // #4
+    IEnumerator ItemComeUp(ITEM_TYPE _type) // #4 버섯 등장
     {
-        while(true)
+        switch(_type)
         {
-            if(moveTimer < comeUpTimer)
-            {
-                transform.localPosition = Vector3.Lerp(startPos, destPos, curve.Evaluate(moveTimer/comeUpTimer));
-            }
-            else
-            {
-                itemColl.isTrigger = false; // 완전히 위로 올라온 뒤부터는, 아이템 블록과 충돌처리 하도록
-                comeUpComplete = true;
-                yield break;
-            }
-            moveTimer += Time.deltaTime;
-            yield return null;
+            case ITEM_TYPE.MUSHROOM : 
+                while(true)
+                {
+                    if(moveTimer < comeUpTimer)
+                    {
+                        transform.localPosition = Vector3.Lerp(startPos, destPos, curve.Evaluate(moveTimer/comeUpTimer));
+                    }
+                    else
+                    {
+                        itemColl.isTrigger = false; // 완전히 위로 올라온 뒤부터는, 아이템 블록과 충돌처리 하도록
+                        comeUpComplete = true;
+                        yield break;
+                    }
+                    moveTimer += Time.deltaTime;
+                    yield return null;
+                }
+            
+            case ITEM_TYPE.LEAF :       //#5
+                while(true)
+                {
+                    rBody.gravityScale = -0.2f; // 첫 등장할 땐, 위로 붕 뜨도록
+                    if(moveTimer >= comeUpTimer)
+                    {
+                        rBody.gravityScale = 0.05f;  // 그 이후로는 천천히 떨어지도록
+                        comeUpComplete = true;
+
+                        StartCoroutine(ChangeDirection());  //#5 살랑거리는 움직임 연출
+                        yield break;
+                    }
+                    moveTimer += Time.deltaTime;
+                    yield return null;
+                }
         }
+
+        IEnumerator ChangeDirection()   // #5 나뭇잎 등장 - 1초마다 방향 바꾸면서 살랑 거리며 떨어짐
+        {
+            while(true)
+            {
+                rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
+                yield return new WaitForSeconds(1.0f);  
+                Flip();
+            }
+        }
+
     }
 }
