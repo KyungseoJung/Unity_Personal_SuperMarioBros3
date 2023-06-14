@@ -22,6 +22,10 @@ public class Block : MonoBehaviour  // 물음표 블록
     (2) : 물리적인 효과 흉내 (중력, 탄성처럼 자연스럽고 현실적이게)
     (3) : 다양한 움직임 패턴 (특정 구간에서 속도 조절 가능)
 */
+// 블록 보이는 모습. 애니메이션.
+    private Animator anim;  //#6
+
+
 // 블록 부딪힐 때
     public Sprite brokenBlock;  // 부숴진 블록 이미지
     private bool isTouched = false; // 플레이어 headCheck와 블록이 닿았는지 확인용
@@ -39,6 +43,7 @@ public class Block : MonoBehaviour  // 물음표 블록
     void Awake()
     {
         playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        anim = GetComponent<Animator>();    // #6 애니메이션 설정
     }
     void Start()
     {
@@ -52,7 +57,10 @@ public class Block : MonoBehaviour  // 물음표 블록
         {   
             // Debug.Log("#2 HeadCheck");
             StartCoroutine(BlockUpDown());
-    
+
+            // anim.SetBool("IsTouched", true);   // #6 이 방법으로 하면, 애니메이터가 완전히 멈추는 게 아니기 때문에 sprte 이미지가 바뀌지 않음.  
+            anim.enabled = false;                 // #6 블록 이미지 바꾸기 위한 목적
+
             transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
             BlockIsTouched();    // 코인 또는 아이템 등장
         }
