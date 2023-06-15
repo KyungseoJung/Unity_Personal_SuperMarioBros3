@@ -49,7 +49,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             case ITEM_TYPE.MUSHROOM :
                 comeUpTimer = 1f;       // 다 올라오는 데 1초 걸림       
-                moveSpeed = 0.3f;
+                moveSpeed = 3f;
 
                 startPos = transform.position;          // #4 버섯 등장하기
                 destPos = transform.position;
@@ -86,7 +86,10 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
                 if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
                 {
-                    rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
+                    // rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
+                    rBody.velocity = new Vector2(Mathf.Sign(rBody.velocity.x) * moveSpeed, rBody.velocity.y);   // #9 
+                        //이 방식 사용하면 frontCheck 없이도 반동을 느끼면, 방향 바꿔서 이동함
+
                 }
                 break;
 
@@ -144,31 +147,30 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                     yield return null;
                 }
         }
+    }
 
-        IEnumerator ChangeDirection()   // #5 나뭇잎 등장 - 1초마다 방향 바꾸면서 살랑 거리며 떨어짐
+    IEnumerator ChangeDirection()   // #5 나뭇잎 등장 - 1초마다 방향 바꾸면서 살랑 거리며 떨어짐 // #9 위치만 약간 바꿈
+    {
+        while(true)
         {
-            while(true)
+            if(dirRight)
             {
-                if(dirRight)
-                {
-                    rBody.AddForce(Vector2.right * moveSpeed);
-                }    
-                else
-                {
-                    rBody.AddForce(Vector2.left * moveSpeed);
-                }
-
-                yield return new WaitForSeconds(0.2f);
-                
-                rBody.AddForce(Vector2.up * 100f);   // 깃털 효과 - 떨어질 때 곡선을 그리도록
-
-                yield return new WaitForSeconds(0.5f);  
-                
-                rBody.velocity = new Vector2(0f, 0f); // 이전에 반대편으로 살랑거렸던 그 움직임이(속도가) 다음 움직임에 영향을 주지 않도록
-
-                Flip();
+                rBody.AddForce(Vector2.right * moveSpeed);
+            }    
+            else
+            {
+                rBody.AddForce(Vector2.left * moveSpeed);
             }
-        }
 
+            yield return new WaitForSeconds(0.2f);
+            
+            rBody.AddForce(Vector2.up * 100f);   // 깃털 효과 - 떨어질 때 곡선을 그리도록
+
+            yield return new WaitForSeconds(0.5f);  
+            
+            rBody.velocity = new Vector2(0f, 0f); // 이전에 반대편으로 살랑거렸던 그 움직임이(속도가) 다음 움직임에 영향을 주지 않도록
+
+            Flip();
+        }
     }
 }
