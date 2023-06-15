@@ -36,6 +36,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private GameObject level2Obj;
     private GameObject level3Obj;
 
+// #8 플레이어 X좌표 위치 제한
+    private Vector3 playerPos;
+
     void Awake()
     {
         Transform firstChild = transform.GetChild(0);   // 자식 오브젝트 위치 중 0번째 자식
@@ -85,6 +88,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void FixedUpdate()
     {   
+        if(transform.position.x < -6.65)    // #8 맵 기준으로 왼쪽 맨 끝까지 갈 수 없도록
+        {
+            playerPos = transform.position;
+            playerPos.x = -6.65f;
+            transform.position = playerPos;
+        }
+
     //달리기 가속도 ===============================
         float h = Input.GetAxis("Horizontal");
         // anim.SetFloat("Speed", Mathf.Abs(h));
