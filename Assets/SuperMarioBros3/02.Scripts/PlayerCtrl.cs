@@ -43,7 +43,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Transform thirdChild = transform.GetChild(2);
 
         anim = firstChild.GetComponent<Animator>();
-        Rbody = firstChild.GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~
+        Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기
 
