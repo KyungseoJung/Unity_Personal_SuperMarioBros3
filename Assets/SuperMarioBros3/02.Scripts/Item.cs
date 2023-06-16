@@ -25,21 +25,22 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         콜라이더가 명확히 정해져있다면, 정확히 지정하는 것이 더 좋음.
         */
 // 아이템 이동
-    private bool dirRight = true;      // #4 이동 방향 - Block.cs에서 결정해주도록
+    private int itemDir = 1;      // #4 이동 방향 - Block.cs에서 결정해주도록  // #10 오른쪽 : 1, 왼쪽 : -1
     private float moveSpeed;    // #4 이동 속도
 /* 
     디테일 : 
     플레이어 headCheck가 물음표 박스 중심보다 왼쪽에서 치면, 버섯은 오른쪽으로 이동
                 물음표 박스 중심보다 오른쪽에서 치면, 버섯은 왼쪽으로 이동
 */
-    private Rigidbody2D rBody;  // #4 움직이도록
-
+    private Rigidbody2D rBody;      // #4 움직이도록
+    private Transform frontCheck;   // #10 부딪혔을 때 이동 방향 바꾸도록 확인용
     void Awake()
     {
         itemColl = GetComponent<CircleCollider2D>();
         itemColl.isTrigger = true;  // 완전히 위로 올라오기 전까지는, 아이템 블록과 충돌처리 하지 않도록
 
         rBody = GetComponent<Rigidbody2D>();
+        frontCheck = transform.GetChild(1).GetComponent<Transform>();   // #10
     }
 
     void Start()
@@ -55,7 +56,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                 destPos = transform.position;
                 destPos.y += 1f;    
 
-                if(!dirRight)   // 만약 처음 이동 방향이 왼쪽이라면, 왼쪽 방향부터 이동 시작하도록 설정
+                if(itemDir == -1)   // 만약 처음 이동 방향이 왼쪽이라면, 왼쪽 방향부터 이동 시작하도록 설정 //#10 
                     Flip();                
                 break;
             
@@ -87,9 +88,9 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                 if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
                 {
                     // rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
-                    rBody.velocity = new Vector2(Mathf.Sign(rBody.velocity.x) * moveSpeed, rBody.velocity.y);   // #9 
-                        //이 방식 사용하면 frontCheck 없이도 반동을 느끼면, 방향 바꿔서 이동함
-
+                    
+                    // rBody.velocity = new Vector2(Mathf.Sign(rBody.velocity.x) * moveSpeed, rBody.velocity.y);   // #9 이 방식 사용하면 frontCheck 없이도 반동을 느끼면, 방향 바꿔서 이동함
+                    rBody.velocity = new Vector2(itemDir * moveSpeed, rBody.velocity.y);    //#10 
                 }
                 break;
 
@@ -98,10 +99,18 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         }
 
     }
+    private void OnCollisionEnter2D(Collision2D other)  // #10 장애물 or 땅에 부딪히면 이동 방향 바꾸기 
+    {
+        if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
+            || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+        {
+            Flip();
+        }
+    }
 
     void Flip() // #4 이동 방향 바꿈
     {
-        dirRight = !dirRight;   //#5 나뭇잎 바라보는 방향 변경 - 가해지는 힘의 방향도 다르게 하기 위함(ChangeDirection함수)
+        itemDir *= -1;   //#5 나뭇잎 바라보는 방향 변경 - 가해지는 힘의 방향도 다르게 하기 위함(ChangeDirection함수)    //#10 
 
         Vector3 itemScale = transform.localScale;
         itemScale.x *= -1;
@@ -153,14 +162,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
     {
         while(true)
         {
-            if(dirRight)
-            {
-                rBody.AddForce(Vector2.right * moveSpeed);
-            }    
-            else
-            {
-                rBody.AddForce(Vector2.left * moveSpeed);
-            }
+            rBody.AddForce(Vector2.right * itemDir * moveSpeed);    //#10 int(1 또는 -1)에 맞도록 조정
+
 
             yield return new WaitForSeconds(0.2f);
             

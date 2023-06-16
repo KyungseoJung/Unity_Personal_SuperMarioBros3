@@ -18,7 +18,7 @@ TagManager:
   - LargeBlock
   - Player
   - FallDownPlayer
-  - 
+  - Obstacle
   - 
   - 
   - 
@@ -45,11 +45,11 @@ TagManager:
   - name: Background
     uniqueID: 4119604101
     locked: 0
-  - name: Item
-    uniqueID: 112351197
-    locked: 0
   - name: Foreground
     uniqueID: 1362865801
+    locked: 0
+  - name: Item
+    uniqueID: 112351197
     locked: 0
   - name: Character
     uniqueID: 2786871529
