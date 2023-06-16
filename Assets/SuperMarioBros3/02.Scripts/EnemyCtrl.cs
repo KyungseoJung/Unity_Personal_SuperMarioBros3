@@ -12,7 +12,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     public WINGS_TYPE wingsType;
 
 // 몬스터 이동
-    private bool dirRight = true;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
+    private int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed;        // 이동 속도
     private Rigidbody2D rBody;      
 
@@ -38,7 +38,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
-                rBody.velocity = new Vector2(Mathf.Sign(rBody.velocity.x) * moveSpeed, rBody.velocity.y);
+                rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;
         }
@@ -46,7 +46,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void Flip()
     {
-        dirRight = !dirRight;
+        enemyDir *= -1;
 
         Vector3 enemyScale = transform.localScale;
         enemyScale.x *= -1;

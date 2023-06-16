@@ -103,13 +103,13 @@ TextureImporter:
     second: enemy_32
   - first:
       213: 3667383921375749786
-    second: enemy_33
+    second: enemy2_1
   - first:
       213: -4652208741748458644
-    second: enemy_34
+    second: enemy2_2
   - first:
       213: -6119433104660310066
-    second: enemy_35
+    second: enemy2_3
   - first:
       213: 3306992852962324422
     second: enemy_36
@@ -1191,7 +1191,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_33
+      name: enemy2_1
       rect:
         serializedVersion: 2
         x: 31
@@ -1212,7 +1212,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_34
+      name: enemy2_2
       rect:
         serializedVersion: 2
         x: 50
@@ -1233,7 +1233,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_35
+      name: enemy2_3
       rect:
         serializedVersion: 2
         x: 74
