@@ -23,6 +23,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public float minJump = 100f;            // 최소 점프 높이
 
     private bool grounded;                  // 땅 밟았는지 체크
+    public bool steppingOnEnemy;           // #11 적 밟았는지 확인
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     public float velocityY;
@@ -38,6 +39,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
 // #8 플레이어 X좌표 위치 제한
     private Vector3 playerPos;
+
 
     void Awake()
     {
@@ -58,10 +60,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Update()
     {  
-        // 땅 밟았는지 체크
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
-                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"))
-                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
+        CheckGroundCheck();
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
         if(Input.GetButtonDown("Jump") && grounded && (playerState != MODE_STATE.HURT))     
@@ -140,4 +139,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         transform.localScale = theScale;
     }
 
+    void CheckGroundCheck() // #11 따로 함수 추가. 
+    {
+        // 땅 밟았는지 체크
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
+                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"))
+                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
+        
+        steppingOnEnemy = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Enemy"));  // #11
+
+    }
 }

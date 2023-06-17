@@ -39,6 +39,7 @@
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Block.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Destructor.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyCtrl.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyLife.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\FollowCamera.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Instantiator.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Item.cs" />
