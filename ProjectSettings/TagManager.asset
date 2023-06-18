@@ -20,7 +20,7 @@ TagManager:
   - FallDownPlayer
   - Obstacle
   - Enemy
-  - 
+  - HiddenEnemy
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 4119604101
+    locked: 0
+  - name: HiddenEnemy
+    uniqueID: 797593029
     locked: 0
   - name: Foreground
     uniqueID: 1362865801
