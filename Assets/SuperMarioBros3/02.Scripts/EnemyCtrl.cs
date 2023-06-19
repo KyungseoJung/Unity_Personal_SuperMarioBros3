@@ -28,14 +28,17 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용  // 곡선 이용 - (0,0)에서 (1.1)로 가는 자연스러운 움직임 연출
 
-    [SerializeField]
     private BoxCollider2D surroundCheck;
-
-
+    private Transform playerTransform;  // #13 꽃 Enemy - 쳐다보는 방향(좌/ 우) 플레이어 위치에 따라 방향 바꾸도록
+    [SerializeField]
+    private Sprite bodySprite;          // #13 꽃 Enemy - 쳐다보는 방향(위/ 아래)
+    public Sprite lookingUp;            // #13 위 바라보는 이미지
+    public Sprite lookingDown;          // #13 아래 바라보는 이미지
 
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();        
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void Start()
@@ -67,6 +70,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;
+
+            case ENEMY_TYPE.FLOWER : 
+                CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크
+                break;
         }
 
     }
@@ -87,8 +94,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 꽃 Enemy 주위에 플레이어가 있다면 꽃 등장 X 
                 {
-                    Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
+                    // Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
                     isMoving = false;
+
                 }
                 break;
         }
@@ -102,9 +110,14 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 플레이어가 다시 멀어졌으니, 올라오기 다시 시작해라
                 {
-                    Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
+                    // Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
+
+                    StopCoroutine(FlowerUp());      // 중복 실행을 막기 위해 코루틴 종료시킨 후, 새로 시작하기
+                    StopCoroutine(FlowerDown());
+
                     isMoving = true;
-                    StartCoroutine(FlowerUp()); 
+                    StartCoroutine(FlowerUp());   
+ 
                 }
                 break;
         }
@@ -135,7 +148,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         }
     }
 
-    public IEnumerator FlowerDown()    // #12 꽃 - 밑으로 내려가기
+    IEnumerator FlowerDown()    // #12 꽃 - 밑으로 내려가기
     {
         while(true)
         {
@@ -158,6 +171,27 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             yield return null;  // 한 프레임 대기
 
         }
+    }
+
+    void CheckDirection()
+    {
+        bool playerDir = playerTransform.position.x > transform.position.x; // Enemy 기준으로 플레이어가 오른쪽에 있는지 확인
+
+        if((!playerDir && (enemyDir == 1))  // Enemy 기준으로 플레이어가 왼쪽에 있고 && Enemy가 보는 방향이 오른쪽이라면
+            || (playerDir && (enemyDir == -1)) )   // 플레이어가 오른쪽에 있고 && Enemy가 보는 방향이 왼쪽이라면
+        {
+            Flip();
+        }    
+
+        if(playerTransform.position.y > -1.8)   // 플레이어가 위에 위치한다면
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingUp;
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingDown;
+        }
+
     }
 
 }
