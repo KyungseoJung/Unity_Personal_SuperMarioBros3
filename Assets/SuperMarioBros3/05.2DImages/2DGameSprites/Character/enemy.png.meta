@@ -31,10 +31,10 @@ TextureImporter:
     second: enemy3_1
   - first:
       213: -6686358444854819152
-    second: enemy_9
+    second: enemy3_fireball_1
   - first:
       213: 8966077861573107906
-    second: enemy_10
+    second: enemy3_fireball_2
   - first:
       213: 5942247198578474322
     second: enemy_11
@@ -52,10 +52,10 @@ TextureImporter:
     second: enemy_15
   - first:
       213: -4987121757160251396
-    second: enemy_16
+    second: enemy3_fireball_3
   - first:
       213: -1325660692555949653
-    second: enemy_17
+    second: enemy3_fireball_4
   - first:
       213: -991036465199342561
     second: enemy3_2
@@ -687,7 +687,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_9
+      name: enemy3_fireball_1
       rect:
         serializedVersion: 2
         x: 35
@@ -708,7 +708,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_10
+      name: enemy3_fireball_2
       rect:
         serializedVersion: 2
         x: 50
@@ -834,7 +834,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_16
+      name: enemy3_fireball_3
       rect:
         serializedVersion: 2
         x: 35
@@ -855,7 +855,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_17
+      name: enemy3_fireball_4
       rect:
         serializedVersion: 2
         x: 50

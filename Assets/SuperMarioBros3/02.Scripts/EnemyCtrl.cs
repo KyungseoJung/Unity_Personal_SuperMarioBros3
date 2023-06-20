@@ -30,10 +30,13 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     private BoxCollider2D surroundCheck;
     private Transform playerTransform;  // #13 꽃 Enemy - 쳐다보는 방향(좌/ 우) 플레이어 위치에 따라 방향 바꾸도록
-    [SerializeField]
-    private Sprite bodySprite;          // #13 꽃 Enemy - 쳐다보는 방향(위/ 아래)
     public Sprite lookingUp;            // #13 위 바라보는 이미지
     public Sprite lookingDown;          // #13 아래 바라보는 이미지
+// #14 꽃 Enemy 파이어 볼 공격
+    public Rigidbody2D fireball;        // #14 꽃 Enemy - 파이어볼 공격하기    // GameObject가 아닌 Rigidbody로 받는다. 속도 접근 쉽도록
+    private float shootDist;            // 삼항연산자 - 플레이어와 Enemy 위치에 따라 다른 각도로 파이어 볼 쏘기
+    private int shootHeight;            // 삼항연산자
+
 
     void Awake()
     {
@@ -54,6 +57,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 startPos = transform.position;  // #12 시작 위치, 도착 위치 설정
                 destPos = transform.position;
                 destPos.y += 1f;
+                moveSpeed = 3f;                 // #14 파이어볼 속도
                 
                 StartCoroutine(FlowerUp());     // #12 꽃 움직임 시작
 
@@ -140,7 +144,6 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 yield return new WaitForSeconds(0.5f);
                 moveTimer = 0f;
                 StartCoroutine(FlowerDown());      // 다시 내려가도록
-
                 yield break;    // 현재 코루틴 종료
             }
             moveTimer += Time.deltaTime;
@@ -150,6 +153,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     IEnumerator FlowerDown()    // #12 꽃 - 밑으로 내려가기
     {
+        ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
+
         while(true)
         {
             // Debug.Log("#12 다운 함수 실행" + moveTimer);
@@ -183,7 +188,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             Flip();
         }    
 
-        if(playerTransform.position.y > -1.8)   // 플레이어가 위에 위치한다면
+        if(playerTransform.position.y > transform.position.y)   // 플레이어가 Enemy보다 위에 위치한다면
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingUp;
         }
@@ -191,6 +196,20 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingDown;
         }
+    }
+
+    void ShootFireball()    // #14
+    {
+        Rigidbody2D fireInstance = Instantiate(fireball, transform.position, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+
+        float playerDist = (transform.position.x - playerTransform.position.x) * (transform.position.x - playerTransform.position.x);
+
+// 삼항 연산자
+        shootDist = ( playerDist < (5.5)*(5.5))? 1 : 0.5f;    // 가까운 위치이면 1, 먼 위치이면 1/2
+        shootHeight = (playerTransform.position.y < transform.position.y) ? -1 : 1; // 플레이어가 아래에 있으면 -1, 위에 있으면 +1
+        
+
+        fireInstance.velocity = new Vector2(moveSpeed * enemyDir, moveSpeed * shootDist * shootHeight);    
 
     }
 

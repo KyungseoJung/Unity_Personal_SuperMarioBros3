@@ -21,7 +21,7 @@ TagManager:
   - Obstacle
   - Enemy
   - HiddenEnemy
-  - 
+  - EnemyWeapon
   - 
   - 
   - 
@@ -59,4 +59,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 785241683
+    locked: 0
+  - name: EnemyWeapon
+    uniqueID: 3181888735
     locked: 0
