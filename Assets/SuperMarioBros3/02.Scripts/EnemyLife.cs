@@ -21,7 +21,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         {
             if(playerCtrl.steppingOnEnemy)  // 만약 플레이어가 Enemy의 머리를 밟은 거라면
             {
-                Debug.Log("#11 플레이어 머리 밟힘");
+                Debug.Log("#11 플레이어가 Enemy 머리 밟음");
                 isDie = true;
             }
             // else

@@ -98,7 +98,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1508095767
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 3667383921375749786, guid: 0f379e43d2d2af045827b3e5e44f518b,
     type: 3}
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 5778404503118158595}
   - component: {fileID: 5778404503118158594}
   - component: {fileID: 5778404503118158597}
+  - component: {fileID: 4109030421009125964}
   m_Layer: 13
   m_Name: Enemy2
   m_TagString: Untagged
@@ -163,6 +164,10 @@ MonoBehaviour:
   enemyType: 2
   wingsType: 2
   moveSpeed: 0
+  isMoving: 1
+  lookingUp: {fileID: 0}
+  lookingDown: {fileID: 0}
+  fireball: {fileID: 0}
 --- !u!114 &5778404503118158595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,3 +227,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.64}
   m_EdgeRadius: 0
+--- !u!95 &4109030421009125964
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778404503118158598}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec3bf114dcdab04439510eb5bcdb4ca0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

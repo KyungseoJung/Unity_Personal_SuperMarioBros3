@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2911953465357029401}
   - component: {fileID: 2911953465357029393}
   - component: {fileID: 2911953465357029398}
+  - component: {fileID: 1678703497848542477}
   m_Layer: 13
   m_Name: Enemy1
   m_TagString: Untagged
@@ -51,6 +52,10 @@ MonoBehaviour:
   enemyType: 1
   wingsType: 2
   moveSpeed: 0
+  isMoving: 1
+  lookingUp: {fileID: 0}
+  lookingDown: {fileID: 0}
+  fireball: {fileID: 0}
 --- !u!114 &2911953465357029401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +115,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1678703497848542477
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911953465357029397}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb54f4b995f4244448949b0f0ff6e48c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2911953466005344462
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +232,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1508095767
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 297761703447499198, guid: 0f379e43d2d2af045827b3e5e44f518b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
