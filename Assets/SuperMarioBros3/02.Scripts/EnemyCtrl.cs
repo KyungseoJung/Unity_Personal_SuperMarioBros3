@@ -28,7 +28,6 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용  // 곡선 이용 - (0,0)에서 (1.1)로 가는 자연스러운 움직임 연출
 
-    private BoxCollider2D surroundCheck;
     private Transform playerTransform;  // #13 꽃 Enemy - 쳐다보는 방향(좌/ 우) 플레이어 위치에 따라 방향 바꾸도록
     public Sprite lookingUp;            // #13 위 바라보는 이미지
     public Sprite lookingDown;          // #13 아래 바라보는 이미지

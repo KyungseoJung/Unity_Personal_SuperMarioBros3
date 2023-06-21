@@ -23,7 +23,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public float minJump = 100f;            // 최소 점프 높이
 
     private bool grounded;                  // 땅 밟았는지 체크
-    public bool steppingOnEnemy;           // #11 적 밟았는지 확인
+    // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     public float velocityY;
@@ -57,7 +57,6 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         level3Obj = thirdChild.gameObject;
     }
     
-
     void Update()
     {  
         CheckGroundCheck();
@@ -145,8 +144,18 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"))
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
-        
-        steppingOnEnemy = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Enemy"));  // #11
+        Debug.Log("grounded : " + grounded);
+        // steppingOnEnemy = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Enemy"));  // #11   -> // #15로 변경
+    }
+
+    void OnTriggerEnter2D(Collider2D col) // #15 플레이어가 몬스터(굼바, 거북)의 headCheck를 밟았을 때
+    {
+        if(col.gameObject.tag == "EnemyHeadCheck")
+        {
+            Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
+
+            col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
+        }
 
     }
 }
