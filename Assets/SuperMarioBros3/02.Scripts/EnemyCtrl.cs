@@ -5,14 +5,14 @@ using UnityEngine;
 public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 {
 // 몬스터 종류
-    public enum ENEMY_TYPE {GOOMBA = 1, TURTLE, FLOWER};
+    public enum ENEMY_TYPE {GOOMBA = 1, TURTLE, SHELL, FLOWER};
     public enum WINGS_TYPE {YES = 1, NO};    // 날개 달려 있는지
 
     public ENEMY_TYPE enemyType;
     public WINGS_TYPE wingsType;
 
 // 몬스터 이동
-    private int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
+    public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed;        // 이동 속도
     private Rigidbody2D rBody;      
 
@@ -36,10 +36,19 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private float shootDist;            // 삼항연산자 - 플레이어와 Enemy 위치에 따라 다른 각도로 파이어 볼 쏘기
     private int shootHeight;            // 삼항연산자
 
+// #16 거북 껍질 발로 차기
+    public bool kickShell;
+    public float kickSpeed = 1f;       // 플레이어가 발로 찼을 때 날라가는 속도
 
     void Awake()
     {
-        rBody = GetComponent<Rigidbody2D>();        
+        switch(enemyType)
+        {
+            case ENEMY_TYPE.TURTLE : 
+            case ENEMY_TYPE.SHELL : 
+                rBody = GetComponent<Rigidbody2D>();        
+                break;
+        }
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -73,7 +82,15 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;
-
+            // case ENEMY_TYPE.SHELL :
+            //     if(kickShell)
+            //         rBody.velocity = new Vector2(enemyDir * kickSpeed, rBody.velocity.y);   // #16 한쪽 방향으로 날라가도록
+            //     break;
+            case ENEMY_TYPE.SHELL :
+                if(kickShell)
+                    rBody.velocity = new Vector2(enemyDir * kickSpeed, rBody.velocity.y);   // #16 한쪽 방향으로 날라가도록
+                    Debug.Log("//#16 속도 : " + rBody.velocity);
+                break;
             case ENEMY_TYPE.FLOWER : 
                 CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크
                 break;

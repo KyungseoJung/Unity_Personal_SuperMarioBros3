@@ -21,6 +21,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private bool isJumping;                      // 점프 가능한지 체크
     public float jumpForce = 70f;           // 점프 가속도. 누르는 동안 더해지는 높이
     public float minJump = 100f;            // 최소 점프 높이
+    private float bounceJump =500f;        // 살짝 튀어오를 때 점프 높이
 
     private bool grounded;                  // 땅 밟았는지 체크
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
@@ -144,7 +145,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"))
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
-        Debug.Log("grounded : " + grounded);
+        // Debug.Log("grounded : " + grounded);
         // steppingOnEnemy = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Enemy"));  // #11   -> // #15로 변경
     }
 
@@ -152,10 +153,15 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {
         if(col.gameObject.tag == "EnemyHeadCheck")
         {
-            Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
-
+            // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
             col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
         }
 
+    }
+
+    public void BounceUp() // #16 약간 위로 튀어오르기 - 예 : 몬스터 밟았을 때
+    {
+        Rbody.AddForce(Vector2.up * bounceJump);
+        Debug.Log("//#16 플레이어 살짝 위로 튀어오르기");
     }
 }
