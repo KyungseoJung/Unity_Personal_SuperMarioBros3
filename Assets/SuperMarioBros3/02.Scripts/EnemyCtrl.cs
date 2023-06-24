@@ -13,7 +13,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // 몬스터 이동
     public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
-    public float moveSpeed;        // 이동 속도
+    public float moveSpeed = 2f;        // 이동 속도
     private Rigidbody2D rBody;      
 
 // #12 꽃 움직임
@@ -44,9 +44,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     {
         switch(enemyType)
         {
+            case ENEMY_TYPE.GOOMBA :
             case ENEMY_TYPE.TURTLE : 
-            case ENEMY_TYPE.SHELL : 
-                rBody = GetComponent<Rigidbody2D>();        
+                rBody = GetComponent<Rigidbody2D>();       
                 break;
         }
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();

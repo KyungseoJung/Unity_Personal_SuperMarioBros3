@@ -125,7 +125,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(Rbody.velocity.y <0 && !fallDown)    // 추락하고 있을 때
         {
             fallDown = true;    
-            Debug.Log("#1 fallDown = true");
+            // Debug.Log("#1 fallDown = true");
         }    
     }
 

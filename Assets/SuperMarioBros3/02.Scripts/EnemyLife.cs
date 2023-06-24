@@ -49,28 +49,25 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
                     isDie = true;
                     break;
-            }
-
-
-            if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
-            {
-                Debug.Log("#11 플레이어가 Enemy 머리 밟음");
-                switch(enemyCtrl.enemyType)
-                {
-                    case EnemyCtrl.ENEMY_TYPE.GOOMBA : 
+                
+                case EnemyCtrl.ENEMY_TYPE.GOOMBA : 
+                    if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
+                    {
+                        Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
                         other.gameObject.GetComponent<PlayerCtrl>().BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음
                         isDie = true;
-
+                    }
                         break;
-                    
-                    case EnemyCtrl.ENEMY_TYPE.TURTLE : 
+                
+                case EnemyCtrl.ENEMY_TYPE.TURTLE : 
+                    if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
+                    {
+                        Debug.Log("#11 플레이어가 Enemy 머리 밟음");
                         other.gameObject.GetComponent<PlayerCtrl>().BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음
                         TransformIntoShell();           // #15 등껍질로 변신
+                    }
                         break;
-                }
-
             }
-
 
             // else
             //     Debug.Log("#11 플레이어랑 그냥 부딪힘");
