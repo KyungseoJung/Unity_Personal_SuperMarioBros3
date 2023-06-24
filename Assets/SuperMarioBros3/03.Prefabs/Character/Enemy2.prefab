@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.2}
+  m_Size: {x: 0.8, y: 0.4}
   m_EdgeRadius: 0
 --- !u!1 &5778404502671825885
 GameObject:
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 4109030421009125964}
   m_Layer: 13
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,11 +222,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 2
   wingsType: 2
+  enemyDir: -1
   moveSpeed: 0
   isMoving: 1
   lookingUp: {fileID: 0}
   lookingDown: {fileID: 0}
   fireball: {fileID: 0}
+  kickShell: 0
+  kickSpeed: 20
 --- !u!114 &5778404503118158595
 MonoBehaviour:
   m_ObjectHideFlags: 0

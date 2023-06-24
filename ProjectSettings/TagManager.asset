@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HeadCheck
   - EnemyHeadCheck
+  - Enemy
   layers:
   - Default
   - TransparentFX

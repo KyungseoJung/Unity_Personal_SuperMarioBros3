@@ -89,7 +89,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.SHELL :
                 if(kickShell)
                     rBody.velocity = new Vector2(enemyDir * kickSpeed, rBody.velocity.y);   // #16 한쪽 방향으로 날라가도록
-                    Debug.Log("//#16 속도 : " + rBody.velocity);
+                    // Debug.Log("//#16 속도 : " + rBody.velocity);
                 break;
             case ENEMY_TYPE.FLOWER : 
                 CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크

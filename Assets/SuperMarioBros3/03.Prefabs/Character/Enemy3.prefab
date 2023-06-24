@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1499156012293689799}
   m_Layer: 14
   m_Name: Enemy3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 3
   wingsType: 2
+  enemyDir: -1
   moveSpeed: 0
   isMoving: 1
   lookingUp: {fileID: -991036465199342561, guid: 0f379e43d2d2af045827b3e5e44f518b,
@@ -139,6 +140,8 @@ MonoBehaviour:
     type: 3}
   fireball: {fileID: 5206860361071916730, guid: d711a0c89a99ec54a83ccde52c9075ed,
     type: 3}
+  kickShell: 0
+  kickSpeed: 20
 --- !u!114 &1499156012293689805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbd31432c0e5b149adda976dcf9ccdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beStepped: 0
 --- !u!61 &1499156012293689794
 BoxCollider2D:
   m_ObjectHideFlags: 0

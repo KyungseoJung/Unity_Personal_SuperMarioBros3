@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1678703497848542477}
   m_Layer: 13
   m_Name: Enemy1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,11 +52,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 1
   wingsType: 2
+  enemyDir: -1
   moveSpeed: 0
   isMoving: 1
   lookingUp: {fileID: 0}
   lookingDown: {fileID: 0}
   fireball: {fileID: 0}
+  kickShell: 0
+  kickSpeed: 20
 --- !u!114 &2911953465357029401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,5 +305,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.2}
+  m_Size: {x: 0.8, y: 0.4}
   m_EdgeRadius: 0

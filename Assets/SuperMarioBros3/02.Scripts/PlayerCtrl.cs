@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 관련)
 {
+    private PlayerLife playerLife;          // #17
+
     private Animator anim;
     private Rigidbody2D Rbody;
-    public enum MODE_TYPE {LEVEL1 = 1, LEVEL2, LEVEL3 };      // 플레이어 타입
-    public enum MODE_STATE {IDLE = 1, HURT, LEVELCHANGE};
-        // 다친 상태인지 체크 - 다친 상태라면 점프 불가능, 일정 시간동안 공격 안 받음
-    public MODE_TYPE playerLevel = MODE_TYPE.LEVEL1;
-    public MODE_STATE playerState = MODE_STATE.IDLE;
+
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
 
     private float moveForce = 50f;          // 이동 속도
@@ -44,6 +42,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Awake()
     {
+        playerLife = GetComponent<PlayerLife>();        // #17
+
         Transform firstChild = transform.GetChild(0);   // 자식 오브젝트 위치 중 0번째 자식
         Transform secondChild = transform.GetChild(1);
         Transform thirdChild = transform.GetChild(2);
@@ -63,7 +63,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         CheckGroundCheck();
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
-        if(Input.GetButtonDown("Jump") && grounded && (playerState != MODE_STATE.HURT))     
+        if(Input.GetButtonDown("Jump") && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     
         {
             isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
@@ -151,14 +151,23 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void OnTriggerEnter2D(Collider2D col) // #15 플레이어가 몬스터(굼바, 거북)의 headCheck를 밟았을 때
     {
-        if(col.gameObject.tag == "EnemyHeadCheck")
+        if(col.gameObject.tag == "EnemyHeadCheck" && !col.gameObject.GetComponentInParent<EnemyLife>().beStepped)   //  아직 beStepped가 true가 아니라면
         {
-            // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
+            Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
             col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)  // #17 플레이어가 Enemy와 그냥 부딪혔을 때
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
+            if(! col.gameObject.GetComponent<EnemyLife>().beStepped)
+                playerLife.GetHurt();
         }
 
     }
-
     public void BounceUp() // #16 약간 위로 튀어오르기 - 예 : 몬스터 밟았을 때
     {
         Rbody.AddForce(Vector2.up * bounceJump);

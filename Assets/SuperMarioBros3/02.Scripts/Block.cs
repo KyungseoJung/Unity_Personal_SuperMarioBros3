@@ -38,11 +38,11 @@ public class Block : MonoBehaviour  // 물음표 블록
 
 
 // 플레이어 Level 상태 확인
-    private PlayerCtrl playerCtrl;
+    private PlayerLife playerLife;
 
     void Awake()
     {
-        playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
         anim = GetComponent<Animator>();    // #6 애니메이션 설정
     }
     void Start()
@@ -113,15 +113,15 @@ public class Block : MonoBehaviour  // 물음표 블록
             case BLOCK_TYPE.ITEM : 
             {
                 AudioSource.PlayClipAtPoint(blockClips[1], transform.position);
-                switch(playerCtrl.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
+                switch(playerLife.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
                 {
-                    case PlayerCtrl.MODE_TYPE.LEVEL1 : 
+                    case PlayerLife.MODE_TYPE.LEVEL1 : 
                         StartCoroutine(ItemAppears(Item.ITEM_TYPE.MUSHROOM));   // #2 보완 - 코루틴 활용 - 코루틴은 항상 생성 or 소멸에만 사용하라고 배운 기억
                         break;
-                    case PlayerCtrl.MODE_TYPE.LEVEL2 : 
+                    case PlayerLife.MODE_TYPE.LEVEL2 : 
                         StartCoroutine(ItemAppears(Item.ITEM_TYPE.LEAF));
                         break;
-                    case PlayerCtrl.MODE_TYPE.LEVEL3 :
+                    case PlayerLife.MODE_TYPE.LEVEL3 :
                         StartCoroutine(ItemAppears(Item.ITEM_TYPE.LEAF)); 
                         break;                    
                 }
