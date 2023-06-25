@@ -40,7 +40,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 // #16 거북 껍질 발로 차기
     public bool kickShell;
     public float kickSpeed = 1f;       // 플레이어가 발로 찼을 때 날라가는 속도
-
+// #19 죽은 후 상태에 따른 함수 실행
+    private EnemyLife enemyLife;
+    
     void Awake()
     {
         switch(enemyType)
@@ -52,6 +54,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 break;
         }
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        enemyLife = GetComponent<EnemyLife>();
     }
 
     void Start()
@@ -77,10 +81,15 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void FixedUpdate()
     {
+
+
         switch(enemyType)
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
+                if(enemyLife.isDie)
+                    return;
+                    
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;

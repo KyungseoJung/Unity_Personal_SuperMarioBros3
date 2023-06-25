@@ -19,7 +19,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private bool isJumping;                      // 점프 가능한지 체크
     public float jumpForce = 70f;           // 점프 가속도. 누르는 동안 더해지는 높이
     public float minJump = 100f;            // 최소 점프 높이
-    private float bounceJump =500f;        // 살짝 튀어오를 때 점프 높이
+    private float bounceJump =600f;        // 살짝 튀어오를 때 점프 높이 - 예 : Enemy 밟았을 때
 
     private bool grounded;                  // 땅 밟았는지 체크
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
