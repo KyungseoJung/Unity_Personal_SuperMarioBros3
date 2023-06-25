@@ -15,7 +15,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
     private float jumpTimer;
-    private float jumpTimeLimit = 0.3f;
+    private float jumpTimeLimit = 0.25f;
     private bool isJumping;                      // 점프 가능한지 체크
     public float jumpForce = 70f;           // 점프 가속도. 누르는 동안 더해지는 높이
     public float minJump = 100f;            // 최소 점프 높이
@@ -26,15 +26,15 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     public float velocityY;
-    public bool fallDown;                  // 지금 추락하고 있는지 체크
+    private bool fallDown;                  // 지금 추락하고 있는지 체크
 
 // 오디오 ==================================
     public AudioClip jumpClip;
 
-// 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록
-    private GameObject level1Obj;
-    private GameObject level2Obj;
-    private GameObject level3Obj;
+// // 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록   // #21 버그 수정 (콜라이더 위치를 최상위 부모로 바꿨으니, 레이어 변경 코드 대상도 최상위 부모로 수정 필요)
+//     private GameObject level1Obj;
+//     private GameObject level2Obj;
+//     private GameObject level3Obj;
 
 // #8 플레이어 X좌표 위치 제한
     private Vector3 playerPos;
@@ -53,9 +53,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
 
-        level1Obj = firstChild.gameObject;
-        level2Obj = secondChild.gameObject;
-        level3Obj = thirdChild.gameObject;
+        // level1Obj = firstChild.gameObject;           // #21 버그 수정
+        // level2Obj = secondChild.gameObject;
+        // level3Obj = thirdChild.gameObject;
     }
     
     void Update()
@@ -71,18 +71,19 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
 
-        if(fallDown)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경
+        if(fallDown)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정
         {
-            level1Obj.layer = 11;   // "FallDownPlayer" 레이어
-            level2Obj.layer = 11;
-            level3Obj.layer = 11;
+            gameObject.layer = 11;  // "FallDownPlayer" 레이어
+            // level1Obj.layer = 11;   
+            // level2Obj.layer = 11;
+            // level3Obj.layer = 11;
         }
         else
         {
-            // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
-            level1Obj.layer = 10;   // "Player" 레이어
-            level2Obj.layer = 10;
-            level3Obj.layer = 10;
+            gameObject.layer = 10;  // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
+            // level1Obj.layer = 10;   // "Player" 레이어
+            // level2Obj.layer = 10;
+            // level3Obj.layer = 10;
         }
     }
 
