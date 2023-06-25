@@ -26,7 +26,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     public float velocityY;
-    private bool fallDown;                  // 지금 추락하고 있는지 체크
+    public bool fallDown;                  // 지금 추락하고 있는지 체크
 
 // 오디오 ==================================
     public AudioClip jumpClip;
@@ -73,14 +73,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         if(fallDown)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경
         {
-            level1Obj.layer = 11;
+            level1Obj.layer = 11;   // "FallDownPlayer" 레이어
             level2Obj.layer = 11;
             level3Obj.layer = 11;
         }
         else
         {
             // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
-            level1Obj.layer = 10;
+            level1Obj.layer = 10;   // "Player" 레이어
             level2Obj.layer = 10;
             level3Obj.layer = 10;
         }

@@ -87,7 +87,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
-                if(enemyLife.isDie)
+                if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
                     return;
                     
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);

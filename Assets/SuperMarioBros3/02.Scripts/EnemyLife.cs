@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 죽이는 기능
 {
+    public enum ENEMY_STATE {IDLE = 1, DIE};    // #9 Enemy의 상태
+    public ENEMY_STATE enemystate = ENEMY_STATE.IDLE;
+
     private PlayerCtrl playerCtrl;
-    public bool isDie;             // 죽었나 확인
     
 // #15 플레이어에게 머리 밟혔는지 확인용 & 등껍질로 변신하도록
     public bool beStepped = false;          // PlayerCtrl에서 true, false 적용됨
@@ -34,7 +36,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void OnCollisionEnter2D(Collision2D other)  // 콜라이더 위치상, ㅡIsTrigger 체크가 된 함수 먼저 실행 -> IsTrigger 체크 안 된 함수 실행되기 때문에~
     {
-        if(isDie)       // 이미 죽었으면 아래 코드 실행 X
+        if(enemystate == ENEMY_STATE.DIE)       // 이미 죽었으면 아래 코드 실행 X   //#9 리팩터링
             return;
 
 
@@ -50,7 +52,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     {
                         Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
                         other.gameObject.GetComponent<PlayerCtrl>().BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음
-                        isDie = true;
+                        enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
                         IsDie();            // #19 죽었을 때 효과
                     }
                     break;
@@ -76,7 +78,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                         Debug.Log("//#16 왼쪽으로 차기");
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
-                    isDie = true;
+                    enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
                     IsDie();
                     break;
             }
