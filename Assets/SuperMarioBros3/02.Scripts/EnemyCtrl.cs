@@ -15,6 +15,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed = 2f;        // 이동 속도
     private Rigidbody2D rBody;      
+    private Transform frontCheck;   // #18 부딪혔을 때 이동 방향 바꾸도록 확인용
 
 // #12 꽃 움직임
     public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
@@ -46,7 +47,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             case ENEMY_TYPE.GOOMBA :
             case ENEMY_TYPE.TURTLE : 
-                rBody = GetComponent<Rigidbody2D>();       
+                rBody = GetComponent<Rigidbody2D>();    
+                frontCheck = transform.GetChild(1).GetComponent<Transform>();   
                 break;
         }
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -98,7 +100,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     }
 
-    void Flip()
+    public void Flip()
     {
         enemyDir *= -1;
 
@@ -106,7 +108,21 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         enemyScale.x *= -1;
         transform.localScale = enemyScale;
     }
-
+    void OnCollisionEnter2D(Collision2D col) 
+    {
+        switch(enemyType)
+        {
+            case ENEMY_TYPE.GOOMBA : 
+            case ENEMY_TYPE.TURTLE : 
+            case ENEMY_TYPE.SHELL :
+                if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
+                    || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+                {
+                    Flip();
+                }
+                break;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D col)   
     {
         switch(enemyType)

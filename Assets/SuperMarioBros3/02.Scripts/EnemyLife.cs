@@ -38,7 +38,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 case EnemyCtrl.ENEMY_TYPE.SHELL :   // #16 등껍질 밟았을 때
                     if(other.gameObject.transform.position.x < this.gameObject.transform.position.x)
                     {
-                        enemyCtrl.enemyDir = 1;     // 날라가는 방향 설정
+                        enemyCtrl.Flip();     // 날라가는 방향 설정 - 플레이어가 왼쪽에서 차면 오른쪽으로 날아가도록
                         Debug.Log("//#16 오른쪽으로 차기");
                     }
                     else
