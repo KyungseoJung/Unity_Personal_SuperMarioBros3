@@ -146,6 +146,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 break;
         }
 
+        if(col.gameObject.tag == "Cliff")   // #18 낭떠러지에서 이동 방향 바꾸도록
+        {
+            Flip();
+        }
+
     }
     
     private void OnTriggerExit2D(Collider2D col) 

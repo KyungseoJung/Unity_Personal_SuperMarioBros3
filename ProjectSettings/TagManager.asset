@@ -7,6 +7,7 @@ TagManager:
   - HeadCheck
   - EnemyHeadCheck
   - Enemy
+  - Cliff
   layers:
   - Default
   - TransparentFX
