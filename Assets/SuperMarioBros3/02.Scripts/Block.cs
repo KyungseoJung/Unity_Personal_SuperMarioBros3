@@ -65,6 +65,19 @@ public class Block : MonoBehaviour  // 물음표 블록
             BlockIsTouched();    // 코인 또는 아이템 등장
         }
     }
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        if(other.gameObject.tag == "Enemy")     
+        {
+            if(other.gameObject.GetComponent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)  // #22 거북 등껍질에 부딪혔을 때에도 블록 부숴지도록
+            {
+                StartCoroutine(BlockUpDown());
+                anim.enabled = false;                 // 블록 이미지 바꾸기 위한 목적
+                transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
+                BlockIsTouched();    // 코인 또는 아이템 등장
+            }
+        }
+    }
     
 
 

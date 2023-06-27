@@ -8028,12 +8028,12 @@ PrefabInstance:
     - target: {fileID: 5778404503118158599, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.19
+      value: 28.27
       objectReference: {fileID: 0}
     - target: {fileID: 5778404503118158599, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.22
+      value: -3.46
       objectReference: {fileID: 0}
     - target: {fileID: 5778404503118158599, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
         type: 3}
@@ -17063,6 +17063,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_GravityScale
       value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366501708183641462, guid: 0ede26b0fae61cd4eb83d9a9d8704273,
+        type: 3}
+      propertyPath: playerLevel
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ede26b0fae61cd4eb83d9a9d8704273, type: 3}
