@@ -39,7 +39,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // #16 거북 껍질 발로 차기
     public bool kickShell;
-    public float kickSpeed = 1f;       // 플레이어가 발로 찼을 때 날라가는 속도
+    private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 // #19 죽은 후 상태에 따른 함수 실행
     private EnemyLife enemyLife;
     
@@ -100,7 +100,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.SHELL :
                 if(kickShell)
                     rBody.velocity = new Vector2(enemyDir * kickSpeed, rBody.velocity.y);   // #16 한쪽 방향으로 날라가도록
-                    // Debug.Log("//#16 속도 : " + rBody.velocity);
+                    Debug.Log("//#16 속도 : " + rBody.velocity);
                 break;
             case ENEMY_TYPE.FLOWER : 
                 CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크
@@ -144,12 +144,15 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 }
                 break;
+            case ENEMY_TYPE.TURTLE :
+                if(col.gameObject.tag == "Cliff")   // #18 낭떠러지에서 이동 방향 바꾸도록
+                {
+                    Flip();
+                }
+                break;
         }
 
-        if(col.gameObject.tag == "Cliff")   // #18 낭떠러지에서 이동 방향 바꾸도록
-        {
-            Flip();
-        }
+
 
     }
     
