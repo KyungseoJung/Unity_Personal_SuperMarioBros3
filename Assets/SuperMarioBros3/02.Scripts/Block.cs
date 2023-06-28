@@ -67,7 +67,7 @@ public class Block : MonoBehaviour  // 물음표 블록
     }
     void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject.tag == "Enemy")     
+        if(other.gameObject.tag == "Enemy" && !isTouched)       // #22 보완 - 한번만 등장하도록 isTouched 변수 추가
         {
             if(other.gameObject.GetComponent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)  // #22 거북 등껍질에 부딪혔을 때에도 블록 부숴지도록
             {
