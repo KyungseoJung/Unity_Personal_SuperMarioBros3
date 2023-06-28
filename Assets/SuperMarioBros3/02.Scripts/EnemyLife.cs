@@ -67,6 +67,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     break;
 
                 case EnemyCtrl.ENEMY_TYPE.SHELL :   // #16 등껍질 밟았을 때 
+                    this.gameObject.layer = 16;     // #24 껍질 날라갈 때, (LargeBlock 레이어) 블록에 부딪히지 않도록
                     if(other.gameObject.transform.position.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
                     {
                         if(enemyCtrl.enemyDir == -1)    // fix: 왼쪽 방향으로 바라보고 있었다면 - 방향 변경하기
