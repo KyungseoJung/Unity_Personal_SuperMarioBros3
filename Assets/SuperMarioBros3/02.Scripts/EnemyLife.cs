@@ -67,14 +67,17 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     break;
 
                 case EnemyCtrl.ENEMY_TYPE.SHELL :   // #16 등껍질 밟았을 때 
-                    if(other.gameObject.transform.position.x < this.gameObject.transform.position.x)
+                    if(other.gameObject.transform.position.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
                     {
-                        enemyCtrl.Flip();     // 날라가는 방향 설정 - 플레이어가 왼쪽에서 차면 오른쪽으로 날아가도록
+                        if(enemyCtrl.enemyDir == -1)    // fix: 왼쪽 방향으로 바라보고 있었다면 - 방향 변경하기
+                            enemyCtrl.Flip();           // 날라가는 방향 설정 - 플레이어가 왼쪽에서 차면 오른쪽으로 날아가도록
+
                         Debug.Log("//#16 오른쪽으로 차기");
                     }
                     else
                     {
-                        enemyCtrl.enemyDir = -1; 
+                        if(enemyCtrl.enemyDir == 1)     // fix: 오른쪽 방향으로 바라보고 있었다면 - 방향 변경하기
+                            enemyCtrl.Flip();       
                         Debug.Log("//#16 왼쪽으로 차기");
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행

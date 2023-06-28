@@ -39,7 +39,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // #16 거북 껍질 발로 차기
     public bool kickShell;
-    private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
+    private float kickSpeed = 8f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 // #19 죽은 후 상태에 따른 함수 실행
     private EnemyLife enemyLife;
     

@@ -8162,6 +8162,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5778404503118158594, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
+        type: 3}
+      propertyPath: m_Mass
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5778404503118158594, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
+        type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5778404503118158596, guid: 3a08adb14ed05454cad192d1a4ecbc9f,
         type: 3}
       propertyPath: kickSpeed
