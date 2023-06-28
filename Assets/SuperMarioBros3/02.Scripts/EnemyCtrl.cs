@@ -39,7 +39,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // #16 거북 껍질 발로 차기
     public bool kickShell;
-    private float kickSpeed = 10f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
+    private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 // #19 죽은 후 상태에 따른 함수 실행
     private EnemyLife enemyLife;
     
@@ -127,6 +127,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
                     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
                 {
+                    if(col.gameObject.tag == "FragileBlock")   // #25 SHELL의 frontCheck가 부숴지는 블록과 부딪힌 거라면 - 블록이 부숴지도록
+                    {
+                        col.gameObject.GetComponent<Block>().FragileBlockBroken();
+                    }
                     Flip();
                 }
                 break;

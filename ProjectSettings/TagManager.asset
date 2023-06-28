@@ -8,6 +8,8 @@ TagManager:
   - EnemyHeadCheck
   - Enemy
   - Cliff
+  - EnemyWeapon
+  - FragileBlock
   layers:
   - Default
   - TransparentFX

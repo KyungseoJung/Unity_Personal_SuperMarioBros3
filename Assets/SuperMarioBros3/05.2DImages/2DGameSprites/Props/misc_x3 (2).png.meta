@@ -371,6 +371,18 @@ TextureImporter:
   - first:
       213: -6047395813723953166
     second: misc_x3 (2)_122
+  - first:
+      213: -2946341763151620996
+    second: Fragment_2
+  - first:
+      213: 1204338438754403879
+    second: Fragment_1
+  - first:
+      213: -3009023159636809833
+    second: Fragment_3
+  - first:
+      213: 778847319962366035
+    second: Fragment_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -2752,9 +2764,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 461
-        y: 143
+        y: 184
         width: 566
-        height: 236
+        height: 195
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3058,6 +3070,90 @@ TextureImporter:
       bones: []
       spriteID: 2f7acc24c85531ca0800000000000000
       internalID: -6047395813723953166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fragment_2
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 143
+        width: 39
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74137cd6cd7c17d0800000000000000
+      internalID: -2946341763151620996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fragment_1
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 143
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7260e4fdd6ba6b010800000000000000
+      internalID: 1204338438754403879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fragment_3
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 142
+        width: 37
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 797ace8f06dcd36d0800000000000000
+      internalID: -3009023159636809833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fragment_4
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 142
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3503f90d2850fca00800000000000000
+      internalID: 778847319962366035
       vertices: []
       indices: 
       edges: []

@@ -118,7 +118,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 trampledBody.SetActive(true);       // 등껍질 이미지 활성화
 
                 Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
-                size.y = 1f;
+                size.y = 0.7f;
                 boxCollider2D.size = size;
 
                 enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
