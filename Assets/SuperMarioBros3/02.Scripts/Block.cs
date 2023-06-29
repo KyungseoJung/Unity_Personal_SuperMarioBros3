@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour  // 물음표 블록
 {
-    public enum BLOCK_TYPE {COIN = 1, ITEM, FRAGILE };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가
+    public enum BLOCK_TYPE {COIN = 1, ITEM, FRAGILE, PBUTTON };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가  // #26 PBUTTON 블록 타입 추가
     public BLOCK_TYPE blockType;
 
 // #2 블록 업다운
@@ -62,6 +62,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COIN:
             case BLOCK_TYPE.ITEM:
+            case BLOCK_TYPE.PBUTTON:    // #26
                 startPos = transform.position;
                 destPos = transform.position;
                 destPos.y += 0.7f;  // 업다운 하는 높이 // y값을 따로 빼서 더해줘야 돼 - Vector3 통째로 값을 수정하는 것이 아니라
@@ -75,6 +76,8 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COIN:
             case BLOCK_TYPE.ITEM:// 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
+            case BLOCK_TYPE.PBUTTON:        // #26 PBUTTON 블록을 플레이어가 머리로 쳤을 때
+
                 if(other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
                 {   
                     // Debug.Log("#2 HeadCheck");
@@ -172,6 +175,11 @@ public class Block : MonoBehaviour  // 물음표 블록
                         break;                    
                 }
             }
+                break;
+            case BLOCK_TYPE.PBUTTON :   // #26 
+                // anim.SetTrigger("Smoke");    // 연기 효과 ->  Particle System(파티클)로 표현
+                this.transform.GetChild(0).gameObject.SetActive(true);  // PBUTTON 활성화 - 등장과 동시에 파티클 시스템으로 Smoke 효과
+
                 break;
         }
     }
