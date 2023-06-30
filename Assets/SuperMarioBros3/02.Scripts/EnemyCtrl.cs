@@ -123,6 +123,14 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
+                if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
+                    || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+                {
+                    Flip();
+                }
+
+                break;
+
             case ENEMY_TYPE.SHELL :
                 if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
                     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
@@ -131,8 +139,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     {
                         col.gameObject.GetComponent<Block>().FragileBlockBroken();
                     }
+                    
                     Flip();
                 }
+                
                 break;
         }
     }
