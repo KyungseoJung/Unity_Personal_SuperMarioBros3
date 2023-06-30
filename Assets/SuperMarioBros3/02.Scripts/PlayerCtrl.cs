@@ -31,6 +31,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
 // 오디오 ==================================
     public AudioClip jumpClip;
+    public AudioClip coinClip;              // 코인 획득 클립
 
 // // 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록   // #21 버그 수정 (콜라이더 위치를 최상위 부모로 바꿨으니, 레이어 변경 코드 대상도 최상위 부모로 수정 필요)
 //     private GameObject level1Obj;
@@ -40,6 +41,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 // #8 플레이어 X좌표 위치 제한
     private Vector3 playerPos;
 
+// #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
+    private int score;
 
     void Awake()
     {
@@ -190,6 +193,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
             if(! col.gameObject.GetComponent<EnemyLife>().beStepped)
                 playerLife.GetHurt();
+        }
+
+        if(col.gameObject.tag == "Coin")    // #28  코인 획득
+        {
+            Destroy(col.gameObject);        // 코인 사라져
+            score += 100;                   // 점수 획득
+            AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
+
         }
 
     }

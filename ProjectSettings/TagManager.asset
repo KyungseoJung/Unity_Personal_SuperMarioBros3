@@ -11,6 +11,7 @@ TagManager:
   - EnemyWeapon
   - FragileBlock
   - ButtonHeadCheck
+  - Coin
   layers:
   - Default
   - TransparentFX
