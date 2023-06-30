@@ -100,6 +100,13 @@ public class Block : MonoBehaviour  // 물음표 블록
                     BlockIsTouched();    // 코인 또는 아이템 등장
                 }
                 break;
+            case BLOCK_TYPE.FRAGILE:
+                if(other.gameObject.tag == "HeadCheck" && !isTouched)   // #25 뒤늦게 추가 플레이어가 머리로 박아도 부숴지도록
+                {
+                    isTouched = true;
+                    FragileBlockBroken();   
+                }
+                break;
         }
     }
     void OnCollisionEnter2D(Collision2D other) 
