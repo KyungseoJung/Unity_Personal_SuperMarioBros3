@@ -112,7 +112,7 @@ TextureImporter:
     second: misc_x3 (2)_35
   - first:
       213: 1224600708797574928
-    second: misc_x3 (2)_36
+    second: BigCoin1
   - first:
       213: -5378473966904697851
     second: misc_x3 (2)_37
@@ -157,13 +157,13 @@ TextureImporter:
     second: misc_x3 (2)_50
   - first:
       213: 1775570011275495191
-    second: misc_x3 (2)_51
+    second: PButton1_1
   - first:
       213: 317227749042555175
-    second: misc_x3 (2)_52
+    second: PButton1_2
   - first:
       213: -834229914307906725
-    second: misc_x3 (2)_53
+    second: PButton1_3
   - first:
       213: 4107053512649520885
     second: misc_x3 (2)_54
@@ -1248,7 +1248,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_36
+      name: BigCoin1
       rect:
         serializedVersion: 2
         x: 1001
@@ -1563,7 +1563,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_51
+      name: PButton1_1
       rect:
         serializedVersion: 2
         x: 467
@@ -1584,7 +1584,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_52
+      name: PButton1_2
       rect:
         serializedVersion: 2
         x: 532
@@ -1605,13 +1605,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_53
+      name: PButton1_3
       rect:
         serializedVersion: 2
         x: 599
         y: 755
         width: 50
-        height: 24
+        height: 50
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3083,7 +3083,7 @@ TextureImporter:
         width: 39
         height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3104,7 +3104,7 @@ TextureImporter:
         width: 36
         height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3125,7 +3125,7 @@ TextureImporter:
         width: 37
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3146,7 +3146,7 @@ TextureImporter:
         width: 39
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

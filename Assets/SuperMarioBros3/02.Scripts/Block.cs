@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour  // 물음표 블록
 {
-    public enum BLOCK_TYPE {COIN = 1, ITEM, FRAGILE, PBUTTON };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가  // #26 PBUTTON 블록 타입 추가
+    public enum BLOCK_TYPE {COINBLOCK = 1, ITEMBLOCK, FRAGILE, PBUTTON, COIN };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가  // #26 PBUTTON 블록 타입 추가
     public BLOCK_TYPE blockType;
 
 // #2 블록 업다운
@@ -43,6 +43,13 @@ public class Block : MonoBehaviour  // 물음표 블록
 // #25 블록 부딪힐 때 나오는 파편 - layer 번호 더 크게 해서 가장 앞에서 보이도록
     private SpriteRenderer[] fragments;
 
+// #26 #27 P버튼
+[HideInInspector]
+    public bool bePushed = false;    // #27 눌렸는지 확인
+    private GameObject pButton;     // #26
+    public Sprite pushedPButton;    // #27 눌린 P버튼 이미지
+    public Sprite bigCoin;          // #27 블록 -> 코인으로 변할 때 이미지
+
     void Awake()
     {
         playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
@@ -54,14 +61,17 @@ public class Block : MonoBehaviour  // 물음표 블록
             case BLOCK_TYPE.FRAGILE:
                 fragments = GetComponentsInChildren<SpriteRenderer>();
                 break;
+            case BLOCK_TYPE.PBUTTON:        // #26
+                pButton = this.transform.GetChild(0).gameObject;
+                break;
         }
     }
     void Start()
     {
         switch(blockType)           // #25 조건 추가
         {
-            case BLOCK_TYPE.COIN:
-            case BLOCK_TYPE.ITEM:
+            case BLOCK_TYPE.COINBLOCK:
+            case BLOCK_TYPE.ITEMBLOCK:
             case BLOCK_TYPE.PBUTTON:    // #26
                 startPos = transform.position;
                 destPos = transform.position;
@@ -74,8 +84,8 @@ public class Block : MonoBehaviour  // 물음표 블록
     {       
         switch(blockType)           // #25 조건 추가
         {
-            case BLOCK_TYPE.COIN:
-            case BLOCK_TYPE.ITEM:// 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
+            case BLOCK_TYPE.COINBLOCK:
+            case BLOCK_TYPE.ITEMBLOCK:// 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
             case BLOCK_TYPE.PBUTTON:        // #26 PBUTTON 블록을 플레이어가 머리로 쳤을 때
 
                 if(other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
@@ -96,8 +106,8 @@ public class Block : MonoBehaviour  // 물음표 블록
     {
         switch(blockType)           // #25 조건 추가
         {
-            case BLOCK_TYPE.COIN:
-            case BLOCK_TYPE.ITEM:
+            case BLOCK_TYPE.COINBLOCK:
+            case BLOCK_TYPE.ITEMBLOCK:
                 if(other.gameObject.tag == "Enemy" && !isTouched)       // #22 보완 - 한번만 등장하도록 isTouched 변수 추가
                 {
                     if(other.gameObject.GetComponent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)  // #22 거북 등껍질에 부딪혔을 때에도 블록 부숴지도록
@@ -147,7 +157,7 @@ public class Block : MonoBehaviour  // 물음표 블록
     {
         switch(blockType)   // 블록 타입에 따라 다르게 작동
         {
-            case BLOCK_TYPE.COIN : 
+            case BLOCK_TYPE.COINBLOCK : 
                 AudioSource.PlayClipAtPoint(blockClips[0], transform.position);
 
                 // #3 코인 UI 등장  
@@ -159,7 +169,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                 // Debug.Log("#3 코인 UI 생성 위치 : " + coinPos);
 
                 break;
-            case BLOCK_TYPE.ITEM : 
+            case BLOCK_TYPE.ITEMBLOCK : 
             {
                 AudioSource.PlayClipAtPoint(blockClips[1], transform.position);
                 switch(playerLife.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
@@ -178,7 +188,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                 break;
             case BLOCK_TYPE.PBUTTON :   // #26 
                 // anim.SetTrigger("Smoke");    // 연기 효과 ->  Particle System(파티클)로 표현
-                this.transform.GetChild(0).gameObject.SetActive(true);  // PBUTTON 활성화 - 등장과 동시에 파티클 시스템으로 Smoke 효과
+                pButton.SetActive(true);  // PBUTTON 활성화 - 등장과 동시에 파티클 시스템으로 Smoke 효과
 
                 break;
         }
@@ -205,6 +215,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         anim.SetTrigger("Broken");  // 부숴지는 파편 효과 - 애니메이션으로 표현
             // 애니메이션 끝날 때 Destroy 효과 적용                
     }
+
     void FragementsVisible()    // #25 파편 블록들 잘 보이도록
     {
         foreach(SpriteRenderer spr in fragments)
@@ -212,5 +223,15 @@ public class Block : MonoBehaviour  // 물음표 블록
             spr.sortingOrder = 15;  // 다른 블록들보다 더 앞에서 보이도록
         }
     }
-
+    
+    public void PushButton()           // #26 P버튼 누르기 - PBUTTON 경우에만 실행
+    {
+        pButton.GetComponent<SpriteRenderer>().sprite = pushedPButton;  // P버튼 이미지 변경
+        pButton.GetComponent<BoxCollider2D>().enabled = false;          // 콜라이더 비활성화
+    }
+    public void TurnsIntoCoin()        // #27 P버튼 누르면 FRAGILE 블록들은 모두 코인으로 변함
+    {
+        blockType = BLOCK_TYPE.COIN;    // 타입 변경
+        gameObject.GetComponent<SpriteRenderer>().sprite = bigCoin; // 코인으로 이미지 변경 
+    }
 }

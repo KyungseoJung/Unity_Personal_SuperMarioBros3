@@ -23,6 +23,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private bool grounded;                  // 땅 밟았는지 체크
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
+    public bool pushPButton;                // #27 P버튼 밟았는지 체크
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     public float velocityY;
@@ -148,14 +149,37 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
         // Debug.Log("grounded : " + grounded);
         // steppingOnEnemy = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Enemy"));  // #11   -> // #15로 변경
+
     }
 
     void OnTriggerEnter2D(Collider2D col) // #15 플레이어가 몬스터(굼바, 거북)의 headCheck를 밟았을 때
     {
-        if(col.gameObject.tag == "EnemyHeadCheck" && !col.gameObject.GetComponentInParent<EnemyLife>().beStepped)   //  아직 beStepped가 true가 아니라면
+        if(col.gameObject.tag == "EnemyHeadCheck")   
         {
-            Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
-            col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
+            if(!col.gameObject.GetComponentInParent<EnemyLife>().beStepped) //  아직 beStepped가 true가 아니라면
+            {
+                // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
+                col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
+            }
+        }
+        
+        if(col.gameObject.tag == "ButtonHeadCheck") // #27 P버튼의 머리 부분에 부딪혔다면 (=밟았다면) && 아직 눌린 상태가 아니라면
+        {
+            GameObject parentObj = col.gameObject.transform.parent.transform.parent.gameObject;
+            Debug.Log("//#27 bePushed는 true?: " + parentObj.GetComponent<Block>().bePushed);
+            if(!parentObj.GetComponent<Block>().bePushed)
+            {
+                Debug.Log("//#27 P버튼 밟음");
+                parentObj.GetComponent<Block>().bePushed = true;
+                parentObj.GetComponent<Block>().PushButton();  
+
+                GameObject[] blocks = GameObject.FindGameObjectsWithTag("FragileBlock");
+                foreach(GameObject obj in blocks)
+                {
+                    obj.GetComponent<Block>().TurnsIntoCoin();  // #27 현재 존재하는 FRAGILE 블록들은 모두 코인으로 변하도록
+                }
+            }
+
         }
     }
 

@@ -10,6 +10,7 @@ TagManager:
   - Cliff
   - EnemyWeapon
   - FragileBlock
+  - ButtonHeadCheck
   layers:
   - Default
   - TransparentFX
