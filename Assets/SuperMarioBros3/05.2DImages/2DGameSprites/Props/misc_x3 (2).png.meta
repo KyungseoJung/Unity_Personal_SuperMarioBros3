@@ -253,13 +253,13 @@ TextureImporter:
     second: NormalBlock2_1
   - first:
       213: -5322741707665019156
-    second: misc_x3 (2)_83
+    second: NormalBlock2_2
   - first:
       213: -8361567949187762527
-    second: misc_x3 (2)_84
+    second: NormalBlock2_3
   - first:
       213: -2739638860513396831
-    second: misc_x3 (2)_85
+    second: NormalBlock2_4
   - first:
       213: 1075567379092386474
     second: misc_x3 (2)_86
@@ -383,6 +383,9 @@ TextureImporter:
   - first:
       213: 778847319962366035
     second: Fragment_4
+  - first:
+      213: -3293132632025972653
+    second: misc_x3 (2)_127
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -2217,10 +2220,10 @@ TextureImporter:
       name: NormalBlock2_1
       rect:
         serializedVersion: 2
-        x: 820
-        y: 623
-        width: 52
-        height: 50
+        x: 821
+        y: 624
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2235,13 +2238,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_83
+      name: NormalBlock2_2
       rect:
         serializedVersion: 2
-        x: 878
-        y: 623
-        width: 50
-        height: 50
+        x: 879
+        y: 624
+        width: 47
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2256,13 +2259,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_84
+      name: NormalBlock2_3
       rect:
         serializedVersion: 2
-        x: 934
-        y: 623
-        width: 52
-        height: 50
+        x: 935
+        y: 624
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2277,13 +2280,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_85
+      name: NormalBlock2_4
       rect:
         serializedVersion: 2
-        x: 991
-        y: 623
-        width: 52
-        height: 50
+        x: 993
+        y: 624
+        width: 46
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3154,6 +3157,27 @@ TextureImporter:
       bones: []
       spriteID: 3503f90d2850fca00800000000000000
       internalID: 778847319962366035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: misc_x3 (2)_127
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 673
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35048d5a1517c42d0800000000000000
+      internalID: -3293132632025972653
       vertices: []
       indices: 
       edges: []
