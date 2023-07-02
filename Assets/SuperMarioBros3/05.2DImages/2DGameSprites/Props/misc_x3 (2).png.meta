@@ -196,7 +196,7 @@ TextureImporter:
     second: misc_x3 (2)_63
   - first:
       213: -1434090916570947336
-    second: misc_x3 (2)_64
+    second: Underground1_1
   - first:
       213: -6377324460374657618
     second: misc_x3 (2)_65
@@ -1839,7 +1839,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: misc_x3 (2)_64
+      name: Underground1_1
       rect:
         serializedVersion: 2
         x: 523

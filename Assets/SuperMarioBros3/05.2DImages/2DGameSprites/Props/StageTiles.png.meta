@@ -871,10 +871,10 @@ TextureImporter:
     second: StageTiles_288
   - first:
       213: 5431525494391548272
-    second: StageTiles_289
+    second: BlackPipe1_1
   - first:
       213: -8735180522739209632
-    second: StageTiles_290
+    second: BlackPipe1_2
   - first:
       213: 8850118476094992519
     second: StageTiles_291
@@ -1087,10 +1087,10 @@ TextureImporter:
     second: StageTiles_360
   - first:
       213: 8534805980095457093
-    second: StageTiles_361
+    second: BlackPipe1_3
   - first:
       213: 2540596157463023026
-    second: StageTiles_362
+    second: BlackPipe1_4
   - first:
       213: -3628825839373730172
     second: StageTiles_363
@@ -2581,7 +2581,7 @@ TextureImporter:
     second: StageTiles_858
   - first:
       213: -2664154851091279756
-    second: StageTiles_859
+    second: Block_Underground1_1
   - first:
       213: 5916227586179484698
     second: StageTiles_860
@@ -10761,7 +10761,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_289
+      name: BlackPipe1_1
       rect:
         serializedVersion: 2
         x: 0
@@ -10782,7 +10782,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_290
+      name: BlackPipe1_2
       rect:
         serializedVersion: 2
         x: 34
@@ -12273,7 +12273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_361
+      name: BlackPipe1_3
       rect:
         serializedVersion: 2
         x: 0
@@ -12294,7 +12294,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_362
+      name: BlackPipe1_4
       rect:
         serializedVersion: 2
         x: 34
@@ -22731,7 +22731,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_859
+      name: Block_Underground1_1
       rect:
         serializedVersion: 2
         x: 2108
