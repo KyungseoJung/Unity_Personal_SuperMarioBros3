@@ -17,6 +17,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private BoxCollider2D boxCollider2D; // #15
 
     private Rigidbody2D rBody;      // #19
+// #19 몬스터 죽인 후 등장하는 PointUi
+    public GameObject pointUi;
 
     private void Awake() 
     {
@@ -107,6 +109,9 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 trampledBody.SetActive(true);       // 밟힌 이미지 활성화
 
                 Invoke("DestoryEnemy", 0.3f);       // 1초 후 소멸
+
+                ShowPointUi();                      // #19 획득 점수 표시
+
                 break;
 
             case EnemyCtrl.ENEMY_TYPE.TURTLE :      // #15 등껍질로 변신
@@ -114,7 +119,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 body = transform.GetChild(0).gameObject;
                 trampledBody = transform.GetChild(2).gameObject;
 
-                body.SetActive(false);              // 기존 바디 비홣성화
+                body.SetActive(false);              // 기존 바디 비활성화
                 trampledBody.SetActive(true);       // 등껍질 이미지 활성화
 
                 Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
@@ -122,6 +127,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 boxCollider2D.size = size;
 
                 enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
+
+                ShowPointUi();                      // #19 획득 점수 표시
 
                 break;
             
@@ -137,6 +144,15 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         Destroy(this.gameObject);
     }
 
+    private void ShowPointUi()  // #19 획득 점수 표시
+    {
+        Vector3 pointPos;
+        pointPos = transform.position;
+        pointPos.y +=1f;
+
+        Instantiate(pointUi, pointPos, Quaternion.identity);
+    }
+
     // private void OnTriggerEnter2D(Collider2D col)   
     // {
     //     switch(enemyCtrl.enemyType)
@@ -150,4 +166,5 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     //             break;
     //     }
     // }
+
 }
