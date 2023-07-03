@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 2
+  pointUi: {fileID: 7690453889661327053, guid: 67d2e4febda00a545950cb827f67d7f9, type: 3}
 --- !u!58 &2878855749352330144
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -183,7 +184,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 112351197
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 5546791404165925803, guid: 66d0fc96291b5814b86c356984c9a7b7,
     type: 3}

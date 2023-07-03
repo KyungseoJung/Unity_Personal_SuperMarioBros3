@@ -108,7 +108,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 body.SetActive(false);              // 기존 바디 비홣성화
                 trampledBody.SetActive(true);       // 밟힌 이미지 활성화
 
-                Invoke("DestoryEnemy", 0.3f);       // 1초 후 소멸
+                Invoke("DestroyEnemy", 0.3f);       // 1초 후 소멸
 
                 ShowPointUi();                      // #19 획득 점수 표시
 
@@ -135,11 +135,11 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             case EnemyCtrl.ENEMY_TYPE.SHELL :       // #19 등껍질 밟거나 차면 3초 후 소멸
                 rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
 
-                Invoke("DestoryEnemy", 2.0f);   
+                Invoke("DestroyEnemy", 2.0f);   
                 break;
         }
     }
-    private void DestoryEnemy() // #16 Enemy 소멸
+    private void DestroyEnemy() // #16 Enemy 소멸
     {
         Destroy(this.gameObject);
     }

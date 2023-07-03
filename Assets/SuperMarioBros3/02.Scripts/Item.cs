@@ -34,6 +34,10 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 */
     private Rigidbody2D rBody;      // #4 움직이도록
     private Transform frontCheck;   // #10 부딪혔을 때 이동 방향 바꾸도록 확인용
+
+// #30 점수 UI
+    public GameObject pointUi;      // #30 아이템 먹었을 때 등장하는 점수 UI (1000점)
+
     void Awake()
     {
         itemColl = GetComponent<CircleCollider2D>();
@@ -106,6 +110,13 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             Flip();
         }
+
+        if(other.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
+        {
+            Debug.Log("//#30 플레이어와 부딪힘");
+            ShowPointUi();                      // 점수 UI 표시
+            Invoke("DestroyItem", 0.3f);        // 아이템 사라지기
+        }
     }
 
     void Flip() // #4 이동 방향 바꿈
@@ -175,5 +186,20 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
             Flip();
         }
+    }
+
+    private void ShowPointUi()      // #30 점수 UI 등장
+    {
+        Vector3 pointPos;
+        pointPos = transform.position;
+        pointPos.y += 1f;
+        
+        Instantiate(pointUi, pointPos, Quaternion.identity);    
+    }
+    private void DestroyItem()      // #30 아이템 사라지기
+    {
+        Destroy(this.gameObject);   
+        Debug.Log("//#30 아이템 사라짐");
+
     }
 }
