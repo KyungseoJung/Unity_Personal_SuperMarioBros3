@@ -25,7 +25,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         콜라이더가 명확히 정해져있다면, 정확히 지정하는 것이 더 좋음.
         */
 // 아이템 이동
-    private int itemDir = 1;      // #4 이동 방향 - Block.cs에서 결정해주도록  // #10 오른쪽 : 1, 왼쪽 : -1
+    public int itemDir = 1;      // #4 이동 방향 - Block.cs에서 결정해주도록  // #10 오른쪽 : 1, 왼쪽 : -1
     private float moveSpeed;    // #4 이동 속도
 /* 
     디테일 : 
@@ -60,8 +60,6 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                 destPos = transform.position;
                 destPos.y += 1f;    
 
-                if(itemDir == -1)   // 만약 처음 이동 방향이 왼쪽이라면, 왼쪽 방향부터 이동 시작하도록 설정 //#10 
-                    Flip();                
                 break;
             
             case ITEM_TYPE.LEAF :
@@ -88,7 +86,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             case ITEM_TYPE.MUSHROOM :
                 //#4 장애물과 충돌하면 방향 바꾸도록
-
+                Debug.Log("//#4 추가: Item 스크립트// 버섯 이동 방향은 " + itemDir);
                 if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
                 {
                     // rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
@@ -119,7 +117,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         }
     }
 
-    void Flip() // #4 이동 방향 바꿈
+    public void Flip() // #4 이동 방향 바꿈
     {
         itemDir *= -1;   //#5 나뭇잎 바라보는 방향 변경 - 가해지는 힘의 방향도 다르게 하기 위함(ChangeDirection함수)    //#10 
 

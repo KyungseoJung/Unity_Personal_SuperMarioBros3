@@ -97,7 +97,11 @@ public class Block : MonoBehaviour  // 물음표 블록
                     anim.enabled = false;                 // #6 블록 이미지 바꾸기 위한 목적
 
                     transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
-                    BlockIsTouched();    // 코인 또는 아이템 등장
+
+                    if(other.gameObject.transform.root.position.x < transform.position.x) // #4 추가: 블록에 부딪힌 플레이어 위치가 블록보다 왼쪽에 있다면
+                        BlockIsTouched(1);    // 코인 또는 아이템 등장 - 오른쪽으로 등장
+                    else
+                        BlockIsTouched(-1);   // 플레이어가 블록보다 오른쪽이면 - 버섯은 등장 후 왼쪽으로 이동
                 }
                 break;
             case BLOCK_TYPE.FRAGILE:
@@ -160,7 +164,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         }
     }
 
-    void BlockIsTouched()    // #2 플레이어 headCheck와 블록 부딪힌 후 작동
+    void BlockIsTouched(int _itemDir = 1)    // #2 플레이어 headCheck와 블록 부딪힌 후 작동
     {
         switch(blockType)   // 블록 타입에 따라 다르게 작동
         {
@@ -182,7 +186,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                 switch(playerLife.playerLevel)  // #4 #5 플레이어 레벨에 따라 다른 아이템 등장함
                 {
                     case PlayerLife.MODE_TYPE.LEVEL1 : 
-                        StartCoroutine(ItemAppears(Item.ITEM_TYPE.MUSHROOM));   // #2 보완 - 코루틴 활용 - 코루틴은 항상 생성 or 소멸에만 사용하라고 배운 기억
+                        StartCoroutine(ItemAppears(Item.ITEM_TYPE.MUSHROOM, _itemDir));   // #2 보완 - 코루틴 활용 - 코루틴은 항상 생성 or 소멸에만 사용하라고 배운 기억
                         break;
                     case PlayerLife.MODE_TYPE.LEVEL2 : 
                         StartCoroutine(ItemAppears(Item.ITEM_TYPE.LEAF));
@@ -201,14 +205,17 @@ public class Block : MonoBehaviour  // 물음표 블록
         }
     }
 
-    IEnumerator ItemAppears(Item.ITEM_TYPE _type)  // #4 #5 아이템(버섯 or 나뭇잎) 등장
+    IEnumerator ItemAppears(Item.ITEM_TYPE _type, int _itemDir =1)  // #4 #5 아이템(버섯 or 나뭇잎) 등장       // #4 추가: 등장 후 이동방향 설정
     {
         yield return new WaitForSeconds(downTimer); // #2 #4 블록이 완전히 다 내려온 뒤에 버섯 등장하도록 
 
         switch(_type)
         {
             case Item.ITEM_TYPE.MUSHROOM : 
-                Instantiate(mushroomObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
+                Debug.Log("//#5 추가: Block 스크립트// 버섯 이동 방향은 " + _itemDir);
+                GameObject mushroom = Instantiate(mushroomObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
+                if(_itemDir == -1)
+                    mushroom.GetComponent<Item>().Flip();   // #4 블록에 부딪힌 플레이어 위치에 따라 버섯 이동 방향 설정 
                 break;
             case Item.ITEM_TYPE.LEAF : 
                 Instantiate(leafObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
