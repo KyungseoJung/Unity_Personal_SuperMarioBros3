@@ -157,19 +157,19 @@ TextureImporter:
     second: UI_x1_50
   - first:
       213: 2856568526982806083
-    second: UI_x1_51
+    second: BottomBox1_1
   - first:
       213: -8463305991595971457
-    second: UI_x1_52
+    second: BottomBox1_2
   - first:
       213: 1813712272921719287
     second: UI_x1_53
   - first:
       213: -2106119163561881419
-    second: UI_x1_54
+    second: SpeedIndicator1_1
   - first:
       213: -656766943294376451
-    second: UI_x1_55
+    second: SpeedIndicator1_2
   - first:
       213: -561861035272225869
     second: UI_x1_56
@@ -1365,7 +1365,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_51
+      name: BottomBox1_1
       rect:
         serializedVersion: 2
         x: 11
@@ -1386,7 +1386,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_52
+      name: BottomBox1_2
       rect:
         serializedVersion: 2
         x: 171
@@ -1428,12 +1428,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_54
+      name: SpeedIndicator1_1
       rect:
         serializedVersion: 2
         x: 63
         y: 39
-        width: 26
+        width: 9
         height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1449,12 +1449,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_55
+      name: SpeedIndicator1_2
       rect:
         serializedVersion: 2
         x: 90
         y: 39
-        width: 26
+        width: 9
         height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

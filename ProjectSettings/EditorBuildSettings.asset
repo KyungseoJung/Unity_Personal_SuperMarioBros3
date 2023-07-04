@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SuperMarioBros3/01.Scenes/scOpen.unity
+    guid: 0afd2ae768b5abd46bb7d3e081c351a5
+  - enabled: 1
+    path: Assets/SuperMarioBros3/01.Scenes/scStage1.unity
+    guid: 5bde8775a7b71dc479389f0dde6b13d3
   m_configObjects: {}
