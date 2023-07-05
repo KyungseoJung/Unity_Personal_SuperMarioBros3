@@ -97,6 +97,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     
     private void IsDie()                
     {
+        GameMgr.Mgr.score += 100;                   // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+
         switch(enemyCtrl.enemyType)
         {
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :      // #19 죽을 때 - 굼바는 찌그러짐

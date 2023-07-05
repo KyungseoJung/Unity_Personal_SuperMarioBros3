@@ -41,8 +41,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 // #8 플레이어 X좌표 위치 제한
     private Vector3 playerPos;
 
-// #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
-    private int score;
+// // #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
+//     private int score;
 
     void Awake()
     {
@@ -198,7 +198,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(col.gameObject.tag == "Coin")    // #28  코인 획득
         {
             Destroy(col.gameObject);        // 코인 사라져
-            score += 100;                   // 점수 획득
+            // score += 50;                   // 점수 획득
+            GameMgr.Mgr.score += 50;       // #30 점수 획득
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
 
         }
