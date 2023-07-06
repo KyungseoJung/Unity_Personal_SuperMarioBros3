@@ -67,7 +67,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         CheckGroundCheck();
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
-        if(Input.GetButtonDown("Jump") && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     
+        if(Input.GetKeyDown(KeyCode.Z) && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     // #31 점프 키 변경 (Input.GetButtonDown("Jump")) -> Input.GetKeyDown(KeyCode.Z)
         {
             isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
@@ -119,7 +119,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(fallDown)            // 블록->블록으로 점프하고 있는 경우 고려
                 fallDown = false;   // 점프하고 있을 때 = 추락하고 있지 않을 때
 
-            if(!Input.GetButton("Jump") || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락
+            if(!Input.GetKey(KeyCode.Z) || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락  // // #31 점프 키 변경(Input.GetButton("Jump")) -> Input.GetKey(KeyCode.Z)
             {
                 isJumping = false;
                 jumpTimer = 0f;
