@@ -14,6 +14,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float moveForce = 50f;          // 이동 속도
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
+    private bool runFast = false;           // #32 빠르게 달리기 (X키)
+    private float normalRunSpeed = 5f;      // #32 원래 최고 속도
+    private float maxRunSpeed = 10f;         // #32 더 빠르게 달리기 가속도. 최고 속도
+
     private float jumpTimer;
     private float jumpTimeLimit = 0.25f;
     private bool isJumping;                      // 점프 가능한지 체크
@@ -41,8 +45,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 // #8 플레이어 X좌표 위치 제한
     private Vector3 playerPos;
 
-// // #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
-//     private int score;
+// #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
+    private int score;
 
     void Awake()
     {
@@ -67,7 +71,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         CheckGroundCheck();
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
-        if(Input.GetKeyDown(KeyCode.Z) && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     // #31 점프 키 변경 (Input.GetButtonDown("Jump")) -> Input.GetKeyDown(KeyCode.Z)
+        if(Input.GetKeyDown(KeyCode.Z) && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     // #1 리팩토링 점프 키 변경 (Input.GetButtonDown("Jump")) -> Input.GetKeyDown(KeyCode.Z)
         {
             isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
@@ -89,6 +93,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             // level2Obj.layer = 10;
             // level3Obj.layer = 10;
         }
+
+        if(Input.GetKey(KeyCode.X)) // #32 X키 누르고 있는 동안은 달리는 속도 더 빨라지도록
+            runFast = true;
+        else
+            runFast = false;
     }
 
     void FixedUpdate()
@@ -101,8 +110,17 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
 
     //달리기 가속도 ===============================
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("Horizontal");  // 좌우 키
         // anim.SetFloat("Speed", Mathf.Abs(h));
+        
+        if(runFast)                       // #32 더 빠르게 달리도록 최고 속도 높이기
+        {
+            Debug.Log("//#31 더 빠르게");
+            maxSpeed = maxRunSpeed;     
+        }
+        else
+            maxSpeed = normalRunSpeed;
+
 
         if(h*Rbody.velocity.x < maxSpeed) //최고 속도 도달하기 전이면, 속도 계속 증가
             Rbody.AddForce(Vector2.right * h * moveForce);
@@ -110,6 +128,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(Mathf.Abs(Rbody.velocity.x) > maxSpeed)
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
 
+        
     //점프 가속도 ===============================
         if(isJumping)
         {
@@ -119,7 +138,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(fallDown)            // 블록->블록으로 점프하고 있는 경우 고려
                 fallDown = false;   // 점프하고 있을 때 = 추락하고 있지 않을 때
 
-            if(!Input.GetKey(KeyCode.Z) || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락  // // #31 점프 키 변경(Input.GetButton("Jump")) -> Input.GetKey(KeyCode.Z)
+            if(!Input.GetKey(KeyCode.Z) || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락  // // #1 리팩토링 점프 키 변경(Input.GetButton("Jump")) -> Input.GetKey(KeyCode.Z)
             {
                 isJumping = false;
                 jumpTimer = 0f;
