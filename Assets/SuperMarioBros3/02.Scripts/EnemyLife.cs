@@ -53,7 +53,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
                     {
                         Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
-                        other.gameObject.GetComponent<PlayerCtrl>().BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음
+                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
                         IsDie();            // #19 죽었을 때 효과
                     }
@@ -63,7 +63,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
                     {
                         Debug.Log("#11 플레이어가 Enemy 머리 밟음");
-                        other.gameObject.GetComponent<PlayerCtrl>().BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음
+                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         IsDie();           // #15 등껍질로 변신
                     }
                     break;
