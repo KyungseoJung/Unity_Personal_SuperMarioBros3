@@ -113,7 +113,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi();                      // 점수 UI 표시
-            Invoke("DestroyItem", 0.3f);        // 아이템 사라지기
+            DestroyItem();        // 아이템 사라지기  // #30 보완: Invoke 대신에 바로 실행되도록
         }
     }
 
