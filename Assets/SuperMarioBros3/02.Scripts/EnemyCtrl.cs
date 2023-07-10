@@ -16,6 +16,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     public float moveSpeed = 2f;        // 이동 속도
     private Rigidbody2D rBody;      
     private Transform frontCheck;   // #18 부딪혔을 때 이동 방향 바꾸도록 확인용
+    
+    private bool grounded;              // #33 땅 밟았는지 체크
+    [SerializeField]
+    private Transform groundCheck;      // #33 땅 밟았는지 체크 
+    private float jumpForce = 10000f;   // #33 날개가 달려서 점프하면서 다니는 Enemy
 
 // #12 꽃 움직임
     public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
@@ -51,6 +56,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.TURTLE : 
                 rBody = GetComponent<Rigidbody2D>();    
                 frontCheck = transform.GetChild(1).GetComponent<Transform>();   
+                
+                groundCheck = transform.Find("groundCheck");    // #33
                 break;
         }
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -65,6 +72,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.GOOMBA :
             case ENEMY_TYPE.TURTLE : 
                 moveSpeed = 2f;
+
                 break;
             
             case ENEMY_TYPE.FLOWER : 
@@ -79,17 +87,34 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-
-
         switch(enemyType)
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
                 if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
                     return;
-                    
+
+                CheckGroundCheck(); // #33
+                if(grounded)
+                {
+                    Jump();
+                    grounded = false;
+                }
+
+                break;
+        }
+    }
+    void FixedUpdate()
+    {
+        switch(enemyType)
+        {
+            case ENEMY_TYPE.GOOMBA : 
+            case ENEMY_TYPE.TURTLE : 
+                if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+                    return;
+                
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;
@@ -276,4 +301,19 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     }
 
+    void CheckGroundCheck() // #33 따로 함수 추가. 
+    {
+        // 땅 밟았는지 체크
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Ground"))
+                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("LargeBlock"))
+                    || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
+    }
+
+    void Jump() // #33 껑충껑충 뛰어다니는
+    {
+        rBody.AddForce(Vector2.up * jumpForce);
+        Debug.Log("//#33 점프");
+
+        grounded = false;   // 점프 1번 한 후에는 false로
+    }
 }
