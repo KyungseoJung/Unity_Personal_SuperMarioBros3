@@ -20,7 +20,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private bool grounded;              // #33 땅 밟았는지 체크
     [SerializeField]
     private Transform groundCheck;      // #33 땅 밟았는지 체크 
-    private float jumpForce = 10000f;   // #33 날개가 달려서 점프하면서 다니는 Enemy
+    private float jumpForce = 3000f;   // #33 날개가 달려서 점프하면서 다니는 Enemy
 
 // #12 꽃 움직임
     public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
@@ -47,7 +47,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 // #19 죽은 후 상태에 따른 함수 실행
     private EnemyLife enemyLife;
-    
+// #34 몬스터 애니메이션
+    private Animator anim;
+
+
     void Awake()
     {
         switch(enemyType)
@@ -63,6 +66,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         enemyLife = GetComponent<EnemyLife>();
+        anim = GetComponent<Animator>();        // #34
     }
 
     void Start()
@@ -70,7 +74,12 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         switch(enemyType)
         {
             case ENEMY_TYPE.GOOMBA :
-            case ENEMY_TYPE.TURTLE : 
+            case ENEMY_TYPE.TURTLE :   
+                if(wingsType == WINGS_TYPE.YES) // #34 날개가 있는 거북이라면
+                {
+                    anim.SetBool("Fly", true);  // 처음부터 날개 애니메이션 실행
+                } 
+
                 moveSpeed = 2f;
 
                 break;
@@ -97,7 +106,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     return;
 
                 CheckGroundCheck(); // #33
-                if(grounded)
+                if(grounded && (wingsType == WINGS_TYPE.YES)) 
                 {
                     Jump();
                     grounded = false;

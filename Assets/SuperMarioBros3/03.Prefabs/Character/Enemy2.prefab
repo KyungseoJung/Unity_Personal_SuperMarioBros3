@@ -306,6 +306,7 @@ MonoBehaviour:
   wingsType: 2
   enemyDir: -1
   moveSpeed: 0
+  groundCheck: {fileID: 0}
   isMoving: 1
   lookingUp: {fileID: 0}
   lookingDown: {fileID: 0}
