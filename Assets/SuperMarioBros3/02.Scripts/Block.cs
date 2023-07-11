@@ -237,10 +237,11 @@ public class Block : MonoBehaviour  // 물음표 블록
         pButton.GetComponent<SpriteRenderer>().sprite = pushedPButton;  // P버튼 이미지 변경
         pButton.GetComponent<BoxCollider2D>().enabled = false;          // 콜라이더 비활성화
     }
-    public void TurnsIntoCoin()        // #27 P버튼 누르면 FRAGILE 블록들은 모두 코인으로 변함
+    public void TurnsIntoCoin()         // #27 P버튼 누르면 FRAGILE 블록들은 모두 코인으로 변함
     {
         gameObject.tag = "Coin";        // #28 태그도 변경
         
+        anim.enabled = false;           // #27 블록 이미지 바꾸기 위한 목적   
         blockType = BLOCK_TYPE.COIN;    // 타입 변경
         gameObject.GetComponent<SpriteRenderer>().sprite = bigCoin; // 코인으로 이미지 변경 
     }
