@@ -50,11 +50,15 @@ public class Block : MonoBehaviour  // 물음표 블록
     public Sprite pushedPButton;    // #27 눌린 P버튼 이미지
     public Sprite bigCoin;          // #27 블록 -> 코인으로 변할 때 이미지
 
+// #35
+    private LobbyManager lobbyManager;           // #35 점수 체크용
+
     void Awake()
     {
         playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
-
         anim = GetComponent<Animator>();    // #6 애니메이션 설정
+
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
 
         switch(blockType)   // #25
         {
@@ -176,6 +180,8 @@ public class Block : MonoBehaviour  // 물음표 블록
                 // Debug.Log("#3 코인 UI 생성 위치 : " + coinPos);
 
                 GameMgr.Mgr.score += 100;
+                lobbyManager.CheckPoint();      // #35 포인트 확인용
+
                 break;
             case BLOCK_TYPE.ITEMBLOCK : 
             {

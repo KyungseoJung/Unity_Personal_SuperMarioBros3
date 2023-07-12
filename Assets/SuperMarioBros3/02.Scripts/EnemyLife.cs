@@ -21,6 +21,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     public GameObject pointUi;
 // #34 몬스터 애니메이션
     private Animator anim;
+// #35
+    private LobbyManager lobbyManager;           // #35 점수 체크용
 
     private void Awake() 
     {
@@ -31,6 +33,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         anim = GetComponent<Animator>();            // #34
 
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
+        
         switch(enemyCtrl.enemyType)
         {
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :
@@ -110,6 +114,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private void IsDie()                
     {
         GameMgr.Mgr.score += 100;                   // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+        lobbyManager.CheckPoint();                  // #35 포인트 확인용
 
         switch(enemyCtrl.enemyType)
         {

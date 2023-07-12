@@ -47,6 +47,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
 // #28 임의의 점수 변수 - 코인 획득 시 점수 증가 
     private int score;
+// #35
+    private LobbyManager lobbyManager;           // #35 점수 체크용
+
 
     void Awake()
     {
@@ -60,6 +63,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
+
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
 
         // level1Obj = firstChild.gameObject;           // #21 버그 수정
         // level2Obj = secondChild.gameObject;
@@ -217,8 +222,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(col.gameObject.tag == "Coin")    // #28  코인 획득
         {
             Destroy(col.gameObject);        // 코인 사라져
-            // score += 50;                   // 점수 획득
-            GameMgr.Mgr.score += 50;       // #30 점수 획득
+            // score += 50;                 // 점수 획득
+            GameMgr.Mgr.score += 50;        // #30 점수 획득
+            lobbyManager.CheckPoint();      // #35 포인트 확인용
+
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
 
         }
