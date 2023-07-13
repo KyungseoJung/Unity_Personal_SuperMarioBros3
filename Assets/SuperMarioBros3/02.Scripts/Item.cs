@@ -39,6 +39,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
     public GameObject pointUi;      // #30 아이템 먹었을 때 등장하는 점수 UI (1000점)
 
     private PlayerLife playerLife;
+// #37 
+    public AudioClip[] itemObstainedClip;   // 0번째: 버섯, 1번째: 나뭇잎
 
     void Awake()
     {
@@ -117,6 +119,18 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi();                      // 점수 UI 표시
+
+            // #37 효과음
+            switch(itemType)
+            {
+                case ITEM_TYPE.MUSHROOM:
+                    AudioSource.PlayClipAtPoint(itemObstainedClip[0], transform.position);  // 버섯 획득 사운드
+                    break;
+                case ITEM_TYPE.LEAF:
+                    AudioSource.PlayClipAtPoint(itemObstainedClip[1], transform.position);  // 나뭇잎 획득 사운드
+                    break;
+            }
+
 
             playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
             DestroyItem();        // 아이템 사라지기  // #30 보완: Invoke 대신에 바로 실행되도록

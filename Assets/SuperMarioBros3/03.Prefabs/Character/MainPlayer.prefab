@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLevel: 1
   playerState: 1
-  hurtClip: {fileID: 8300000, guid: 2bcd20e0d15336146aac318de23b4ffc, type: 3}
+  hurtClip: {fileID: 8300000, guid: cdd74e6f822f606418a14d296b856487, type: 3}
 --- !u!50 &2195683245706047425
 Rigidbody2D:
   serializedVersion: 4
