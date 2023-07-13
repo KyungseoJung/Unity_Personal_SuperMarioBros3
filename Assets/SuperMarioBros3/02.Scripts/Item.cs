@@ -38,6 +38,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 // #30 점수 UI
     public GameObject pointUi;      // #30 아이템 먹었을 때 등장하는 점수 UI (1000점)
 
+    private PlayerLife playerLife;
+
     void Awake()
     {
         itemColl = GetComponent<CircleCollider2D>();
@@ -45,6 +47,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
         rBody = GetComponent<Rigidbody2D>();
         frontCheck = transform.GetChild(1).GetComponent<Transform>();   // #10
+
+        playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>(); // #36
     }
 
     void Start()
@@ -86,7 +90,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             case ITEM_TYPE.MUSHROOM :
                 //#4 장애물과 충돌하면 방향 바꾸도록
-                Debug.Log("//#4 추가: Item 스크립트// 버섯 이동 방향은 " + itemDir);
+                // Debug.Log("//#4 추가: Item 스크립트// 버섯 이동 방향은 " + itemDir);
                 if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
                 {
                     // rBody.velocity = new Vector2(transform.localPosition.x * moveSpeed, rBody.velocity.y);
@@ -113,6 +117,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi();                      // 점수 UI 표시
+
+            playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
             DestroyItem();        // 아이템 사라지기  // #30 보완: Invoke 대신에 바로 실행되도록
         }
     }
@@ -194,6 +200,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         
         Instantiate(pointUi, pointPos, Quaternion.identity);    
     }
+
     private void DestroyItem()      // #30 아이템 사라지기
     {
         Destroy(this.gameObject);   

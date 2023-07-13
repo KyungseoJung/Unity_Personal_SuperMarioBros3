@@ -56,8 +56,6 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         playerLife = GetComponent<PlayerLife>();        // #17
 
         Transform firstChild = transform.GetChild(0);   // 자식 오브젝트 위치 중 0번째 자식
-        Transform secondChild = transform.GetChild(1);
-        Transform thirdChild = transform.GetChild(2);
 
         anim = firstChild.GetComponent<Animator>();
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
@@ -120,7 +118,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         
         if(runFast)                       // #32 더 빠르게 달리도록 최고 속도 높이기
         {
-            Debug.Log("//#31 더 빠르게");
+            // Debug.Log("//#31 더 빠르게");
             maxSpeed = maxRunSpeed;     
         }
         else
@@ -231,9 +229,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
 
     }
+
     public void BounceUp() // #16 약간 위로 튀어오르기 - 예 : 몬스터 밟았을 때
     {
         Rbody.AddForce(Vector2.up * bounceJump);
         Debug.Log("//#16 플레이어 살짝 위로 튀어오르기");
     }
+
+
 }

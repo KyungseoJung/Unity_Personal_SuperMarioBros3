@@ -18,8 +18,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private Transform frontCheck;   // #18 부딪혔을 때 이동 방향 바꾸도록 확인용
     
     private bool grounded;              // #33 땅 밟았는지 체크
-    [SerializeField]
-    private Transform groundCheck;      // #33 땅 밟았는지 체크 
+    private Transform groundCheck;      // #33 땅 밟았는지 체크 - Enemy 각각 자기 자신의 그라운드체크 가져오기 
     private float jumpForce = 3000f;   // #33 날개가 달려서 점프하면서 다니는 Enemy
 
 // #12 꽃 움직임
