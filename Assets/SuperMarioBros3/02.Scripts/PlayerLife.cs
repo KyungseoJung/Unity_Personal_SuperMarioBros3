@@ -116,6 +116,7 @@ public class PlayerLife : MonoBehaviour
                 firstChild.gameObject.SetActive(true);  
 
                 playerCtrl.groundCheck = firstChild.Find("groundCheck");
+                playerCtrl.anim = firstChild.GetComponent<Animator>();  // #36
 
                 break;
 
@@ -128,6 +129,7 @@ public class PlayerLife : MonoBehaviour
                 secondChild.gameObject.SetActive(true);
 
                 playerCtrl.groundCheck = secondChild.Find("groundCheck");
+                playerCtrl.anim = secondChild.GetComponent<Animator>(); // #36
 
                 break;
             
@@ -140,6 +142,7 @@ public class PlayerLife : MonoBehaviour
                 thirdChild.gameObject.SetActive(true);  
 
                 playerCtrl.groundCheck = thirdChild.Find("groundCheck");
+                playerCtrl.anim = thirdChild.GetComponent<Animator>();  // #36
 
                 break;
         }

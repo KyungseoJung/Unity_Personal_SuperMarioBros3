@@ -6,7 +6,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 {
     private PlayerLife playerLife;          // #17
 
-    private Animator anim;
+    public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경)
     private Rigidbody2D Rbody;
 
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
