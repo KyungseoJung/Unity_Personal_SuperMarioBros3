@@ -114,8 +114,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     //달리기 가속도 ===============================
         float h = Input.GetAxis("Horizontal");  // 좌우 키
-        // anim.SetFloat("Speed", Mathf.Abs(h));
+        anim.SetFloat("Speed", Mathf.Abs(h));   // #37 속도 적용되도록 - 애니메이션 적용
         
+    // #37 플레이어 이미지 뒤집기
+        if(((h>0) && !dirRight) || (h<0) && dirRight) // 움직이는 방향과 바라보는 방향이 다르다면 
+            Flip();
+
         if(runFast)                       // #32 더 빠르게 달리도록 최고 속도 높이기
         {
             // Debug.Log("//#31 더 빠르게");
@@ -158,6 +162,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Flip() // 플레이어 바라보는 방향 
     {
+        Debug.Log("//#37 방향 바꾸기");
         // Debug.Log("뒤집어");
         dirRight = !dirRight;   //바라보는 방향 변경
 

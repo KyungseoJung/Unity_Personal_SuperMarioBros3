@@ -78,7 +78,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 2
+  itemDir: 1
   pointUi: {fileID: 7690453889661327053, guid: 67d2e4febda00a545950cb827f67d7f9, type: 3}
+  itemObstainedClip:
+  - {fileID: 8300000, guid: e5cadf45e0de11449a8c0ba39efb1811, type: 3}
+  - {fileID: 8300000, guid: 9c6c11dce1b050a47a0d533899821c7c, type: 3}
 --- !u!58 &2878855749352330144
 CircleCollider2D:
   m_ObjectHideFlags: 0
