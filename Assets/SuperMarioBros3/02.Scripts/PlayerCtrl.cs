@@ -8,6 +8,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경)
     private Rigidbody2D Rbody;
+    private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
 
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
 
@@ -51,6 +52,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private LobbyManager lobbyManager;           // #35 점수 체크용
 
 
+
     void Awake()
     {
         playerLife = GetComponent<PlayerLife>();        // #17
@@ -59,11 +61,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         anim = firstChild.GetComponent<Animator>();
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
-
+        boxCollider2D = GetComponent<BoxCollider2D>();  // #39
+        
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
 
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
-
+        
         // level1Obj = firstChild.gameObject;           // #21 버그 수정
         // level2Obj = secondChild.gameObject;
         // level3Obj = thirdChild.gameObject;
@@ -101,6 +104,28 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             runFast = true;
         else
             runFast = false;
+
+
+        if(playerLife.playerLevel != PlayerLife.MODE_TYPE.LEVEL1)   // #39 아래 방향키를 누르고 있는 동안은 웅크리도록 (단, 레벨2, 레벨3에서만)
+        {
+            Vector2 size = boxCollider2D.size;  // 웅크리니까 콜라이더 크기도 변경
+
+            if(Input.GetKey(KeyCode.DownArrow)) 
+            {
+                anim.SetBool("CurlUp", true);
+
+                size.y = 1f;
+                boxCollider2D.size = size;
+            }
+            else
+            {
+                anim.SetBool("CurlUp", false);
+                
+                size.y = 1.6f;
+                boxCollider2D.size = size;
+            }
+        }
+        
     }
 
     void FixedUpdate()
