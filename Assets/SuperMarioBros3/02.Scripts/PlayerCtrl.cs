@@ -12,31 +12,33 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
 
-    private float moveForce = 50f;          // 이동 속도
+    private float moveForce = 30f;          // 이동 속도 (50 > 20)
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
     private bool runFast = false;           // #32 빠르게 달리기 (X키)
     private float normalRunSpeed = 5f;      // #32 원래 최고 속도
-    private float maxRunSpeed = 10f;         // #32 더 빠르게 달리기 가속도. 최고 속도
+    private float maxRunSpeed = 15f;        // #32 더 빠르게 달리기 가속도. 최고 속도
+    private bool playMaxRunClip = false;            // #40 빨리 달리는 소리 
 
     private float jumpTimer;
     private float jumpTimeLimit = 0.25f;
-    private bool isJumping;                      // 점프 가능한지 체크
+    private bool isJumping;                 // 점프 가능한지 체크
     public float jumpForce = 70f;           // 점프 가속도. 누르는 동안 더해지는 높이
     public float minJump = 100f;            // 최소 점프 높이
-    private float bounceJump =600f;        // 살짝 튀어오를 때 점프 높이 - 예 : Enemy 밟았을 때
+    private float bounceJump =600f;         // 살짝 튀어오를 때 점프 높이 - 예 : Enemy 밟았을 때
 
     private bool grounded;                  // 땅 밟았는지 체크
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
     public bool pushPButton;                // #27 P버튼 밟았는지 체크
     public Transform groundCheck;           // 땅 밟았는지 체크
 
-    public float velocityY;
     private bool fallDown;                  // 지금 추락하고 있는지 체크
 
 // 오디오 ==================================
     public AudioClip jumpClip;
     public AudioClip coinClip;              // 코인 획득 클립
+    public AudioSource maxRunAudioSource;
+    public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
 
 // // 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록   // #21 버그 수정 (콜라이더 위치를 최상위 부모로 바꿨으니, 레이어 변경 코드 대상도 최상위 부모로 수정 필요)
 //     private GameObject level1Obj;
@@ -63,6 +65,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
         boxCollider2D = GetComponent<BoxCollider2D>();  // #39
         
+        maxRunAudioSource = gameObject.AddComponent<AudioSource>(); // #40 오디오소스 없기 때문에, 추가해서 지정해줘야 함
+
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
 
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
@@ -102,8 +106,18 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         if(Input.GetKey(KeyCode.X)) // #32 X키 누르고 있는 동안은 달리는 속도 더 빨라지도록
             runFast = true;
-        else
+        else                        // 키를 누르고 있지 않다면
+        {
             runFast = false;
+
+            if(playMaxRunClip)      // X키 안누르고 있는데, 빨리 달릴 때 클립 나오고 있다면
+            {
+                playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
+
+                maxRunAudioSource.Stop();
+            }
+
+        }
 
 
         if(playerLife.playerLevel != PlayerLife.MODE_TYPE.LEVEL1)   // #39 아래 방향키를 누르고 있는 동안은 웅크리도록 (단, 레벨2, 레벨3에서만)
@@ -135,6 +149,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             playerPos = transform.position;
             playerPos.x = -6.65f;
             transform.position = playerPos;
+
+            Rbody.velocity = new Vector2(0f, Rbody.velocity.y);    // #40 맨 끝에 도달하면 속도 0으로 떨어지도록
         }
 
     //달리기 가속도 ===============================
@@ -160,10 +176,28 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
 
         if(h*Rbody.velocity.x < maxSpeed) //최고 속도 도달하기 전이면, 속도 계속 증가
-            Rbody.AddForce(Vector2.right * h * moveForce);
+        {
+            Rbody.AddForce(Vector2.right * h * moveForce); 
+        }    
+
+        if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip) // 속도 느려졌는데, 빨리 달릴 때 클립 나오고 있다면
+        {
+            playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
+
+            maxRunAudioSource.Stop();
+        }
 
         if(Mathf.Abs(Rbody.velocity.x) > maxSpeed)
+        {   
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
+            if(runFast && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면
+            {
+                maxRunAudioSource.clip = maxRunClip;
+                maxRunAudioSource.Play();
+
+                playMaxRunClip = true;
+            }
+        }    
 
         
     //점프 가속도 ===============================
@@ -175,7 +209,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(fallDown)            // 블록->블록으로 점프하고 있는 경우 고려
                 fallDown = false;   // 점프하고 있을 때 = 추락하고 있지 않을 때
 
-            if(!Input.GetKey(KeyCode.Z) || jumpTimer > jumpTimeLimit)   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락  // // #1 리팩토링 점프 키 변경(Input.GetButton("Jump")) -> Input.GetKey(KeyCode.Z)
+            if(!Input.GetKey(KeyCode.Z) || (jumpTimer > jumpTimeLimit))   //점프 가속도 최대값 도달하면 -> 그 다음은 밑으로 추락  // // #1 리팩토링 점프 키 변경(Input.GetButton("Jump")) -> Input.GetKey(KeyCode.Z)
             {
                 isJumping = false;
                 jumpTimer = 0f;

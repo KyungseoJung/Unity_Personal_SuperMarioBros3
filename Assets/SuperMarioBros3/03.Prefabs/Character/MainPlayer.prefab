@@ -439,6 +439,7 @@ MonoBehaviour:
   velocityY: 0
   jumpClip: {fileID: 8300000, guid: 54ce6a6c027de164489bdb0e643e7d71, type: 3}
   coinClip: {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
+  maxRunClip: {fileID: 8300000, guid: 10930a28cecd97a45a2ee9cd2bc20a19, type: 3}
 --- !u!114 &4537692312673107509
 MonoBehaviour:
   m_ObjectHideFlags: 0
