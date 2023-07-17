@@ -15,10 +15,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float moveForce = 30f;          // 이동 속도 (50 > 20)
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
-    private bool runFast = false;           // #32 빠르게 달리기 (X키)
+    private bool pressingX = false;           // #32 빠르게 달리기 (X키)
+    private bool runSlowDown = false;       // #41 함수 중복 실행 방지 목적의 bool형 변수
     private float normalRunSpeed = 5f;      // #32 원래 최고 속도
     private float maxRunSpeed = 15f;        // #32 더 빠르게 달리기 가속도. 최고 속도
-    private bool playMaxRunClip = false;            // #40 빨리 달리는 소리 
+    private bool playMaxRunClip = false;    // #40 빨리 달리는 소리 
+    private float currSpeed;                // #41 현재 속도
 
     private float jumpTimer;
     private float jumpTimeLimit = 0.25f;
@@ -105,10 +107,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
 
         if(Input.GetKey(KeyCode.X)) // #32 X키 누르고 있는 동안은 달리는 속도 더 빨라지도록
-            runFast = true;
+            pressingX = true;
         else                        // 키를 누르고 있지 않다면
         {
-            runFast = false;
+            pressingX = false;
 
             if(playMaxRunClip)      // X키 안누르고 있는데, 빨리 달릴 때 클립 나오고 있다면
             {
@@ -166,13 +168,57 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(((h>0) && !dirRight) || (h<0) && dirRight) // 움직이는 방향과 바라보는 방향이 다르다면 
             Flip();
 
-        if(runFast)                       // #32 더 빠르게 달리도록 최고 속도 높이기
+    // 빨리 달리기 ================================
+        if(pressingX)                       // #32 더 빠르게 달리도록 최고 속도 높이기
         {
             // Debug.Log("//#31 더 빠르게");
             maxSpeed = maxRunSpeed;     
         }
-        else
+        else    // X키 누르고 있지 않다면
+        {
             maxSpeed = normalRunSpeed;
+        }
+
+    //#41 속도 표시계 설정 =========================
+        currSpeed = h*Rbody.velocity.x;               // 속도에 따라 속도 표시계 다르게 나타나도록    
+
+        if(pressingX && ((Input.GetKey(KeyCode.LeftArrow)) || Input.GetKey(KeyCode.RightArrow)))        // #41 X키를 누름과 동시에 좌우 한쪽 방향으로 향하고 있다면
+        {
+            if(currSpeed < maxRunSpeed * 1/7)
+                lobbyManager.SetSpeedUp(-1);          // 아무 표시도 들어오지 않도록
+            else if(currSpeed < maxRunSpeed * 2/7)
+                lobbyManager.SetSpeedUp(0);           // 0번째 표시는 들어오도록
+            else if(currSpeed < maxRunSpeed * 3/7)
+                lobbyManager.SetSpeedUp(1);
+            else if(currSpeed < maxRunSpeed * 4/7)
+                lobbyManager.SetSpeedUp(2);
+            else if(currSpeed < maxRunSpeed * 5/7)
+                lobbyManager.SetSpeedUp(3);
+            else if(currSpeed < maxRunSpeed * 6/7)
+                lobbyManager.SetSpeedUp(4);
+            else if(currSpeed >maxRunSpeed * 6/7)
+                lobbyManager.SetSpeedUp(5, true);
+
+            runSlowDown = false;                     // #41 빠르게 달릴 때에만 false로 해제해주기
+        }
+        // else if(pressingX && (!Input.GetKey(KeyCode.LeftArrow) && (!Input.GetKey(KeyCode.RightArrow))))
+        // // X키는 누르고 있는데, 화살표는 안 누르고 있다면(어느 한 쪽으로 달려가고 있는 게 아니라면)
+        // {
+        //     if(!runSlowDown)
+        //     {
+        //         runSlowDown = true;
+        //         lobbyManager.SetSpeedDown();
+        //     }
+        
+        // }
+        else    // #41 X키 누르지 않거나 OR 좌우 방향키 아무것도 안 누르고 있다면
+        {
+            if(!runSlowDown)              // if문 안의 함수를 딱 한번만 실행하기 위한 bool형 변수
+            {
+                runSlowDown = true;
+                lobbyManager.SetSpeedDown();
+            }
+        }
 
 
         if(h*Rbody.velocity.x < maxSpeed) //최고 속도 도달하기 전이면, 속도 계속 증가
@@ -190,7 +236,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(Mathf.Abs(Rbody.velocity.x) > maxSpeed)
         {   
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
-            if(runFast && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면
+            if(pressingX && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면
             {
                 maxRunAudioSource.clip = maxRunClip;
                 maxRunAudioSource.Play();
@@ -198,6 +244,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 playMaxRunClip = true;
             }
         }    
+
+
 
         
     //점프 가속도 ===============================

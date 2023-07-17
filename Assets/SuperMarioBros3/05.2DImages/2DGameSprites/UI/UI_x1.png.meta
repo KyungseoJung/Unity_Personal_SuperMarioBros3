@@ -169,7 +169,7 @@ TextureImporter:
     second: SpeedIndicator1_1
   - first:
       213: -656766943294376451
-    second: SpeedIndicator1_2
+    second: SpeedIndicator1_1
   - first:
       213: -561861035272225869
     second: UI_x1_56
@@ -185,6 +185,12 @@ TextureImporter:
   - first:
       213: 6161674344325473508
     second: UI_x1_60
+  - first:
+      213: 277967292660488335
+    second: SpeedIndicator2_1
+  - first:
+      213: 2624047130885002217
+    second: SpeedIndicator2_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1428,7 +1434,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpeedIndicator1_1
+      name: SpeedIndicator1_2
       rect:
         serializedVersion: 2
         x: 63
@@ -1449,7 +1455,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpeedIndicator1_2
+      name: SpeedIndicator1_1
       rect:
         serializedVersion: 2
         x: 90
@@ -1570,6 +1576,48 @@ TextureImporter:
       bones: []
       spriteID: 4e468239b2aa28550800000000000000
       internalID: 6161674344325473508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpeedIndicator2_2
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 39
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f88943aa7c98bd300800000000000000
+      internalID: 277967292660488335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpeedIndicator2_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 39
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e3984676fc7a6420800000000000000
+      internalID: 2624047130885002217
       vertices: []
       indices: 
       edges: []
