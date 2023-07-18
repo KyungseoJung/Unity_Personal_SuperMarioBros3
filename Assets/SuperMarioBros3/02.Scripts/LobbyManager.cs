@@ -48,7 +48,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void SetSpeedDown()
     {
-        Debug.Log("//#41 스피드 다운");
+        // Debug.Log("//#41 스피드 다운");
 
         enumerator = SpeedDown();
 
@@ -64,7 +64,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         
         for(int i=5; i>=0; i--)
         {
-            Debug.Log(i + "번째 비활성화");
+            // Debug.Log(i + "번째 비활성화");
 
             fastIndicator[i].SetActive(false);      
             yield return new WaitForSeconds(1f);  // 0.5초마다 속도표시계가 천천히 꺼지도록

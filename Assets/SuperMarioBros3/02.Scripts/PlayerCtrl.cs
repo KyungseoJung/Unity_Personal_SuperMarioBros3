@@ -36,6 +36,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private bool fallDown;                  // 지금 추락하고 있는지 체크
 
+// #42 날기(Fly)
+    private bool isFlying;                  // 날고 있는지 체크
+    private float flyTimeCheck = 0f;         
+    private float flyTimeLimit = 5.0f;      
+    IEnumerator enumerator;                 // 코루틴 지정용
+    private float flyForce = 330f;
+
 // 오디오 ==================================
     public AudioClip jumpClip;
     public AudioClip coinClip;              // 코인 획득 클립
@@ -88,6 +95,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
             // anim.SetTrigger("Jump");                                    // 애니메이션
+            AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
+        }
+
+        if(Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))  // #42
+        {
+            Debug.Log("//#42 위로! ");
+            Rbody.AddForce(Vector2.up * flyForce);
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
 
@@ -155,6 +169,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.velocity = new Vector2(0f, Rbody.velocity.y);    // #40 맨 끝에 도달하면 속도 0으로 떨어지도록
         }
 
+        if(transform.position.y > 18)    // #42 갈 수 있는 범위 제한
+        {
+            playerPos = transform.position;
+            playerPos.y = 18f;
+            transform.position = playerPos;
+        }
+
     //달리기 가속도 ===============================
         float h = Input.GetAxis("Horizontal");  // 좌우 키
         anim.SetFloat("RunSpeed", Mathf.Abs(h));   // #37 속도 적용되도록 - 애니메이션 적용
@@ -198,6 +219,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 lobbyManager.SetSpeedUp(4);
             else if(currSpeed >maxRunSpeed * 6/7)
                 lobbyManager.SetSpeedUp(5, true);
+                
 
             runSlowDown = false;                     // #41 빠르게 달릴 때에만 false로 해제해주기
         }
@@ -231,6 +253,20 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
 
             maxRunAudioSource.Stop();
+        }
+
+        if((h*Rbody.velocity.x > normalRunSpeed) && playMaxRunClip) // 어느정도 빠르게 달리고 있고, 클립도 나오고 있다면
+        {
+            // #42 레벨3의 경우 5초동안 하늘 날기 가능 - Z키 누를 때마다(누르고 있는 상태는 취급 X -> GetKey가 아닌 GetKeyDown)
+            if(Input.GetKeyDown(KeyCode.Z) && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
+            {
+                Debug.Log("//#42 날기 시작");
+                isFlying = true;
+                
+                enumerator = FlyStop();
+                StopCoroutine(enumerator);     // #42 시작 전에 혹시나 실행중인 것이 있다면 종료하기
+                StartCoroutine(enumerator);    // #42 5초 뒤에 날기 종료
+            }
         }
 
         if(Mathf.Abs(Rbody.velocity.x) > maxSpeed)
@@ -274,7 +310,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Flip() // 플레이어 바라보는 방향 
     {
-        Debug.Log("//#37 방향 바꾸기");
+        // Debug.Log("//#37 방향 바꾸기");
         // Debug.Log("뒤집어");
         dirRight = !dirRight;   //바라보는 방향 변경
 
@@ -353,5 +389,19 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Debug.Log("//#16 플레이어 살짝 위로 튀어오르기");
     }
 
+    IEnumerator FlyStop()  // #42
+    {
+        flyTimeCheck = 0f;  // 날고 있는 시간 리셋
+
+        while(flyTimeCheck < flyTimeLimit)
+        {
+            flyTimeCheck += Time.deltaTime;
+            yield return null;
+        }
+
+        isFlying = false;
+        Debug.Log("//#42 날기 멈춤");
+
+    }
 
 }

@@ -97,7 +97,7 @@ public class PlayerLife : MonoBehaviour
     public void ChangeLevel()   // #36 레벨 변경 - 콜라이더 y길이(1<->1.6), 해당 오브젝트만 켜기, 그라운드체크 재설정 
                                 // 헤드체크 위치는 상관 없음. 플레이어에서 조정하는 경우가 없기 때문에, 태그만 잘 붙어있으면 됨.
     {
-        Debug.Log("//#36 레벨 변경");
+        // Debug.Log("//#36 레벨 변경");
         
         Vector2 size = boxCollider2D.size;
 

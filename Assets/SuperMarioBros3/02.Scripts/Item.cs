@@ -117,7 +117,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
         if(other.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
         {
-            Debug.Log("//#30 플레이어와 부딪힘");
+            // Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi();                      // 점수 UI 표시
 
             // #37 효과음
