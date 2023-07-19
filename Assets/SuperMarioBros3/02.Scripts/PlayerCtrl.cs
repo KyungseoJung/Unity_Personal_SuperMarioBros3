@@ -41,7 +41,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float flyTimeCheck = 0f;         
     private float flyTimeLimit = 5.0f;      
     IEnumerator enumerator;                 // 코루틴 지정용
-    private float flyForce = 300f;          // #42
+    private float flyForce = 285f;          // #42
     // private float slowFallForce = 280f;     // #43
 
 // 오디오 ==================================
@@ -63,7 +63,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private int score;
 // #35
     private LobbyManager lobbyManager;           // #35 점수 체크용
-
+    private FollowCamera followCam;              // #44 플레이어 따라오는 카메라
 
 
     void Awake()
@@ -81,6 +81,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
 
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
+        followCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FollowCamera>();    // #44
         
         // level1Obj = firstChild.gameObject;           // #21 버그 수정
         // level2Obj = secondChild.gameObject;
@@ -106,6 +107,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.AddForce(Vector2.up * flyForce);
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
+        //# 44 하늘을 날 때, 날지 않을 때 카메라 위치 조정
+        if(isFlying && transform.position.y > 2)
+            followCam.SetMaxY(12f);
+        else if(!isFlying && transform.position.y < -5.7)
+            followCam.SetMaxY(-3f);
+
 // 느리게 떨어지기 (레벨3) #43
         if(Input.GetKeyDown(KeyCode.Z) && fallDown && !grounded && !isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
         {
@@ -114,7 +121,6 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.velocity = new Vector2(Rbody.velocity.x, 0f);    // #43 느리게 떨어지도록 - 속도0으로
 
             AudioSource.PlayClipAtPoint(slowFallClip, transform.position);  // 효과음
-
         }
 
         if(fallDown && (gameObject.layer != 11))   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정

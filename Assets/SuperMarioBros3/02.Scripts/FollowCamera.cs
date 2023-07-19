@@ -66,6 +66,13 @@ public class FollowCamera : MonoBehaviour   // #7 플레이어 따라다니느 �
 
     }
 
+    public void SetMaxY(float y) //#44 화면 조정 목적 - 날고 있을 때(&& 높이가 2이상)에는 MaxY = 12, 아닐 때(높이가 0이하)에는 MaxY = -3
+    {
+        Vector2 XandY = maxXandY;
+
+        XandY.y = y;            // y만 설정해주는 거~
+        maxXandY = XandY;
+    }
 
 
 }
