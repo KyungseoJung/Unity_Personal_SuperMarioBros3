@@ -41,10 +41,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float flyTimeCheck = 0f;         
     private float flyTimeLimit = 5.0f;      
     IEnumerator enumerator;                 // 코루틴 지정용
-    private float flyForce = 330f;
+    private float flyForce = 300f;          // #42
+    // private float slowFallForce = 280f;     // #43
 
 // 오디오 ==================================
     public AudioClip jumpClip;
+    public AudioClip slowFallClip;          // #43
     public AudioClip coinClip;              // 코인 획득 클립
     public AudioSource maxRunAudioSource;
     public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
@@ -97,22 +99,32 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             // anim.SetTrigger("Jump");                                    // 애니메이션
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
-
+// 하늘 날기 (레벨3)
         if(Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))  // #42
         {
-            Debug.Log("//#42 위로! ");
+            // Debug.Log("//#42 위로! ");
             Rbody.AddForce(Vector2.up * flyForce);
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
+// 느리게 떨어지기 (레벨3) #43
+        if(Input.GetKeyDown(KeyCode.Z) && fallDown && !grounded && !isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
+        {
+            Debug.Log("//#43 느리게 떨어지기");
+            // Rbody.AddForce(Vector2.up * slowFallForce);         // 너무 부자연스러움 - 아이템 기능에 맞지도 않을 뿐더러
+            Rbody.velocity = new Vector2(Rbody.velocity.x, 0f);    // #43 느리게 떨어지도록 - 속도0으로
 
-        if(fallDown)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정
+            AudioSource.PlayClipAtPoint(slowFallClip, transform.position);  // 효과음
+
+        }
+
+        if(fallDown && (gameObject.layer != 11))   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정
         {
             gameObject.layer = 11;  // "FallDownPlayer" 레이어
             // level1Obj.layer = 11;   
             // level2Obj.layer = 11;
             // level3Obj.layer = 11;
         }
-        else
+        else if(!fallDown && (gameObject.layer != 10))
         {
             gameObject.layer = 10;  // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
             // level1Obj.layer = 10;   // "Player" 레이어
@@ -257,7 +269,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         if((h*Rbody.velocity.x > normalRunSpeed) && playMaxRunClip) // 어느정도 빠르게 달리고 있고, 클립도 나오고 있다면
         {
-            // #42 레벨3의 경우 5초동안 하늘 날기 가능 - Z키 누를 때마다(누르고 있는 상태는 취급 X -> GetKey가 아닌 GetKeyDown)
+    // #42 레벨3의 경우 5초동안 하늘 날기 가능 - Z키 누를 때마다(누르고 있는 상태는 취급 X -> GetKey가 아닌 GetKeyDown)
             if(Input.GetKeyDown(KeyCode.Z) && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
             {
                 Debug.Log("//#42 날기 시작");
