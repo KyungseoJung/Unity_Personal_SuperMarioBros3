@@ -46,7 +46,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
 // 오디오 ==================================
     public AudioClip jumpClip;
-    public AudioClip slowFallClip;          // #43
+    public AudioClip raccoonTailClip;          // #43
     public AudioClip coinClip;              // 코인 획득 클립
     public AudioSource maxRunAudioSource;
     public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
@@ -105,13 +105,26 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         {
             // Debug.Log("//#42 위로! ");
             Rbody.AddForce(Vector2.up * flyForce);
-            AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
+            AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
+
+            anim.SetTrigger("PressingZ");   // 더 위로 올라가는 애니도 함께 작용
         }
+        if((anim.GetBool("Fly")) && grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)) //#45 날고 있어야 하고, 땅에 닿는데, bool형이 true라면 잠시 애니도 false로 
+        {
+            anim.SetBool("Fly", false);
+        }
+        else if((!anim.GetBool("Fly")) && !grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)) // #45 날고 있어야 하고, 땅에도 닿지 않아 있는데, bool형이 false라면 - 날고 있는 애니 true
+        {
+            anim.SetBool("Fly", true);
+        }
+
         //# 44 하늘을 날 때, 날지 않을 때 카메라 위치 조정
         if(isFlying && transform.position.y > 2)
             followCam.SetMaxY(12f);
         else if(!isFlying && transform.position.y < -5.7)
             followCam.SetMaxY(-3f);
+
+        
 
 // 느리게 떨어지기 (레벨3) #43
         if(Input.GetKeyDown(KeyCode.Z) && fallDown && !grounded && !isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
@@ -120,7 +133,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             // Rbody.AddForce(Vector2.up * slowFallForce);         // 너무 부자연스러움 - 아이템 기능에 맞지도 않을 뿐더러
             Rbody.velocity = new Vector2(Rbody.velocity.x, 0f);    // #43 느리게 떨어지도록 - 속도0으로
 
-            AudioSource.PlayClipAtPoint(slowFallClip, transform.position);  // 효과음
+            anim.SetTrigger("PressingZ");
+            AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
         }
 
         if(fallDown && (gameObject.layer != 11))   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정
@@ -144,14 +158,18 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         {
             pressingX = false;
 
-            if(playMaxRunClip)      // X키 안누르고 있는데, 빨리 달릴 때 클립 나오고 있다면
+            if(playMaxRunClip && !isFlying)      // X키 안누르고 있고 && 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
             {
                 playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
 
                 maxRunAudioSource.Stop();
             }
-
         }
+
+        if(Input.GetKey(KeyCode.Z) && ! (anim.GetBool("PressingZ")))     // #45
+            anim.SetBool("PressingZ", true);
+        else if(Input.GetKey(KeyCode.Z) && (anim.GetBool("PressingZ")))
+            anim.SetBool("PressingZ", false);
 
 
         if(playerLife.playerLevel != PlayerLife.MODE_TYPE.LEVEL1)   // #39 아래 방향키를 누르고 있는 동안은 웅크리도록 (단, 레벨2, 레벨3에서만)
@@ -266,7 +284,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.AddForce(Vector2.right * h * moveForce); 
         }    
 
-        if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip) // 속도 느려졌는데, 빨리 달릴 때 클립 나오고 있다면
+        if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip && !isFlying) // 속도 느려졌고, 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
         {
             playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
 
@@ -280,7 +298,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             {
                 Debug.Log("//#42 날기 시작");
                 isFlying = true;
-                
+                anim.SetBool("Fly", true);     // #45 isFlying = true와 함께 하늘을 나는 애니 시작
+
                 enumerator = FlyStop();
                 StopCoroutine(enumerator);     // #42 시작 전에 혹시나 실행중인 것이 있다면 종료하기
                 StartCoroutine(enumerator);    // #42 5초 뒤에 날기 종료
@@ -293,6 +312,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(pressingX && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면
             {
                 maxRunAudioSource.clip = maxRunClip;
+                maxRunAudioSource.volume = 0.1f;        // 소리 너무 커.. 줄이자..
                 maxRunAudioSource.Play();
 
                 playMaxRunClip = true;
@@ -328,7 +348,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Flip() // 플레이어 바라보는 방향 
     {
-        // Debug.Log("//#37 방향 바꾸기");
+        Debug.Log("//#37 방향 바꾸기");
         // Debug.Log("뒤집어");
         dirRight = !dirRight;   //바라보는 방향 변경
 
@@ -418,6 +438,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
 
         isFlying = false;
+        anim.SetBool("Fly", false);     // #45 isFlying = false와 함께 하늘을 나는 애니도 끝
+
         Debug.Log("//#42 날기 멈춤");
 
     }
