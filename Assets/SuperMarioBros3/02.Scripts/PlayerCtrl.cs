@@ -21,6 +21,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float maxRunSpeed = 15f;        // #32 더 빠르게 달리기 가속도. 최고 속도
     private bool playMaxRunClip = false;    // #40 빨리 달리는 소리 
     private float currSpeed;                // #41 현재 속도
+    private float fallSpeed;                // 떨어질 때 속도
 
     private float jumpTimer;
     private float jumpTimeLimit = 0.25f;
@@ -215,28 +216,36 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     //달리기 가속도 ===============================
         float h = Input.GetAxis("Horizontal");  // 좌우 키
         anim.SetFloat("RunSpeed", Mathf.Abs(h));   // #37 속도 적용되도록 - 애니메이션 적용
-    // #41
-        currSpeed = h*Rbody.velocity.x;               // 속도에 따라 속도 표시계 다르게 나타나도록    
-    // #38 점프(떨어질 때) 속도
-        float v = Rbody.velocity.y;
-        anim.SetFloat("JumpSpeed", v);  // 양수, 음수 모두 각각 다르게 작동해야 하므로
+    
+        currSpeed = h*Rbody.velocity.x;         // #41 속도에 따라 속도 표시계 다르게 나타나도록    
+    
+        fallSpeed = Rbody.velocity.y;           // #38 점프(떨어질 때) 속도
+        anim.SetFloat("JumpSpeed", fallSpeed);  // 양수, 음수 모두 각각 다르게 작동해야 하므로
         
     // #46 급 방향 전환
-        if(((h>0) && !dirRight) || (h<0) && dirRight) // 움직이는 방향과 바라보는 방향이 다르다면
+        if(((Rbody.velocity.x>0) && (h<0)) || (Rbody.velocity.x<0) && (h>0))    // 움직이는 방향과 방향키의 방향이 다르다면
         {
-            if((currSpeed < -0.1) && !anim.GetBool("SuddenChangeDir"))       // #46 만약 급 방향전환 상태라면(Flip을 하기 전, 속도가 꽤 높은 편이라면) 
+            if(/*(currSpeed < -0.1) &&*/ !anim.GetBool("SuddenChangeDir"))       // #46 만약 급 방향전환 상태라면(Flip을 하기 전, 속도가 꽤 높은 편이라면) 
                                 // - 움직이는 방향과 다른 방향의 버튼을 누르는 상태이므로 음수(-)/ 방향 바꾸는 상태이므로 상대적으로 값이 작음을 고려
             {
                 Debug.Log("// #46 급 방향전환");
-                anim.SetTrigger("SuddenChangeDir");
+                // anim.SetTrigger("SuddenChangeDir");
+                anim.SetBool("SuddenChangeDir", true);
+            }
+        }
+        else if(((Rbody.velocity.x>0) && (h>0)) || ((Rbody.velocity.x<0) && (h<0))) // 움직이는 방향과 방향키의 방향이 같다면
+        {
+            if(anim.GetBool("SuddenChangeDir"))
+            {
+                anim.SetBool("SuddenChangeDir", false);
             }
         }
 
 
 
     // #37 플레이어 이미지 뒤집기
-        if(((h>0) && !dirRight) || (h<0) && dirRight) // 움직이는 방향과 바라보는 방향이 다르다면
-            // && !anim.GetBool("SuddenChangeDir")) // && (currSpeed > -0.1)
+        if(((h>0) && !dirRight) || ((h<0) && dirRight) // 움직이는 방향과 바라보는 방향이 다르다면
+            /* && !anim.GetBool("SuddenChangeDir")*/ && (currSpeed > -0.1))  // 속도가 어느정도 높아진 후라면
         {
             // Debug.Log("//#46 현재 속도 : " + currSpeed);
             Flip();
