@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05d207856499e14fbfc27fe5057ddf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 3
+  enemyType: 4
   wingsType: 2
   enemyDir: -1
   moveSpeed: 0

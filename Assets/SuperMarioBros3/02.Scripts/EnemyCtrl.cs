@@ -23,8 +23,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // #12 꽃 움직임
     public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
-    private IEnumerator flowerUpCor;
-    private IEnumerator flowerDownCor;
+    private IEnumerator flowerUpEnumerator;        // 코루틴 지정용
+    private IEnumerator flowerDownEnumerator;
     private Vector3 startPos;
     private Vector3 destPos;
 
@@ -86,10 +86,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 startPos = transform.position;  // #12 시작 위치, 도착 위치 설정
                 destPos = transform.position;
-                destPos.y += 1f;
+                destPos.y += 2.3f;
                 moveSpeed = 3f;                 // #14 파이어볼 속도
                 
-                StartCoroutine(FlowerUp());     // #12 꽃 움직임 시작
+                flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
+                StartCoroutine(flowerUpEnumerator);     // #12 꽃 움직임 시작
 
                 break;
         }
@@ -186,7 +187,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 꽃 Enemy 주위에 플레이어가 있다면 꽃 등장 X 
                 {
-                    // Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
+                    Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
                     isMoving = false;
 
                 }
@@ -210,13 +211,16 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 플레이어가 다시 멀어졌으니, 올라오기 다시 시작해라
                 {
-                    // Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
+                    Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
 
-                    StopCoroutine(FlowerUp());      // 중복 실행을 막기 위해 코루틴 종료시킨 후, 새로 시작하기
-                    StopCoroutine(FlowerDown());
+                    flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
+                    flowerDownEnumerator = FlowerDown();    // #12 fix 코루틴 지정
+                    
+                    StopCoroutine(flowerUpEnumerator);      // 중복 실행을 막기 위해 코루틴 종료시킨 후, 새로 시작하기
+                    StopCoroutine(flowerDownEnumerator);
 
                     isMoving = true;
-                    StartCoroutine(FlowerUp());   
+                    StartCoroutine(flowerUpEnumerator);   
  
                 }
                 break;
@@ -230,7 +234,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         while(true)  // 올라가도 될 때에만 올라가도록
         {
-            // Debug.Log("#12 업 함수 실행//" + moveTimer);
+            Debug.Log("#12 업 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
             {
                 transform.localPosition = Vector3.Lerp(startPos, destPos, curve.Evaluate(moveTimer/upDownTimer));
@@ -239,7 +243,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             {
                 yield return new WaitForSeconds(0.5f);
                 moveTimer = 0f;
-                StartCoroutine(FlowerDown());      // 다시 내려가도록
+
+                flowerDownEnumerator = FlowerDown();       // #12 fix 코루틴 지정
+                StartCoroutine(flowerDownEnumerator);      // 다시 내려가도록
                 yield break;    // 현재 코루틴 종료
             }
             moveTimer += Time.deltaTime;
@@ -253,7 +259,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         while(true)
         {
-            // Debug.Log("#12 다운 함수 실행" + moveTimer);
+            Debug.Log("#12 다운 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
             {
                 transform.localPosition = Vector3.Lerp(destPos, startPos, curve.Evaluate(moveTimer/upDownTimer));
@@ -264,7 +270,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 moveTimer = 0f;
 
                 if(isMoving)
-                    StartCoroutine(FlowerUp());    // 다시 올라오도록
+                {
+                    flowerUpEnumerator = FlowerUp();       // #12 fix 코루틴 지정
+                    StartCoroutine(flowerUpEnumerator);    // 다시 올라오도록
+                }
+                Debug.Log("//#12 다운 함수 종료");
 
                 yield break;    // 현재 코루틴 종료
             }
