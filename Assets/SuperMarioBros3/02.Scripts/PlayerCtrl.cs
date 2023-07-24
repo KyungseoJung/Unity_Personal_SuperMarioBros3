@@ -424,6 +424,23 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
     }
 
+    void OnTriggerStay2D(Collider2D col) // #47
+    {
+        if(col.gameObject.tag == "Teleport")
+        {
+            // Debug.Log("//#47 텔레포트 범위에 들어와있음");
+            if( (col.gameObject.GetComponent<Teleport>().workingKeyDir == Teleport.WORKING_KEYDIR.DOWN) 
+                && Input.GetKeyDown(KeyCode.DownArrow)) // 아래 화살표 누를 때 작동하는 텔레포트에서 && 아래 화살표 누르면
+            {
+                transform.position = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
+            }
+            else if( (col.gameObject.GetComponent<Teleport>().workingKeyDir == Teleport.WORKING_KEYDIR.UP)
+                && Input.GetKeyDown(KeyCode.UpArrow))   // 위 화살표 누를 때 작동하는 텔레포트에서 && 위 화살표 누르면
+            {
+                transform.position = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
+            }
+        }
+    }
     void OnCollisionEnter2D(Collision2D col)  // #17 플레이어가 Enemy와 그냥 부딪혔을 때
     {
         if(col.gameObject.tag == "Enemy")

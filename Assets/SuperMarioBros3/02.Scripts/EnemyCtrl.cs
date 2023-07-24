@@ -187,7 +187,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 꽃 Enemy 주위에 플레이어가 있다면 꽃 등장 X 
                 {
-                    Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
+                    // Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
                     isMoving = false;
 
                 }
@@ -211,7 +211,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 플레이어가 다시 멀어졌으니, 올라오기 다시 시작해라
                 {
-                    Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
+                    // Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
 
                     flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
                     flowerDownEnumerator = FlowerDown();    // #12 fix 코루틴 지정
@@ -234,7 +234,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         while(true)  // 올라가도 될 때에만 올라가도록
         {
-            Debug.Log("#12 업 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
+            // Debug.Log("#12 업 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
             {
                 transform.localPosition = Vector3.Lerp(startPos, destPos, curve.Evaluate(moveTimer/upDownTimer));
@@ -259,7 +259,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         while(true)
         {
-            Debug.Log("#12 다운 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
+            // Debug.Log("#12 다운 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
             {
                 transform.localPosition = Vector3.Lerp(destPos, startPos, curve.Evaluate(moveTimer/upDownTimer));
@@ -274,7 +274,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     flowerUpEnumerator = FlowerUp();       // #12 fix 코루틴 지정
                     StartCoroutine(flowerUpEnumerator);    // 다시 올라오도록
                 }
-                Debug.Log("//#12 다운 함수 종료");
+                // Debug.Log("//#12 다운 함수 종료");
 
                 yield break;    // 현재 코루틴 종료
             }

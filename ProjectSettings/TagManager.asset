@@ -12,6 +12,7 @@ TagManager:
   - FragileBlock
   - ButtonHeadCheck
   - Coin
+  - Teleport
   layers:
   - Default
   - TransparentFX
