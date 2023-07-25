@@ -6,8 +6,8 @@ public class FollowCamera : MonoBehaviour   // #7 플레이어 따라다니느 �
 {
     public Transform player;   // Player의 transform 컴포넌트를 참조할 수 있는 Reference
 
-    public Vector2 maxXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최대값
-    public Vector2 minXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최소값
+    public Vector2 maxXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최대값 (160,12)
+    public Vector2 minXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최소값 (0,-3)
 
     public float xMargin = 0f;  // 카메라가 Player의 X좌표로 이동하기 전에 체크하는 Player와 Camera의 거리 값
     public float yMargin = 5f;  // 카메라가 Player의 Y좌표로 이동하기 전에 체크하는 Player와 Camera의 거리 값
@@ -66,12 +66,37 @@ public class FollowCamera : MonoBehaviour   // #7 플레이어 따라다니느 �
 
     }
 
-    public void SetMaxY(float y) //#44 화면 조정 목적 - 날고 있을 때(&& 높이가 2이상)에는 MaxY = 12, 아닐 때(높이가 0이하)에는 MaxY = -3
+    public void SetMaxY(float _y) //#44 화면 조정 목적 - 날고 있을 때(&& 높이가 2이상)에는 MaxY = 12, 아닐 때(높이가 0이하)에는 MaxY = -3
     {
         Vector2 XandY = maxXandY;
 
-        XandY.y = y;            // y만 설정해주는 거~
+        XandY.y = _y;            // y만 설정해주는 거~
         maxXandY = XandY;
+    }
+
+    void SetMinY(float _y)          // #48
+    {
+        Vector2 XandY = minXandY;
+
+        XandY.y = _y;
+        minXandY = XandY;
+    }
+
+    public void InUnderground()     // #48
+    {
+        // 플레이어가 지하에 갔을 때 - 카메라 Size : 7, Position.y : -17 고정
+        Debug.Log("//#48 지하로 들어가기");
+        transform.GetComponent<Camera>().orthographicSize = 7;
+        SetMaxY(-17f);
+        SetMinY(-17f);
+    }
+
+    public void OutUnderground()    // #48 지하세계에서 벗어났을 때
+    {
+        Debug.Log("//#48 지하에서 빠져나오기");
+        transform.GetComponent<Camera>().orthographicSize = 7.5f;
+        SetMaxY(12f);
+        SetMinY(-3f);
     }
 
 

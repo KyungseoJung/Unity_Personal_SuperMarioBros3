@@ -12,6 +12,9 @@ public class Teleport : MonoBehaviour   // #47 제일 최상위 부모 오브젝
     [SerializeField]
     private Transform destTransform;     // 인스펙터 창에서 설정
 
+    private FollowCamera followCam;      // #48 순간이동함에 따라 카메라 위치 조정
+    private PlayerCtrl playerCtrl;       // #48 플레이어 상태(지하에 있나, 아닌가) bool형 접근
+
     // void Awake()
     // {
     //     // childTransforms = GetComponentsInChildren<Transform>();   
@@ -31,6 +34,11 @@ public class Teleport : MonoBehaviour   // #47 제일 최상위 부모 오브젝
     //         i++;
     //     }
     // }
+    void Awake()
+    {
+        followCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FollowCamera>();    // #44
+        playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();         // #48  
+    }
 
     public Vector3 StartTeleporting()    // 빠져 나가는 파이프의 위치를 반환해주는 함수 - PlayerCtrl에서 실행
     {
@@ -38,12 +46,18 @@ public class Teleport : MonoBehaviour   // #47 제일 최상위 부모 오브젝
         switch(teleportType)
         {
             case TELEPORT_TYPE.PIPE1_IN : 
+                playerCtrl.isInUnderground = true;
                 destPos = destTransform.position;
-                Debug.Log("//#47 파이프1에서 순간이동 시작");
+                // Debug.Log("//#47 파이프1에서 순간이동 시작");
+
+                followCam.InUnderground();  // #48 지하로 들어가기 - 카메라 범위도 같이 이동
                 break;
             case TELEPORT_TYPE.PIPE2_IN : 
+                playerCtrl.isInUnderground = false;
                 destPos = destTransform.position;
-                Debug.Log("//#47 파이프2에서 순간이동 시작");
+                // Debug.Log("//#47 파이프2에서 순간이동 시작");
+
+                followCam.OutUnderground(); // #48 지하에서 빠져나오기 - 카메라 범위도 같이 이동
                 break;
         }
         return destPos;

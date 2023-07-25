@@ -44,7 +44,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     IEnumerator enumerator;                 // 코루틴 지정용
     private float flyForce = 285f;          // #42
     // private float slowFallForce = 280f;     // #43
-
+    public bool isInUnderground = false;   // #48 지하에 있는지 체크
+    
 // 오디오 ==================================
     public AudioClip jumpClip;
     public AudioClip raccoonTailClip;          // #43
@@ -120,9 +121,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
 
         //# 44 하늘을 날 때, 날지 않을 때 카메라 위치 조정
-        if(isFlying && transform.position.y > 2)
+        if((isFlying && transform.position.y > 2) && (!isInUnderground) )
             followCam.SetMaxY(12f);
-        else if(!isFlying && transform.position.y < -5.7)
+        else if((!isFlying && transform.position.y < -5.7) && (!isInUnderground) )
             followCam.SetMaxY(-3f);
 
         
@@ -228,7 +229,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(/*(currSpeed < -0.1) &&*/ !anim.GetBool("SuddenChangeDir"))       // #46 만약 급 방향전환 상태라면(Flip을 하기 전, 속도가 꽤 높은 편이라면) 
                                 // - 움직이는 방향과 다른 방향의 버튼을 누르는 상태이므로 음수(-)/ 방향 바꾸는 상태이므로 상대적으로 값이 작음을 고려
             {
-                Debug.Log("// #46 급 방향전환");
+                // Debug.Log("// #46 급 방향전환");
                 // anim.SetTrigger("SuddenChangeDir");
                 anim.SetBool("SuddenChangeDir", true);
             }
