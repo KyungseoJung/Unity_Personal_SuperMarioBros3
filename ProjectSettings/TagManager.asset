@@ -71,3 +71,6 @@ TagManager:
   - name: EnemyWeapon
     uniqueID: 3181888735
     locked: 0
+  - name: Teleport
+    uniqueID: 576621549
+    locked: 0

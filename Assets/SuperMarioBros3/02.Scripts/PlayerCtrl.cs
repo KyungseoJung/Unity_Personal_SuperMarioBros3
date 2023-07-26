@@ -44,14 +44,25 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     IEnumerator enumerator;                 // 코루틴 지정용
     private float flyForce = 285f;          // #42
     // private float slowFallForce = 280f;     // #43
+// #49 순간이동하기(Teleport)
     public bool isInUnderground = false;   // #48 지하에 있는지 체크
-    
+    private bool isTeleporting = false;    // #49 순간이동 하고 있는지 체크
+    private float moveTimer = 0f;
+    private float teleportInTimer = 1f;      // #49 순간이동 하는 타이머
+    private float teleportOutTimer = 2f;     // #49 순간이동 하는 타이머
+
+    AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 부드러운 움직임 적용
+    Vector3 startInPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
+    Vector3 destInPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
+    Vector3 startOutPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
+
 // 오디오 ==================================
     public AudioClip jumpClip;
-    public AudioClip raccoonTailClip;          // #43
+    public AudioClip raccoonTailClip;       // #43
     public AudioClip coinClip;              // 코인 획득 클립
     public AudioSource maxRunAudioSource;
     public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
+    public AudioClip teleportClip;          // #49 순간이동할 때 사운드 클립
 
 // // 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록   // #21 버그 수정 (콜라이더 위치를 최상위 부모로 바꿨으니, 레이어 변경 코드 대상도 최상위 부모로 수정 필요)
 //     private GameObject level1Obj;
@@ -427,21 +438,48 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void OnTriggerStay2D(Collider2D col) // #47
     {
-        if(col.gameObject.tag == "Teleport")
-        {
+// #49 파이프 안으로 들어가기 =======================================
+        if((col.gameObject.tag == "Teleport") && !isTeleporting) //#47 #49 아직 순간이동하는 중이 아니라면
+        {            
             // Debug.Log("//#47 텔레포트 범위에 들어와있음");
-            if( (col.gameObject.GetComponent<Teleport>().workingKeyDir == Teleport.WORKING_KEYDIR.DOWN) 
+            Teleport.WORKING_KEYDIR keyDir = col.gameObject.GetComponent<Teleport>().workingKeyDir; // #49 이동 방향 파악
+
+            if( (keyDir == Teleport.WORKING_KEYDIR.DOWN) 
                 && Input.GetKeyDown(KeyCode.DownArrow)) // 아래 화살표 누를 때 작동하는 텔레포트에서 && 아래 화살표 누르면
             {
-                transform.position = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
+                isTeleporting = true;   // #49 한번만 실행되도록 하기 위함
+
+                Vector3 destPos = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
+
+                StartCoroutine(TeleportInLerp(keyDir, destPos));
+
             }
-            else if( (col.gameObject.GetComponent<Teleport>().workingKeyDir == Teleport.WORKING_KEYDIR.UP)
+            else if( (keyDir == Teleport.WORKING_KEYDIR.UP)
                 && Input.GetKeyDown(KeyCode.UpArrow))   // 위 화살표 누를 때 작동하는 텔레포트에서 && 위 화살표 누르면
             {
-                transform.position = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
-            }
+                isTeleporting = true;   // #49 한번만 실행되도록 하기 위함
+
+                Vector3 destPos = col.gameObject.GetComponent<Teleport>().StartTeleporting(); // 플레이어 순간이동
+
+                StartCoroutine(TeleportInLerp(keyDir, destPos));            
+                }
         }
+// #49 파이프 밖으로 나오기 =======================================
+        if((col.gameObject.tag == "Teleport") && isTeleporting)
+        {
+            Teleport.WORKING_KEYDIR keyDir = col.gameObject.GetComponent<Teleport>().workingKeyDir; // #49 출구인지 파악
+
+            if(keyDir == Teleport.WORKING_KEYDIR.NONE)
+            {
+                isTeleporting = false;
+                
+                col.gameObject.GetComponent<Teleport>().SetCameraRange();   // 출구에 따라 카메라 위치, 범위 이동
+            }
+
+        }
+
     }
+
     void OnCollisionEnter2D(Collision2D col)  // #17 플레이어가 Enemy와 그냥 부딪혔을 때
     {
         if(col.gameObject.tag == "Enemy")
@@ -487,4 +525,88 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     }
 
+    IEnumerator TeleportInLerp(Teleport.WORKING_KEYDIR _keydir, Vector3 destOutPos)  // #49 
+    {
+        // boxCollider2D.enabled = false;      // 파이프 통과할 땐, 콜라이더 잠시 비활성화
+        anim.SetBool("Teleport", true);     // 순간이동 중 - 플레이어 애니
+        
+
+//  갖가지 위치 지정
+        switch(_keydir)
+        {
+            case Teleport.WORKING_KEYDIR.UP : 
+            // 파이프 속으로 들어가는 위치 지정
+                startInPos = transform.position;    
+                destInPos = startInPos;
+                destInPos.y += 0.5f;
+
+            // 파이프 밖으로 나오는 위치 지정
+                startOutPos = destOutPos; 
+                startOutPos.y -= 0.5f;              // 아래에서 위로 이동 - 시작점은 더 아래에 있겠지
+
+                break;
+
+            case Teleport.WORKING_KEYDIR.DOWN : 
+            // 파이프 속으로 들어가는 위치 지정
+                startInPos = transform.position;    
+                destInPos = startInPos;
+                destInPos.y -= 0.5f;
+
+            // 파이프 밖으로 나오는 위치 지정
+                startOutPos = destOutPos; 
+                startOutPos.y += 0.5f;              // 위에서 아래로 이동 - 시작점은 더 위에 있겠지
+
+                break;
+            // case Teleport.WORKING_KEYDIR.LEFT : 
+            //     break;
+            // case Teleport.WORKING_KEYDIR.RIGHT : 
+            //     break;
+        }
+
+//  파이프 안으로 들어가기 =======================================
+        AudioSource.PlayClipAtPoint(teleportClip, transform.position);  // 순간이동 효과음
+
+        while(true)
+        {
+            if(moveTimer <= teleportInTimer)
+            {
+                transform.localPosition = Vector3.Lerp(startInPos, destInPos, curve.Evaluate(moveTimer/teleportInTimer));
+            }
+            else
+            {
+                StartCoroutine(TeleportOutLerp(_keydir, destOutPos));
+                yield break;
+            }
+
+            moveTimer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+//  파이프 밖으로 나오기 =======================================
+    IEnumerator TeleportOutLerp(Teleport.WORKING_KEYDIR _keydir, Vector3 destOutPos)
+    {
+        AudioSource.PlayClipAtPoint(teleportClip, transform.position);  // 순간이동 효과음
+
+        while(true)
+        {
+            if(moveTimer <= teleportOutTimer)
+            {
+                transform.localPosition = Vector3.Lerp(startOutPos, destOutPos, curve.Evaluate(moveTimer/teleportOutTimer));
+            }
+            else
+            {
+                moveTimer = 0f; // 타이머 초기화
+                // boxCollider2D.enabled = true;  // 파이프 통과하고 나서는, 다시 콜라이더 활성화
+                // isTeleporting = false;  // 순간이동 종료 - 출구 나오는 순간, OnTriggerStay2D에서 false 처리되도록 만듦.
+                anim.SetBool("Teleport", false);  // 순간이동 종료 - 플레이어 애니
+
+                Rbody.velocity = new Vector2(Rbody.velocity.x, 0f);    // 느리게 떨어지도록 - 너무 빠른 가속도에 바닥으로 꺼지지 않도록
+                yield break;
+            }
+
+            moveTimer += Time.deltaTime;
+            yield return null;
+        }
+    }
 }
