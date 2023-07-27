@@ -24,7 +24,7 @@ public class Block : MonoBehaviour  // 물음표 블록
 */
 // 블록 보이는 모습. 애니메이션.
     private Animator anim;  //#6
-
+    private BoxCollider2D boxCollider2D;    // #50 NormalBlock2 -> BigCoin로 변하면 콜라이더 trigger 체크되도록
 
 // 블록 부딪힐 때
     public Sprite brokenBlock;  // 부숴진 블록 이미지
@@ -57,6 +57,7 @@ public class Block : MonoBehaviour  // 물음표 블록
     {
         playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
         anim = GetComponent<Animator>();    // #6 애니메이션 설정
+        boxCollider2D = GetComponent<BoxCollider2D>();      // #50
 
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
 
@@ -246,7 +247,8 @@ public class Block : MonoBehaviour  // 물음표 블록
     public void TurnsIntoCoin()         // #27 P버튼 누르면 FRAGILE 블록들은 모두 코인으로 변함
     {
         gameObject.tag = "Coin";        // #28 태그도 변경
-        
+        boxCollider2D.isTrigger = true; // #50 콜라이더 트리거 체크
+
         anim.enabled = false;           // #27 블록 이미지 바꾸기 위한 목적   
         blockType = BLOCK_TYPE.COIN;    // 타입 변경
         gameObject.GetComponent<SpriteRenderer>().sprite = bigCoin; // 코인으로 이미지 변경 

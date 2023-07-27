@@ -432,6 +432,16 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                     obj.GetComponent<Block>().TurnsIntoCoin();  // #27 현재 존재하는 FRAGILE 블록들은 모두 코인으로 변하도록
                 }
             }
+        }
+
+        if(col.gameObject.tag == "Coin")    // #28  코인 획득
+        {
+            Destroy(col.gameObject);        // 코인 사라져
+            // score += 50;                 // 점수 획득
+            GameMgr.Mgr.score += 50;        // #30 점수 획득
+            lobbyManager.CheckPoint();      // #35 포인트 확인용
+
+            AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
 
         }
     }
@@ -489,16 +499,16 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 playerLife.GetHurt();
         }
 
-        if(col.gameObject.tag == "Coin")    // #28  코인 획득
-        {
-            Destroy(col.gameObject);        // 코인 사라져
-            // score += 50;                 // 점수 획득
-            GameMgr.Mgr.score += 50;        // #30 점수 획득
-            lobbyManager.CheckPoint();      // #35 포인트 확인용
+        // #50 아래 코드 - OnTriggerEnter2D로 이동
+        // if(col.gameObject.tag == "Coin")    // #28  코인 획득
+        // {
+        //     Destroy(col.gameObject);        // 코인 사라져
+        //     // score += 50;                 // 점수 획득
+        //     GameMgr.Mgr.score += 50;        // #30 점수 획득
+        //     lobbyManager.CheckPoint();      // #35 포인트 확인용
 
-            AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
-
-        }
+        //     AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
+        // }
 
     }
 
