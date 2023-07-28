@@ -159,7 +159,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         }
         else if(!fallDown && (gameObject.layer != 10))
         {
-            gameObject.layer = 10;  // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록
+            gameObject.layer = 10;  // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록 -> 블록 자체가 아니라, ForegroundCollider라는 이름의 오브젝트를 만들어서 설정해줌
+                                    // 왜냐하면, 추락하지 않을 때 블록을 통과하게 하면, 그냥 블록 위를 걸어다닐 때 밑으로 통과할 수 있기 때문.
             // level1Obj.layer = 10;   // "Player" 레이어
             // level2Obj.layer = 10;
             // level3Obj.layer = 10;

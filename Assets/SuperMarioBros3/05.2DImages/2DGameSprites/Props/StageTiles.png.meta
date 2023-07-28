@@ -121,7 +121,7 @@ TextureImporter:
     second: StageTiles_38
   - first:
       213: 6793582778283246379
-    second: StageTiles_39
+    second: skyGround_1
   - first:
       213: -3950224830737224529
     second: cloud0_1
@@ -5511,7 +5511,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StageTiles_39
+      name: skyGround_1
       rect:
         serializedVersion: 2
         x: 1394
