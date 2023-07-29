@@ -9,6 +9,10 @@ using UnityEngine.UI;                       // #35
 public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, 목숨, 남은 시간) UI 관리하는 클래스 생성
 {
     public Text txtScore;                   // #35 점수 표시
+    public Text txtTimeLeft;                // #50 남은 시간 표시
+    private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
+    private int timeLeftInt;                // #50 표시 목적 int형 변수
+
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
 
@@ -17,6 +21,13 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     void Start()
     {
         SceneManager.LoadScene("scStage1");        
+    
+        timeLeftFloat = 300f;                    // #50 남은 시간 - 첫 시작은 300초
+    }
+
+    void Update()
+    {
+        CheckTimeLeft();                    // #50 남은 시간 체크
     }
 
     public void CheckPoint()                // #35 점수, 목숨, 코인 확인용 함수 - GameMgr에서 점수 획득할 때마다 실행
@@ -74,5 +85,17 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private void StopSpeedDown()
     {
         StopCoroutine(enumerator);             
+    }
+
+    private void CheckTimeLeft()    // #50
+    {
+        if(timeLeftFloat - Time.deltaTime >0)   // 계산 값이 0보다 크다면, 계산 적용~
+        {
+            timeLeftFloat -= Time.deltaTime;
+        }
+        timeLeftInt = (int) timeLeftFloat;
+
+        txtTimeLeft.text = timeLeftInt.ToString("D3");
+
     }
 }
