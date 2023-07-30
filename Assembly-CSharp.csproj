@@ -46,6 +46,7 @@
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Instantiator.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Item.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\LobbyManager.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\Music.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerCtrl.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerLife.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Teleport.cs" />
