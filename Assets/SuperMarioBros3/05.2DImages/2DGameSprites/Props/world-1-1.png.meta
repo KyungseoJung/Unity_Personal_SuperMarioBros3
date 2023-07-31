@@ -14,6 +14,15 @@ TextureImporter:
   - first:
       213: -6892446150164937517
     second: Smoke1
+  - first:
+      213: -5677630128732763714
+    second: GoalBox_Star
+  - first:
+      213: -150824587440181479
+    second: GoalBox_Flower
+  - first:
+      213: -6572485832591124366
+    second: GoalBox_Mushroom
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -194,7 +203,7 @@ TextureImporter:
         width: 95
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -202,6 +211,69 @@ TextureImporter:
       bones: []
       spriteID: 3d409e18ebc1950a0800000000000000
       internalID: -6892446150164937517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GoalBox_Star
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1056
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb904d2ba710531b0800000000000000
+      internalID: -5677630128732763714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GoalBox_Flower
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1056
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91fab3a36d928edf0800000000000000
+      internalID: -150824587440181479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GoalBox_Mushroom
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 1058
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2785e1135f6d9c4a0800000000000000
+      internalID: -6572485832591124366
       vertices: []
       indices: 
       edges: []

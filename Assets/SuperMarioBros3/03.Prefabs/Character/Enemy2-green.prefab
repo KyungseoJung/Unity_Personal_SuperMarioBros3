@@ -143,7 +143,6 @@ MonoBehaviour:
   wingsType: 2
   enemyDir: -1
   moveSpeed: 0
-  groundCheck: {fileID: 0}
   isMoving: 1
   lookingUp: {fileID: 0}
   lookingDown: {fileID: 0}
@@ -221,7 +220,7 @@ Animator:
   m_GameObject: {fileID: 5750925778402219120}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ec3bf114dcdab04439510eb5bcdb4ca0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6fac51384e2d98142ad7ceeb3673271d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
