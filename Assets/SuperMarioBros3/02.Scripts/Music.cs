@@ -9,7 +9,7 @@ public class Music : MonoBehaviour  // #51
     public AudioClip[] audioClips;
     /*
     0 : mainMusic
-    1 : 
+    1 : Level Completed
     2 : 
     3 : 
     4 : 
@@ -30,6 +30,13 @@ public class Music : MonoBehaviour  // #51
     {   
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[0];
+        gameMusicArr.Play();
+    }
+
+    public void LevelCompleted()    // #53 게임 성공 종료 BGM
+    {
+        gameMusicArr.Stop();
+        gameMusicArr.clip = audioClips[1];
         gameMusicArr.Play();
     }
 

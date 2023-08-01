@@ -1300,7 +1300,7 @@ GameObject:
   - component: {fileID: 868478979}
   m_Layer: 0
   m_Name: Music
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1334,6 +1334,7 @@ MonoBehaviour:
   gameMusicArr: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: 15bbed4f46632a4489e39f41338b7c75, type: 3}
+  - {fileID: 8300000, guid: ccfb468c414fb1b44b99d065c149fa2d, type: 3}
 --- !u!1 &953390897
 GameObject:
   m_ObjectHideFlags: 0

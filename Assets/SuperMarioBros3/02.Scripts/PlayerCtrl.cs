@@ -64,6 +64,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
     public AudioClip teleportClip;          // #49 순간이동할 때 사운드 클립
 
+    private Music music;                    // #53 게임 백그라운드 음악(BGM) 설정
+
 // // 충돌 처리 - 점프할 땐, LargeBlock과 부딪히지 않도록   // #21 버그 수정 (콜라이더 위치를 최상위 부모로 바꿨으니, 레이어 변경 코드 대상도 최상위 부모로 수정 필요)
 //     private GameObject level1Obj;
 //     private GameObject level2Obj;
@@ -90,6 +92,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         boxCollider2D = GetComponent<BoxCollider2D>();  // #39
         
         maxRunAudioSource = gameObject.AddComponent<AudioSource>(); // #40 오디오소스 없기 때문에, 추가해서 지정해줘야 함
+        music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();    // #53 BGM 설정
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
 
@@ -444,6 +447,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
 
+        }
+    
+        if(col.gameObject.tag == "Goal")    // #53
+        {
+            col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!
+            music.LevelCompleted(); // 게임 종료 BGM
         }
     }
 
