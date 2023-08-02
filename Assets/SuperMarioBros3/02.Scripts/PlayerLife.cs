@@ -108,7 +108,7 @@ public class PlayerLife : MonoBehaviour
         switch(playerLevel)
         {
             case MODE_TYPE.LEVEL1:                          // 레벨1로 변경됐다면
-                size.y = 1f;                              // 콜라이더 길이 맞추기
+                size.y = 0.9f;                              // 콜라이더 길이 맞추기
                 boxCollider2D.size = size;
 
                 secondChild.gameObject.SetActive(false);    // 오브젝트 끄고 켜기

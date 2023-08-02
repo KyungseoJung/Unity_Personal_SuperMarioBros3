@@ -197,7 +197,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             {
                 anim.SetBool("CurlUp", true);
 
-                size.y = 1f;
+                size.y = 0.9f;
                 boxCollider2D.size = size;
             }
             else

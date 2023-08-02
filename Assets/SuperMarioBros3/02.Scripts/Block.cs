@@ -106,7 +106,8 @@ public class Block : MonoBehaviour  // 물음표 블록
                 }
                 break;
             case BLOCK_TYPE.FRAGILE:
-                if(other.gameObject.tag == "HeadCheck" && !isTouched)   // #25 뒤늦게 추가 플레이어가 머리로 박아도 부숴지도록
+                if(other.gameObject.tag == "HeadCheck" && !isTouched )   /* Input.GetKey(KeyCode.Z) -> 이걸 이용하고 싶다면 OnTriggerStay를 사용해야겠지 */
+                    // #25 뒤늦게 추가 플레이어가 머리로 박아도 부숴지도록  // #25 보완: 플레이어가 점프하고 있을 때에 부숴지도록 (그냥 머리 갖다댄다고 해서 부숴지면 안되니까)
                 {
                     isTouched = true;
                     FragileBlockBroken();   
