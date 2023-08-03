@@ -280,7 +280,7 @@ TextureImporter:
     second: mario(1)_91
   - first:
       213: -17371693466781114
-    second: mario(1)_92
+    second: 3Mario3_8_2
   - first:
       213: 8292784707265588929
     second: mario(1)_93
@@ -403,7 +403,7 @@ TextureImporter:
     second: 3Mario3_7
   - first:
       213: -5575797184005560146
-    second: 3Mario3_8
+    second: 3Mario3_8_1
   - first:
       213: -8762486753797283972
     second: 3Mario3_9
@@ -3216,7 +3216,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_92
+      name: 3Mario3_8_2
       rect:
         serializedVersion: 2
         x: 78
@@ -4077,7 +4077,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3Mario3_8
+      name: 3Mario3_8_1
       rect:
         serializedVersion: 2
         x: 193

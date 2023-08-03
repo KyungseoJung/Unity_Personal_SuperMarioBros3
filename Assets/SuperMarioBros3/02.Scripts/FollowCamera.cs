@@ -6,7 +6,7 @@ public class FollowCamera : MonoBehaviour   // #7 플레이어 따라다니느 �
 {
     public Transform player;   // Player의 transform 컴포넌트를 참조할 수 있는 Reference
 
-    public Vector2 maxXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최대값 (160,12)
+    public Vector2 maxXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최대값 (160,-3) 으로 시작  
     public Vector2 minXandY;    // X와 Y 좌표로 카메라가 가질수 있는 최소값 (0,-3)
 
     public float xMargin = 0f;  // 카메라가 Player의 X좌표로 이동하기 전에 체크하는 Player와 Camera의 거리 값

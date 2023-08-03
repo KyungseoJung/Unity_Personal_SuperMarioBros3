@@ -38,7 +38,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private bool fallDown;                  // 지금 추락하고 있는지 체크
 
 // #42 날기(Fly)
-    private bool isFlying;                  // 날고 있는지 체크
+    private bool isFlying = false;                  // 날고 있는지 체크
     private float flyTimeCheck = 0f;         
     private float flyTimeLimit = 5.0f;      
     IEnumerator enumerator;                 // 코루틴 지정용
@@ -167,6 +167,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             // level1Obj.layer = 10;   // "Player" 레이어
             // level2Obj.layer = 10;
             // level3Obj.layer = 10;
+        }
+
+        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) & (Input.GetKeyDown(KeyCode.X))) // #54 레벨3의 경우, X키를 누르면 한번 회전
+        {
+            anim.SetTrigger("TurnAround"); // 한 바퀴 돌기
+            AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
         }
 
         if(Input.GetKey(KeyCode.X)) // #32 X키 누르고 있는 동안은 달리는 속도 더 빨라지도록
