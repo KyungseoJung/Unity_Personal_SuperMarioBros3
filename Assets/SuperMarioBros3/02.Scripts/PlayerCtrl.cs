@@ -184,9 +184,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(playMaxRunClip && !isFlying)      // X키 안누르고 있고 && 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
             {
                 playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-
                 maxRunAudioSource.Stop();
             }
+
+            if( anim.GetBool("RunFast") )  // #55 빠르게 달리는 애니메이션 설정 해제
+                anim.SetBool("RunFast", false);
         }
 
         if(Input.GetKey(KeyCode.Z) && ! (anim.GetBool("PressingZ")))     // #45
@@ -334,9 +336,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip && !isFlying) // 속도 느려졌고, 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
         {
             playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-
             maxRunAudioSource.Stop();
         }
+
+        if( (h*Rbody.velocity.x < normalRunSpeed) && (anim.GetBool("RunFast")) )  // #55 빠르게 달리는 애니메이션 설정 해제
+            anim.SetBool("RunFast", false);
 
         if((h*Rbody.velocity.x > normalRunSpeed) && playMaxRunClip) // 어느정도 빠르게 달리고 있고, 클립도 나오고 있다면
         {
@@ -364,6 +368,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
                 playMaxRunClip = true;
             }
+
+            if( !anim.GetBool("RunFast") )  // #55 빠르게 달리는 애니메이션 설정
+                anim.SetBool("RunFast", true);
         }    
 
 
