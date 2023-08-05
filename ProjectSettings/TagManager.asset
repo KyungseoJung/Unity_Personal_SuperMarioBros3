@@ -15,6 +15,7 @@ TagManager:
   - Teleport
   - Goal
   - Music
+  - PlayerTail
   layers:
   - Default
   - TransparentFX

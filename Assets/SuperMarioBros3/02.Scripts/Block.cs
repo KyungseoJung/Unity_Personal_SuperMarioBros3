@@ -93,7 +93,8 @@ public class Block : MonoBehaviour  // 물음표 블록
             case BLOCK_TYPE.ITEMBLOCK:// 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
             case BLOCK_TYPE.PBUTTON:        // #26 PBUTTON 블록을 플레이어가 머리로 쳤을 때
 
-                if(other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
+                if( (other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
+                    || (other.gameObject.tag == "PlayerTail" && !isTouched) )
                 {   
                     // Debug.Log("#2 HeadCheck");
                     StartCoroutine(BlockUpDown());
@@ -104,10 +105,13 @@ public class Block : MonoBehaviour  // 물음표 블록
                     transform.GetComponent<SpriteRenderer>().sprite = brokenBlock;  // 딱딱한 블록 이미지로 변경
                     BlockIsTouched();    // 코인 또는 아이템 등장
                 }
+
                 break;
             case BLOCK_TYPE.FRAGILE:
-                if(other.gameObject.tag == "HeadCheck" && !isTouched )   /* Input.GetKey(KeyCode.Z) -> 이걸 이용하고 싶다면 OnTriggerStay를 사용해야겠지 */
+                if( (other.gameObject.tag == "HeadCheck" && !isTouched )   /* Input.GetKey(KeyCode.Z) -> 이걸 이용하고 싶다면 OnTriggerStay를 사용해야겠지 */
                     // #25 뒤늦게 추가 플레이어가 머리로 박아도 부숴지도록  // #25 보완: 플레이어가 점프하고 있을 때에 부숴지도록 (그냥 머리 갖다댄다고 해서 부숴지면 안되니까)
+                    || (other.gameObject.tag == "PlayerTail" && !isTouched) )
+
                 {
                     isTouched = true;
                     FragileBlockBroken();   

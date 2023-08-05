@@ -9,7 +9,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경)
     private Rigidbody2D Rbody;
     private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
-
+    [SerializeField]
+    private GameObject playerTailObj;       // #56 레벨3 플레이어 꼬리 오브젝트
     private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
 
     private float moveForce = 30f;          // 이동 속도 (50 > 20)
@@ -90,7 +91,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         anim = firstChild.GetComponent<Animator>();
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
         boxCollider2D = GetComponent<BoxCollider2D>();  // #39
-        
+        playerTailObj = transform.GetChild(2).Find("playerTail").gameObject;    // #56 레벨3 플레이어 꼬리 오브젝트
+
         maxRunAudioSource = gameObject.AddComponent<AudioSource>(); // #40 오디오소스 없기 때문에, 추가해서 지정해줘야 함
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();    // #53 BGM 설정
 
@@ -102,6 +104,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         // level1Obj = firstChild.gameObject;           // #21 버그 수정
         // level2Obj = secondChild.gameObject;
         // level3Obj = thirdChild.gameObject;
+    }
+
+    void Start()
+    {
+        if(playerTailObj.activeSelf)    // 활성화 되어 있다면
+            playerTailObj.SetActive(false); //#56 비활성화 하고 시작
     }
     
     void Update()
@@ -171,6 +179,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) & (Input.GetKeyDown(KeyCode.X))) // #54 레벨3의 경우, X키를 누르면 한번 회전
         {
+            WagTailStart(); // #56 꼬리 콜라이더 활성화 
             anim.SetTrigger("TurnAround"); // 한 바퀴 돌기
             AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
         }
@@ -541,6 +550,19 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         Debug.Log("//#16 플레이어 살짝 위로 튀어오르기");
     }
 
+    void WagTailStart()  // #56 꼬리 휘두르기 시작 - 레벨3
+    {
+        // transform.GetChild(2).Find("playerTail").gameObject.SetActive(true);    // 꼬리 콜라이더 활성화 - 무기처럼 사용
+        playerTailObj.SetActive(true);
+        Invoke("WagTailStop", 0.25f);   // 시간 지나면 다시 비활성화
+    }
+
+    void WagTailStop()  // #56 꼬리 휘두르기 끝 - 레벨3 - Invoke로 실행 예정
+    {
+        // transform.GetChild(2).Find("playerTail").gameObject.SetActive(false);   // 꼬리 콜라이더 비활성화
+        playerTailObj.SetActive(false);
+
+    }
     IEnumerator FlyStop()  // #42
     {
         flyTimeCheck = 0f;  // 날고 있는 시간 리셋
