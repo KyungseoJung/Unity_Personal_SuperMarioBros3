@@ -11,6 +11,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     
 // #15 플레이어에게 머리 밟혔는지 확인용 & 등껍질로 변신하도록
     public bool beStepped = false;          // PlayerCtrl에서 true, false 적용됨
+    private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
     private EnemyCtrl enemyCtrl;    // #15
     private GameObject trampledBody;       // #15
     private GameObject body;        // #15
@@ -23,6 +24,9 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private Animator anim;
 // #35
     private LobbyManager lobbyManager;           // #35 점수 체크용
+
+    private float hitForce = 5000f; // #57 플레이어 꼬리에 맞을 때 위로 차이는 힘
+
 
     private void Awake() 
     {
@@ -49,9 +53,6 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         if(enemystate == ENEMY_STATE.DIE)       // 이미 죽었으면 아래 코드 실행 X   //#9 리팩터링
             return;
 
-
-
-        
         if(other.gameObject.tag == "Player")    // #11
         {
 
@@ -63,7 +64,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                         // Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
                         playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
-                        IsDie();            // #19 죽었을 때 효과
+                        IsDieByBeingTrampled();            // #19 죽었을 때 효과
                     }
                     break;
                 
@@ -80,7 +81,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
                         Debug.Log("#11 플레이어가 Enemy 머리 밟음");
                         playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
-                        IsDie();               // #15 등껍질로 변신
+                        IsDieByBeingTrampled();               // #15 등껍질로 변신
                     }
                     break;
 
@@ -101,7 +102,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
                     enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
-                    IsDie();
+                    IsDieByBeingTrampled();
                     break;
             }
 
@@ -109,9 +110,22 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             //     Debug.Log("#11 플레이어랑 그냥 부딪힘");
 
         }        
-    }
     
-    private void IsDie()                
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("//#57 트리거 발생");
+
+        if(other.gameObject.tag == "PlayerTail" && !getHitByTail)    // #57
+        {
+            Debug.Log("//#57 꼬리에 맞음");
+            getHitByTail = true;
+            HitByTail(other.gameObject.transform.position);               
+        }
+    }
+
+    private void IsDieByBeingTrampled()             // # 밟혀서 죽을 때                
     {
         GameMgr.Mgr.score += 100;                   // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
         lobbyManager.CheckPoint();                  // #35 포인트 확인용
@@ -124,7 +138,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 body = transform.GetChild(0).gameObject;
                 trampledBody = transform.GetChild(2).gameObject;
                 
-                body.SetActive(false);              // 기존 바디 비홣성화
+                body.SetActive(false);              // 기존 바디 비활성화
                 trampledBody.SetActive(true);       // 밟힌 이미지 활성화
 
                 Invoke("DestroyEnemy", 0.3f);       // 1초 후 소멸
@@ -138,14 +152,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 body = transform.GetChild(0).gameObject;
                 trampledBody = transform.GetChild(2).gameObject;
 
-                body.SetActive(false);              // 기존 바디 비활성화
-                trampledBody.SetActive(true);       // 등껍질 이미지 활성화
-
-                Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
-                size.y = 0.7f;
-                boxCollider2D.size = size;
-
-                enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
+                ChangeTurtleToShell();              // #57 중복해서 쓸 것 같아서 함수화 해버림
 
                 ShowPointUi();                      // #19 획득 점수 표시
 
@@ -158,6 +165,85 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 break;
         }
     }
+
+    private void HitByTail(Vector3 _pos)  // #57 꼬리에 맞을 때
+    {
+        switch(enemyCtrl.enemyType)     // 꽃 Enemy만 제외하고 실행할 내용 (위로 튀어오르기, 상태 뒤집기)
+        {   
+            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바
+            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북
+            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 거북 등껍질
+            // 위로 튕기기
+                if(_pos.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
+                {
+                    rBody.AddForce(Vector2.right * 50f);    
+                }
+                else
+                {
+                    rBody.AddForce(Vector2.left * 50f);
+                }
+                rBody.AddForce(Vector2.up * hitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
+                break;
+
+        }
+
+
+    // 기타 설정 (포인트 획득, 상태 뒤집기, 죽음, 껍질로 변신)
+        Vector3 theScale = transform.localScale;
+        Debug.Log("//#57 y값 : " + transform.localScale.y);
+
+        switch(enemyCtrl.enemyType) 
+        {              
+            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바가 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+                Debug.Log("//#57 굼바 꼬리에 맞음");
+                enemystate = ENEMY_STATE.DIE;
+                
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+            // 콜라이더 없애기
+                boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
+
+                GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+                lobbyManager.CheckPoint();          // #35 포인트 확인용
+                Invoke("DestroyEnemy", 3f);       // 3초 후 소멸
+                ShowPointUi();                      // #19 획득 점수 표시
+
+                break;
+                
+            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+
+                enemystate = ENEMY_STATE.DIE;
+
+                GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+                lobbyManager.CheckPoint();          // #35 포인트 확인용
+                Invoke("DestroyEnemy", 0.5f);       // 0.5초 후 소멸
+                ShowPointUi();                      // #19 획득 점수 표시
+
+                break;
+            
+            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북이 꼬리에 맞았을 때 : 꼬리에 맞자마자 죽지는 않고, 거북 등 껍질만 뒤집혀 있음/ 위로 튕겼다가 아래로 떨어짐
+                Debug.Log("//#57 거북 꼬리에 맞음");
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+                Debug.Log("//#57 y값 : " + transform.localScale.y);
+
+                ChangeTurtleToShell();
+
+
+                break;
+
+            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 등껍질이 플레이어의 꼬리에 맞았을 때 : 그 모습 그대로 잠깐 위로 튕겼다가 아래로 떨어짐. 탄성 약간 O
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+
+                break;
+        } 
+
+    }
+
     private void DestroyEnemy() // #16 Enemy 소멸
     {
         Destroy(this.gameObject);
@@ -170,6 +256,20 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         pointPos.y +=1f;
 
         Instantiate(pointUi, pointPos, Quaternion.identity);
+    }
+
+    private void ChangeTurtleToShell()  
+    {
+        body = transform.GetChild(0).gameObject;
+        trampledBody = transform.GetChild(2).gameObject;
+        body.SetActive(false);              // 기존 바디 비활성화
+        trampledBody.SetActive(true);       // 등껍질 이미지 활성화
+
+        Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
+        size.y = 0.7f;
+        boxCollider2D.size = size;
+
+        enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
     }
 
     // private void OnTriggerEnter2D(Collider2D col)   
