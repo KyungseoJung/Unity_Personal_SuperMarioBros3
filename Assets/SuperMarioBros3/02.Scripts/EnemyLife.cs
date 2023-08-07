@@ -11,6 +11,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     
 // #15 플레이어에게 머리 밟혔는지 확인용 & 등껍질로 변신하도록
     public bool beStepped = false;          // PlayerCtrl에서 true, false 적용됨
+    public bool shellBeStepped = false;     // #30 보완
     private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
     private EnemyCtrl enemyCtrl;    // #15
     private GameObject trampledBody;       // #15
@@ -127,8 +128,6 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void IsDieByBeingTrampled()             // # 밟혀서 죽을 때                
     {
-        GameMgr.Mgr.score += 100;                   // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
-        lobbyManager.CheckPoint();                  // #35 포인트 확인용
 
         switch(enemyCtrl.enemyType)
         {
@@ -143,6 +142,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
                 Invoke("DestroyEnemy", 0.3f);       // 1초 후 소멸
 
+                GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때 100점씩 획득
+                lobbyManager.CheckPoint();          // #35 포인트 확인용
                 ShowPointUi();                      // #19 획득 점수 표시
 
                 break;
@@ -154,12 +155,22 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
                 ChangeTurtleToShell();              // #57 중복해서 쓸 것 같아서 함수화 해버림
 
+                GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때 100점씩 획득
+                lobbyManager.CheckPoint();          // #35 포인트 확인용
                 ShowPointUi();                      // #19 획득 점수 표시
 
                 break;
             
             case EnemyCtrl.ENEMY_TYPE.SHELL :       // #19 등껍질 밟거나 차면 3초 후 소멸
                 rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
+
+                if(shellBeStepped)  // #30 보완 : 머리가 밟혀서 죽는 거라면 - 점수 획득 있음
+                // #30 보완 : 밟혀서 죽는 게 아닌 방법으로 (옆에서 밀어서) 죽는 거라면 - 점수 획득 없음 
+                {
+                    GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때 100점씩 획득
+                    lobbyManager.CheckPoint();          // #35 포인트 확인용
+                    ShowPointUi();                      // #19 획득 점수 표시
+                }
 
                 Invoke("DestroyEnemy", 2.0f);   
                 break;
@@ -251,6 +262,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void ShowPointUi()  // #19 획득 점수 표시
     {
+        Debug.Log("//#30 보완 : 점수 획득");
         Vector3 pointPos;
         pointPos = transform.position;
         pointPos.y +=1f;

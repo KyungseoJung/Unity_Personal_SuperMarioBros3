@@ -431,14 +431,21 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     }
 
-    void OnTriggerEnter2D(Collider2D col) // #15 플레이어가 몬스터(굼바, 거북)의 headCheck를 밟았을 때
+    void OnTriggerEnter2D(Collider2D col) // #15 플레이어가 몬스터(굼바, 거북)의 headCheck를 밟았을 때 - 콜라이더 위치상, OnCollisionEnter2D보다 먼저 실행
     {
         if(col.gameObject.tag == "EnemyHeadCheck")   
         {
+            Debug.Log("//#30 Enemy의 머리 밟음");
             if(!col.gameObject.GetComponentInParent<EnemyLife>().beStepped) //  아직 beStepped가 true가 아니라면
             {
                 // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
                 col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
+            }
+
+            if(col.gameObject.GetComponentInParent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)    
+                // #30 보완 : 껍질의 경우에는 별도로, 어떻게 밟혀서 죽는 건지 확인이 필요 - 점수 획득하냐, 마냐가 걸림
+            {
+                col.gameObject.GetComponentInParent<EnemyLife>().shellBeStepped = true;
             }
         }
         
