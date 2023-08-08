@@ -50,6 +50,7 @@ public class Destructor : MonoBehaviour //#3 충돌(explosion)==================
    //이 함수는 Animation Even로부터 호출될 수 있다.
    void DestroyGameObject()
    {
+      Debug.Log("//#57 오브젝트 파괴");
       //이 게임오브젝트 삭제
       Destroy(gameObject);
    }

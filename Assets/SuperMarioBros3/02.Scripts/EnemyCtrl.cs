@@ -10,8 +10,12 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     public ENEMY_TYPE enemyType;
     public WINGS_TYPE wingsType;
+    // #19 죽은 후 상태에 따른 함수 실행
+    private EnemyLife enemyLife;
+    // #34 몬스터 애니메이션
+    private Animator anim;
 
-// 몬스터 이동
+// 몬스터 이동 ==========================
     public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed = 2f;        // 이동 속도
     private Rigidbody2D rBody;      
@@ -19,17 +23,22 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     
     private bool grounded;              // #33 땅 밟았는지 체크
     private Transform groundCheck;      // #33 땅 밟았는지 체크 - Enemy 각각 자기 자신의 그라운드체크 가져오기 
-    private float jumpForce = 3000f;   // #33 날개가 달려서 점프하면서 다니는 Enemy
+    private float jumpForce = 3000f;    // #33 날개가 달려서 점프하면서 다니는 Enemy
 
+// 꽃 ==========================
 // #12 꽃 움직임
     public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
+    [HideInInspector]
+    public bool hideInPipe = true;      // #57 파이프 안에 숨었는지 체크
+    
+    private float moveTimer = 0f;           // 현재 움직임 파악
+    private float upDownTimer = 1f;         // 위로 올라와서 등장하는 데 1초 소모
+
     private IEnumerator flowerUpEnumerator;        // 코루틴 지정용
     private IEnumerator flowerDownEnumerator;
     private Vector3 startPos;
-    private Vector3 destPos;
-
-    private float moveTimer = 0f;           // 현재 움직임 파악
-    private float upDownTimer = 1f;         // 위로 올라와서 등장하는 데 1초 소모
+    [HideInInspector]
+    public Vector3 destPos;             // #57 public으로 변경 - 꽃 Enemy의 공격 적용 여부 판단
 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용  // 곡선 이용 - (0,0)에서 (1.1)로 가는 자연스러운 움직임 연출
 
@@ -41,13 +50,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private float shootDist;            // 삼항연산자 - 플레이어와 Enemy 위치에 따라 다른 각도로 파이어 볼 쏘기
     private int shootHeight;            // 삼항연산자
 
+// 거북 껍질 ==========================
 // #16 거북 껍질 발로 차기
     public bool kickShell;
     private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
-// #19 죽은 후 상태에 따른 함수 실행
-    private EnemyLife enemyLife;
-// #34 몬스터 애니메이션
-    private Animator anim;
+
 
 
     void Awake()
@@ -137,6 +144,12 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     // Debug.Log("//#16 속도 : " + rBody.velocity);
                 break;
             case ENEMY_TYPE.FLOWER : 
+                if((transform.position.y > destPos.y -1.5) && hideInPipe) // #57 어느정도 올라와있다면
+                    hideInPipe = false;
+                else if((transform.position.y < destPos.y -1.5) && !hideInPipe)   // #57 어느정도 내려갔다면
+                    hideInPipe = true;
+
+
                 CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크
                 break;
         }

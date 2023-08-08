@@ -21,12 +21,13 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private Rigidbody2D rBody;      // #19
 // #19 몬스터 죽인 후 등장하는 PointUi
     public GameObject pointUi;
+    public GameObject bombUi;   // #57 꽃 Enemy 죽을 때 나타나는 폭탄 모양
 // #34 몬스터 애니메이션
     private Animator anim;
 // #35
     private LobbyManager lobbyManager;           // #35 점수 체크용
 
-    private float hitForce = 5000f; // #57 플레이어 꼬리에 맞을 때 위로 차이는 힘
+    private float tailHitForce = 5000f;     // #57 플레이어 꼬리에 맞을 때 위로 차이는 힘
 
 
     private void Awake() 
@@ -111,16 +112,16 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             //     Debug.Log("#11 플레이어랑 그냥 부딪힘");
 
         }        
-    
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("//#57 트리거 발생");
+        // Debug.Log("//#57 트리거 발생");
 
         if(other.gameObject.tag == "PlayerTail" && !getHitByTail)    // #57
         {
-            Debug.Log("//#57 꼬리에 맞음");
+            Debug.Log("//#57 꼬리에 맞음. 꼬리 위치는 " + other.gameObject.transform.position.y);
             getHitByTail = true;
             HitByTail(other.gameObject.transform.position);               
         }
@@ -193,9 +194,16 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 {
                     rBody.AddForce(Vector2.left * 50f);
                 }
-                rBody.AddForce(Vector2.up * hitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
+                rBody.AddForce(Vector2.up * tailHitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
                 break;
-
+            case EnemyCtrl.ENEMY_TYPE.FLOWER : 
+                if((!enemyCtrl.hideInPipe) && 
+                    (enemyCtrl.destPos.y -0.5 < _pos.y) )   // #57 파이프에 숨어있지 않다면 && 플레이어 위치가 꽃 Enemy의 destPos 위치에 얼추 비슷하면- 공격 적용
+                // (꽃 Enemy는 이미 큰 직사각형으로 Trigger 체크된 콜라이더 있기 때문에 - 그것에 공격 여부 판단이 방해되는 것을 막기 위함)
+                {
+                    ShowBombUi();    // #57 꽃 Enemy 사라질 때 폭탄 효과 표시
+                }                        
+                break;
         }
 
 
@@ -221,17 +229,6 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 ShowPointUi();                      // #19 획득 점수 표시
 
                 break;
-                
-            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
-
-                enemystate = ENEMY_STATE.DIE;
-
-                GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
-                lobbyManager.CheckPoint();          // #35 포인트 확인용
-                Invoke("DestroyEnemy", 0.5f);       // 0.5초 후 소멸
-                ShowPointUi();                      // #19 획득 점수 표시
-
-                break;
             
             case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북이 꼬리에 맞았을 때 : 꼬리에 맞자마자 죽지는 않고, 거북 등 껍질만 뒤집혀 있음/ 위로 튕겼다가 아래로 떨어짐
                 Debug.Log("//#57 거북 꼬리에 맞음");
@@ -251,9 +248,25 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 transform.localScale = theScale;
 
                 break;
+
+            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+                if((!enemyCtrl.hideInPipe) && (enemyCtrl.destPos.y -0.5 < _pos.y) )   // #57 파이프에 숨어있지 않다면 && 플레이어 위치가 꽃 Enemy의 destPos 위치에 얼추 비슷하면- 공격 적용
+                {
+                    enemystate = ENEMY_STATE.DIE;
+
+                    GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+                    lobbyManager.CheckPoint();          // #35 포인트 확인용
+                    Invoke("DestroyEnemy", 0.5f);       // 0.5초 후 소멸
+                    ShowPointUi();                      // #19 획득 점수 표시
+
+                }
+
+                break;
         } 
 
     }
+
+
 
     private void DestroyEnemy() // #16 Enemy 소멸
     {
@@ -268,6 +281,18 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         pointPos.y +=1f;
 
         Instantiate(pointUi, pointPos, Quaternion.identity);
+    }
+
+    private void ShowBombUi()  // #57 폭탄 표시
+    {
+        Debug.Log("//#57 폭탄 표시");
+        transform.GetChild(0).gameObject.SetActive(false); // 기존 바디 안 보이도록
+
+        Vector3 bombPos;
+        bombPos = transform.position;
+        bombPos.y +=1f;
+
+        Instantiate(bombUi, bombPos, Quaternion.identity);
     }
 
     private void ChangeTurtleToShell()  

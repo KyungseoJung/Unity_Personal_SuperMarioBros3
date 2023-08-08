@@ -105,7 +105,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemystate: 1
   beStepped: 0
+  shellBeStepped: 0
   pointUi: {fileID: 8202056514347503736, guid: 1f18731db97135d40b4d83290a1fc990, type: 3}
+  bombUi: {fileID: 6552144888121357942, guid: 5a6c77a7299578246bb79a03d2dfc0fd, type: 3}
 --- !u!50 &2911953465357029393
 Rigidbody2D:
   serializedVersion: 4
