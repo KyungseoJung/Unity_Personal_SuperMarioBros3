@@ -28,7 +28,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private LobbyManager lobbyManager;           // #35 점수 체크용
 
     private float tailHitForce = 5000f;     // #57 플레이어 꼬리에 맞을 때 위로 차이는 힘
-
+    private float shellHitForce = 3000f;    // #58 거북 껍질에 맞을 때 위로 차이는 힘
 
     private void Awake() 
     {
@@ -103,6 +103,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                         Debug.Log("//#16 왼쪽으로 차기");
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
+                    gameObject.tag = "ShellWeapon"; // #58 태그 변경
                     enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
                     IsDieByBeingTrampled();
                     break;
@@ -112,6 +113,11 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             //     Debug.Log("#11 플레이어랑 그냥 부딪힘");
 
         }        
+
+        if(other.gameObject.tag == "ShellWeapon")   // #58
+        {
+            HitByShell(other.gameObject.transform.position);
+        }
 
     }
 
@@ -266,7 +272,87 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     }
 
+    private void HitByShell(Vector3 _pos)   // #58 튕겨다니는 거북 껍질에 맞을 때
+    {
+        Debug.Log("//# 거북 껍질에 맞음");
+        
+        enemystate = ENEMY_STATE.DIE;   // 일단 모두 죽은 상태로
 
+        switch(enemyCtrl.enemyType)     // 꽃 Enemy만 제외하고 실행할 내용 (위로 튀어오르기, 상태 뒤집기)
+        {   
+            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바
+            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북
+            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 거북 등껍질
+            // 위로 튕기기
+                if(_pos.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
+                {
+                    rBody.AddForce(Vector2.right * 50f);    
+                }
+                else
+                {
+                    rBody.AddForce(Vector2.left * 50f);
+                }
+                rBody.AddForce(Vector2.up * shellHitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
+                break;
+            case EnemyCtrl.ENEMY_TYPE.FLOWER : 
+                ShowBombUi();   // 폭탄 나타내면서 사라지기
+                break;
+        }
+
+
+    // 기타 설정 (포인트 획득, 상태 뒤집기, 죽음, 껍질로 변신)
+        Vector3 theScale = transform.localScale;
+        switch(enemyCtrl.enemyType) 
+        {              
+            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바가 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+                
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+            // 콜라이더 없애기
+                boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
+
+                GameMgr.Mgr.score += 100;           // 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+                lobbyManager.CheckPoint();          // 포인트 확인용
+                Invoke("DestroyEnemy", 3f);         // 3초 후 소멸
+                ShowPointUi();                      // 획득 점수 표시
+
+                break;
+            
+            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북이 꼬리에 맞았을 때 : 꼬리에 맞자마자 죽지는 않고, 거북 등 껍질만 뒤집혀 있음/ 위로 튕겼다가 아래로 떨어짐
+                Debug.Log("//#57 거북 꼬리에 맞음");
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+            // 콜라이더 없애기
+                boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
+
+                ChangeTurtleToShell();
+
+                break;
+
+            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 등껍질이 플레이어의 꼬리에 맞았을 때 : 그 모습 그대로 잠깐 위로 튕겼다가 아래로 떨어짐. 탄성 약간 O
+            // 상태 뒤집기
+                theScale.y *= -1;
+                transform.localScale = theScale;
+            // 콜라이더 없애기
+                boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
+
+                break;
+
+            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+
+                enemystate = ENEMY_STATE.DIE;
+
+                GameMgr.Mgr.score += 100;           // 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
+                lobbyManager.CheckPoint();          // 포인트 확인용
+                Invoke("DestroyEnemy", 0.5f);       // 0.5초 후 소멸
+                ShowPointUi();                      // 획득 점수 표시
+
+                break;
+        } 
+    
+    }
 
     private void DestroyEnemy() // #16 Enemy 소멸
     {

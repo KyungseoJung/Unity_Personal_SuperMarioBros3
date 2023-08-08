@@ -16,6 +16,7 @@ TagManager:
   - Goal
   - Music
   - PlayerTail
+  - ShellWeapon
   layers:
   - Default
   - TransparentFX
