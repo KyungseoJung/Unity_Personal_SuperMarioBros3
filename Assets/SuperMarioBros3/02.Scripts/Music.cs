@@ -38,6 +38,8 @@ public class Music : MonoBehaviour  // #51
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[1];
+        gameMusicArr.loop = false;   // #53 보완 - 게임 종료 시, 나오는 BGM은 LOOP로 반복할 필요 없음.
+
         gameMusicArr.Play();
     }
 
