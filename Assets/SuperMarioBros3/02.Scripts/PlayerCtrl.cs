@@ -475,7 +475,6 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             lobbyManager.CheckPoint();      // #35 포인트 확인용
 
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
-
         }
     
         if(col.gameObject.tag == "Goal")    // #53

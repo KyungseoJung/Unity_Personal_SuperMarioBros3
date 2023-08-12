@@ -17,6 +17,7 @@ TagManager:
   - Music
   - PlayerTail
   - ShellWeapon
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -82,7 +82,7 @@ TextureImporter:
     second: UI_x1_25
   - first:
       213: -4564768623995180050
-    second: UI_x1_26
+    second: alphabet-P
   - first:
       213: 2908431632534236996
     second: UI_x1_27
@@ -97,7 +97,7 @@ TextureImporter:
     second: UI_x1_30
   - first:
       213: 7562167666555215708
-    second: UI_x1_31
+    second: alphabet-U
   - first:
       213: 924437253026438931
     second: UI_x1_32
@@ -846,7 +846,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_26
+      name: alphabet-P
       rect:
         serializedVersion: 2
         x: 53
@@ -951,7 +951,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_31
+      name: alphabet-U
       rect:
         serializedVersion: 2
         x: 145

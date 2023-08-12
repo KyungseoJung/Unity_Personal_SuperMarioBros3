@@ -6,7 +6,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 {
 
 // 아이템 등장
-    public enum ITEM_TYPE {MUSHROOM = 1, LEAF};    // #4 아이템 타입
+    public enum ITEM_TYPE {MUSHROOM = 1, LEAF, GREENMUSHROOM};    // #4 아이템 타입
     public ITEM_TYPE itemType;              // #4 인스펙터창에서 각 프리팹을 직접 설정하도록
 
     private bool comeUpComplete = false;        // #4 완전히 올라왔는지 체크  
@@ -37,7 +37,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
 // #30 점수 UI
     public GameObject pointUi;      // #30 아이템 먹었을 때 등장하는 점수 UI (1000점)
-
+    public GameObject lifeUpUi;       // #60
     private PlayerLife playerLife;
 // #37 
     public AudioClip[] itemObstainedClip;   // 0번째: 버섯, 1번째: 나뭇잎
@@ -59,6 +59,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         switch(itemType)
         {
             case ITEM_TYPE.MUSHROOM :
+            case ITEM_TYPE.GREENMUSHROOM : // #60
                 comeUpTimer = 1f;       // 다 올라오는 데 1초 걸림       
                 moveSpeed = 3f;
 
@@ -91,6 +92,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         switch(itemType)
         {
             case ITEM_TYPE.MUSHROOM :
+            case ITEM_TYPE.GREENMUSHROOM : // #60
+
                 //#4 장애물과 충돌하면 방향 바꾸도록
                 // Debug.Log("//#4 추가: Item 스크립트// 버섯 이동 방향은 " + itemDir);
                 if(comeUpComplete)      // #4 완전히 위로 올라오면, 그때부터 이동 시작
@@ -118,21 +121,25 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         if(other.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
         {
             // Debug.Log("//#30 플레이어와 부딪힘");
-            ShowPointUi();                      // 점수 UI 표시
+            ShowPointUi(itemType);                      // 점수 UI 표시
 
             // #37 효과음
             switch(itemType)
             {
                 case ITEM_TYPE.MUSHROOM:
                     AudioSource.PlayClipAtPoint(itemObstainedClip[0], transform.position);  // 버섯 획득 사운드
+                    playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
                     break;
                 case ITEM_TYPE.LEAF:
                     AudioSource.PlayClipAtPoint(itemObstainedClip[1], transform.position);  // 나뭇잎 획득 사운드
+                    playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
+                    break;
+                case ITEM_TYPE.GREENMUSHROOM : // #60
+                    AudioSource.PlayClipAtPoint(itemObstainedClip[2], transform.position);  // 초록 버섯 획득 사운드
                     break;
             }
 
 
-            playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
             DestroyItem();        // 아이템 사라지기  // #30 보완: Invoke 대신에 바로 실행되도록
         }
     }
@@ -151,6 +158,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         switch(_type)
         {
             case ITEM_TYPE.MUSHROOM : 
+            case ITEM_TYPE.GREENMUSHROOM : // #60
+
                 while(true)
                 {
                     if(moveTimer < comeUpTimer)
@@ -206,13 +215,22 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         }
     }
 
-    private void ShowPointUi()      // #30 점수 UI 등장
+    private void ShowPointUi(ITEM_TYPE _type)      // #30 점수 UI 등장
     {
         Vector3 pointPos;
         pointPos = transform.position;
         pointPos.y += 1f;
         
-        Instantiate(pointUi, pointPos, Quaternion.identity);    
+        switch(_type)
+        {
+            case ITEM_TYPE.MUSHROOM : 
+            case ITEM_TYPE.LEAF :
+                Instantiate(pointUi, pointPos, Quaternion.identity);    
+                break;
+            case ITEM_TYPE.GREENMUSHROOM :
+                Instantiate(lifeUpUi, pointPos, Quaternion.identity);   // #60
+                break;
+        }
     }
 
     private void DestroyItem()      // #30 아이템 사라지기

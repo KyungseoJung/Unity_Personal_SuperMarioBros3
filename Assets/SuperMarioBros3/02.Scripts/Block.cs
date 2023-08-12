@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour  // 물음표 블록
 {
-    public enum BLOCK_TYPE {COINBLOCK = 1, ITEMBLOCK, FRAGILE, PBUTTON, COIN };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가  // #26 PBUTTON 블록 타입 추가
+    public enum BLOCK_TYPE {COINBLOCK = 1, ITEMBLOCK, FRAGILE, PBUTTON, COIN, ITEMBLOCK_GREEN };      // 블록 타입    // #25 깨지기 쉬운 블록 타입 추가  // #26 PBUTTON 블록 타입 추가
     public BLOCK_TYPE blockType;
 
 // #2 블록 업다운
@@ -34,6 +34,7 @@ public class Block : MonoBehaviour  // 물음표 블록
 // 코인 or 아이템 등장
     public GameObject coinUi;   // #3 코인 UI가 사라진 뒤에 자동으로 100pointsUi 등장함 (애니메이터에서 설정함)
     public GameObject mushroomObj; // #4
+    public GameObject greenMushroomObj; // #60
     public GameObject leafObj;
 
 
@@ -77,6 +78,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COINBLOCK:
             case BLOCK_TYPE.ITEMBLOCK:
+            case BLOCK_TYPE.ITEMBLOCK_GREEN:    // #60
             case BLOCK_TYPE.PBUTTON:    // #26
                 startPos = transform.position;
                 destPos = transform.position;
@@ -91,6 +93,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COINBLOCK:
             case BLOCK_TYPE.ITEMBLOCK:// 이 방법을 이용하면, 플레이어 스크립트에서 작성하지 않아도 되겠다~
+            case BLOCK_TYPE.ITEMBLOCK_GREEN:    // #60
             case BLOCK_TYPE.PBUTTON:        // #26 PBUTTON 블록을 플레이어가 머리로 쳤을 때
 
                 if( (other.gameObject.tag == "HeadCheck" && !isTouched)            // 딱 1번만 실행 //플레이어 headCheck에 부딪힌 거라면   && 아직 부숴진 상태가 아니라면
@@ -125,6 +128,8 @@ public class Block : MonoBehaviour  // 물음표 블록
         {
             case BLOCK_TYPE.COINBLOCK:
             case BLOCK_TYPE.ITEMBLOCK:
+            case BLOCK_TYPE.ITEMBLOCK_GREEN:    // #60
+
                 if(other.gameObject.tag == "Enemy" && !isTouched)       // #22 보완 - 한번만 등장하도록 isTouched 변수 추가
                 {
                     if(other.gameObject.GetComponent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)  // #22 거북 등껍질에 부딪혔을 때에도 블록 부숴지도록
@@ -206,6 +211,16 @@ public class Block : MonoBehaviour  // 물음표 블록
                 }
             }
                 break;
+            case BLOCK_TYPE.ITEMBLOCK_GREEN:    // #60
+            {                
+                // 플레이어 레벨에 상관 없이 초록 버섯(1UP) 등장
+                AudioSource.PlayClipAtPoint(blockClips[1], transform.position);
+                StartCoroutine(ItemAppears(Item.ITEM_TYPE.GREENMUSHROOM));   // 버섯 등장
+                // 목숨 1 증가
+                
+
+            }
+                break;
             case BLOCK_TYPE.PBUTTON :   // #26 
                 // anim.SetTrigger("Smoke");    // 연기 효과 ->  Particle System(파티클)로 표현
                 pButton.SetActive(true);  // PBUTTON 활성화 - 등장과 동시에 파티클 시스템으로 Smoke 효과
@@ -225,6 +240,9 @@ public class Block : MonoBehaviour  // 물음표 블록
                 break;
             case Item.ITEM_TYPE.LEAF : 
                 Instantiate(leafObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
+                break;
+            case Item.ITEM_TYPE.GREENMUSHROOM : // #60
+                Instantiate(greenMushroomObj, transform.position, Quaternion.identity); // 생성 (이때 생성된 버섯 or 나뭇잎은 isTrigger 체크되어 있어야 함. 블록과 충돌처리 되지 않도록)
                 break;
         }
     }
