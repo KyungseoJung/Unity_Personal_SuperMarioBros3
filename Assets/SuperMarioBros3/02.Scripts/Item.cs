@@ -39,6 +39,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
     public GameObject pointUi;      // #30 아이템 먹었을 때 등장하는 점수 UI (1000점)
     public GameObject lifeUpUi;       // #60
     private PlayerLife playerLife;
+    private LobbyManager lobbyManager;           // #30 추가 : 점수 체크용
+
 // #37 
     public AudioClip[] itemObstainedClip;   // 0번째: 버섯, 1번째: 나뭇잎
 
@@ -51,6 +53,8 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         frontCheck = transform.GetChild(1).GetComponent<Transform>();   // #10
 
         playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>(); // #36
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // #30 추가 : 오브젝트 이름도 LobbyManager이기 때문에
+
     }
 
     void Start()
@@ -225,7 +229,10 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             case ITEM_TYPE.MUSHROOM : 
             case ITEM_TYPE.LEAF :
-                Instantiate(pointUi, pointPos, Quaternion.identity);    
+                GameMgr.Mgr.score += 1000;        // #30 추가 : 점수 획득 (1000점)
+                lobbyManager.CheckPoint();      // #30 추가 :  포인트 확인용
+
+                Instantiate(pointUi, pointPos, Quaternion.identity);    // #30 1000점
                 break;
             case ITEM_TYPE.GREENMUSHROOM :
                 Instantiate(lifeUpUi, pointPos, Quaternion.identity);   // #60
