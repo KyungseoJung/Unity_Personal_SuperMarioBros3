@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SocreInfo
+public class ScoreInfo
 {
     public int score = 0;              // #29 플레이어 획득 점수
-
+    public int life = 5;               // #61 플레이어 생명 수
 }
+
+
 public class GameMgr : MonoBehaviour    // #29 플레이어 게임 관리 싱글톤 클래스
 {
-    private SocreInfo scoreInfo;
+    private ScoreInfo scoreInfo;
 
     private static GameMgr mgr = null;  // 싱글톤 객체 (인스턴스)
     public static GameMgr Mgr           // 싱글톤 프로퍼티
@@ -32,7 +34,7 @@ public class GameMgr : MonoBehaviour    // #29 플레이어 게임 관리 싱글
     }
     void Awake()    //Start에 적으면 다른 것들보다 늦게 실행돼서 Null 에러 발생함.
     {
-        scoreInfo = new SocreInfo();
+        scoreInfo = new ScoreInfo();
 
     }
 
@@ -41,5 +43,10 @@ public class GameMgr : MonoBehaviour    // #29 플레이어 게임 관리 싱글
         get {return scoreInfo.score; }
         set {scoreInfo.score = value; }
     }
-
+    
+    public int life // #61
+    {
+        get {return scoreInfo.life; }
+        set {scoreInfo.life = value; }
+    }
 }

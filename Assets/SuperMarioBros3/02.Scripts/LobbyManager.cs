@@ -10,6 +10,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 {
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
+    public Text txtLife;                    // #61 생명 표시
+
     private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
     private int timeLeftInt;                // #50 표시 목적 int형 변수
 
@@ -34,7 +36,25 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         txtScore.text = GameMgr.Mgr.score.ToString("D7");   // 7자리로 표시
         
-        Debug.Log("#35 포인트 체크");
+        // Debug.Log("#35 포인트 체크");
+    }
+
+    private void CheckTimeLeft()    // #50
+    {
+        if(timeLeftFloat - Time.deltaTime >0)   // 계산 값이 0보다 크다면, 계산 적용~
+        {
+            timeLeftFloat -= Time.deltaTime;
+        }
+        timeLeftInt = (int) timeLeftFloat;
+
+        txtTimeLeft.text = timeLeftInt.ToString("D3");
+
+    }
+
+    public void CheckLife()        // #61
+    {
+        txtLife.text = GameMgr.Mgr.life.ToString("D1"); // 1자리로 표시
+        Debug.Log("#61 남은 생명 수 체크");
     }
 
     public void SetSpeedUp(int num, bool _max = false)           // #41 속도 표시계 설정 - [0]부터 [num]까지의 오브젝트는 활성화 - PlayerCtrl에서 접근
@@ -87,15 +107,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         StopCoroutine(enumerator);             
     }
 
-    private void CheckTimeLeft()    // #50
-    {
-        if(timeLeftFloat - Time.deltaTime >0)   // 계산 값이 0보다 크다면, 계산 적용~
-        {
-            timeLeftFloat -= Time.deltaTime;
-        }
-        timeLeftInt = (int) timeLeftFloat;
 
-        txtTimeLeft.text = timeLeftInt.ToString("D3");
 
-    }
+
 }

@@ -229,12 +229,16 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             case ITEM_TYPE.MUSHROOM : 
             case ITEM_TYPE.LEAF :
-                GameMgr.Mgr.score += 1000;        // #30 추가 : 점수 획득 (1000점)
+                GameMgr.Mgr.score += 1000;      // #30 추가 : 점수 획득 (1000점)
                 lobbyManager.CheckPoint();      // #30 추가 :  포인트 확인용
 
                 Instantiate(pointUi, pointPos, Quaternion.identity);    // #30 1000점
                 break;
             case ITEM_TYPE.GREENMUSHROOM :
+                if(GameMgr.Mgr.life < 5)        // #61 (만약 목숨이 5개 미만이면) 플레이어 생명 추가 +1
+                    GameMgr.Mgr.life += 1;          
+                lobbyManager.CheckLife();       // #61 남은 생명 수 체크
+                
                 Instantiate(lifeUpUi, pointPos, Quaternion.identity);   // #60
                 break;
         }
