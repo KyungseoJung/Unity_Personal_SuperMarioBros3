@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2019305805862556411}
   - component: {fileID: 6994587329583703813}
   - component: {fileID: 802212709404087427}
+  - component: {fileID: 6112457594133823574}
   m_Layer: 0
   m_Name: Item_GreenMushroom
   m_TagString: Item
@@ -93,6 +94,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &6112457594133823574
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041606280546672569}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6
 --- !u!1 &3041606280706316674
 GameObject:
   m_ObjectHideFlags: 0

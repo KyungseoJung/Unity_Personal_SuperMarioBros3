@@ -121,8 +121,11 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
         {
             Flip();
         }
+    }
 
-        if(other.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
         {
             // Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi(itemType);                      // 점수 UI 표시
@@ -147,6 +150,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
             DestroyItem();        // 아이템 사라지기  // #30 보완: Invoke 대신에 바로 실행되도록
         }
     }
+
 
     public void Flip() // #4 이동 방향 바꿈
     {
