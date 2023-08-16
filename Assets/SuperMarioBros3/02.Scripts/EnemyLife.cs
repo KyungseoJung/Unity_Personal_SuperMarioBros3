@@ -147,6 +147,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 body.SetActive(false);              // 기존 바디 비활성화
                 trampledBody.SetActive(true);       // 밟힌 이미지 활성화
 
+                enemystate = ENEMY_STATE.DIE;       //#62
+
                 Invoke("DestroyEnemy", 0.3f);       // 1초 후 소멸
 
                 GameMgr.Mgr.score += 100;           // #30 굼바, 거북, 껍질 모두 밟을 때 100점씩 획득
@@ -178,6 +180,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     lobbyManager.CheckPoint();          // #35 포인트 확인용
                     ShowPointUi();                      // #19 획득 점수 표시
                 }
+                enemystate = ENEMY_STATE.DIE;           //#62
 
                 Invoke("DestroyEnemy", 2.0f);   
                 break;
@@ -342,7 +345,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
             case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
 
-                enemystate = ENEMY_STATE.DIE;
+                // enemystate = ENEMY_STATE.DIE;    // #62 이미 함수 내 맨 위에서 DIE 처리 했음
 
                 GameMgr.Mgr.score += 100;           // 굼바, 거북, 껍질 모두 밟을 때/ 찰 때 100점씩 획득
                 lobbyManager.CheckPoint();          // 포인트 확인용
@@ -393,6 +396,27 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         boxCollider2D.size = size;
 
         enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
+
+        Invoke("ChangeShellToTurtle", 7f);  // #62 - 7초 후 부활 시도
+    }
+
+    private void ChangeShellToTurtle()  // #62 껍질에서 다시 거북으로 변화 (일정 시간(7초) 지나면 실행되도록)
+    {
+        if(enemystate != ENEMY_STATE.DIE)
+        {
+            Debug.Log("//#62 껍질 -> 거북");
+
+            body = transform.GetChild(0).gameObject;
+            trampledBody = transform.GetChild(2).gameObject;
+            trampledBody.SetActive(false);       // 등껍질 이미지 비활성화
+            body.SetActive(true);              // 기존 바디 활성화
+
+            Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
+            size.y = 1.164f;
+            boxCollider2D.size = size;
+
+            enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.TURTLE;   
+        }
     }
 
     // private void OnTriggerEnter2D(Collider2D col)   
