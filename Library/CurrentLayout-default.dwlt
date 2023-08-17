@@ -166,7 +166,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 342}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 79
+  controlID: 42
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -194,7 +194,7 @@ MonoBehaviour:
   - {fileID: 15}
   - {fileID: 17}
   m_Selected: 2
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -373,7 +373,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 72.66667
-    width: 569
+    width: 486
     height: 272
   m_ViewDataDictionary: {fileID: 0}
   m_ViewTransforms:
@@ -567,10 +567,10 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 6fac51384e2d98142ad7ceeb3673271d,
+  m_AnimatorController: {fileID: 9100000, guid: 36a52868baa3f064fb8215ffdc9bf8c4,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -5284953712926049322, guid: 6fac51384e2d98142ad7ceeb3673271d,
+  - m_Target: {fileID: 2940621401962867129, guid: 36a52868baa3f064fb8215ffdc9bf8c4,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -620,9 +620,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.6523142, y: -3.8019207, z: -0.41755137}
+    m_Target: {x: -0.37151453, y: -3.688279, z: -0.4826812}
     speed: 2
-    m_Value: {x: -2.6523142, y: -3.8019207, z: -0.41755137}
+    m_Value: {x: -0.37151453, y: -3.688279, z: -0.4826812}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -672,9 +672,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.8255773
+    m_Target: 4.8022976
     speed: 2
-    m_Value: 3.8255773
+    m_Value: 4.8022976
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -846,9 +846,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 582e0000
+      m_SelectedIDs: 3a3c0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 60fbffff
+      m_ExpandedIDs: deacffffccb7ffff72b9ffff60fbffffa84f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -911,7 +911,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/SuperMarioBros3/02.Scripts
+    - Assets/SuperMarioBros3/01.Scenes
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
