@@ -19,9 +19,13 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private BoxCollider2D boxCollider2D; // #15
 
     private Rigidbody2D rBody;      // #19
+
+    public AudioClip tailHitClip;   // #63
+
 // #19 몬스터 죽인 후 등장하는 PointUi
     public GameObject pointUi;
     public GameObject bombUi;   // #57 꽃 Enemy 죽을 때 나타나는 폭탄 모양
+    public GameObject hitUi;    // #63 꼬리로 죽일 때 나타나는 연기 모양
 // #34 몬스터 애니메이션
     private Animator anim;
 // #35
@@ -189,18 +193,35 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void HitByTail(Vector3 _pos)  // #57 꼬리에 맞을 때
     {
+        
+        AudioSource.PlayClipAtPoint(tailHitClip, transform.position);   // #63 꼬리로 맞으면 효과음 발생함  - 모든 Enemy 해당
+
         switch(enemyCtrl.enemyType)     // 꽃 Enemy만 제외하고 실행할 내용 (위로 튀어오르기, 상태 뒤집기)
         {   
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바
             case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북
             case EnemyCtrl.ENEMY_TYPE.SHELL :   // 거북 등껍질
-            // 위로 튕기기
+
                 if(_pos.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
                 {
+                // #63 꼬리에 맞을 때 HitUi로 연기 효과 발생
+                    Vector3 hitPos;
+                    hitPos = transform.position;
+                    hitPos.x -= 1f;
+                    Instantiate(hitUi, hitPos, Quaternion.identity);
+    
+                // 위로 튕기기
                     rBody.AddForce(Vector2.right * 50f);    
                 }
                 else
                 {
+                // #63 꼬리에 맞을 때 HitUi로 연기 효과 발생
+                    Vector3 hitPos;
+                    hitPos = transform.position;
+                    hitPos.x += 1f;
+                    Instantiate(hitUi, hitPos, Quaternion.identity);
+
+                // 위로 튕기기
                     rBody.AddForce(Vector2.left * 50f);
                 }
                 rBody.AddForce(Vector2.up * tailHitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
