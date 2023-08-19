@@ -89,7 +89,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public IEnumerator SpeedDown()
     {   
-        yield return new WaitForSeconds(0.5f);  // 0.5초마다 속도표시계가 천천히 꺼지도록
+        yield return new WaitForSeconds(0.5f);  // 0.5초 후 속도표시계가 천천히 꺼지기 시작하도록
 
         powerIndicator.SetActive(false);    
         
@@ -98,7 +98,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             // Debug.Log(i + "번째 비활성화");
 
             fastIndicator[i].SetActive(false);      
-            yield return new WaitForSeconds(1f);  // 0.5초마다 속도표시계가 천천히 꺼지도록
+            yield return new WaitForSeconds(1f);  // 1초마다 속도표시계가 천천히 꺼지도록
         }
     }
 

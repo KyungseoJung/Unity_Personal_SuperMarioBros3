@@ -285,7 +285,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         } 
 
     // 빨리 달리기 ================================
-        if(pressingX)                       // #32 더 빠르게 달리도록 최고 속도 높이기
+        if(pressingX && grounded)                       // #32 더 빠르게 달리도록 최고 속도 높이기 // #41 보완 : 땅에 발 디디고 있을 때만 속도 올라가도록
         {
             // Debug.Log("//#31 더 빠르게");
             maxSpeed = maxRunSpeed;     
@@ -297,8 +297,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     //#41 속도 표시계 설정 =========================
 
-        if(pressingX && ((Input.GetKey(KeyCode.LeftArrow)) || Input.GetKey(KeyCode.RightArrow)))        // #41 X키를 누름과 동시에 좌우 한쪽 방향으로 향하고 있다면
+        if(pressingX && ((Input.GetKey(KeyCode.LeftArrow)) || Input.GetKey(KeyCode.RightArrow))        // #41 X키를 누름과 동시에 좌우 한쪽 방향으로 향하고 있다면
+            && grounded )  // #41 보완 : 땅 밟은 상태에서만 속도 표시계 작동하도록
         {
+            // Debug.Log("//#41 보완 : 속도 표시계 작동");
+
             if(currSpeed < maxRunSpeed * 1/7)
                 lobbyManager.SetSpeedUp(-1);          // 아무 표시도 들어오지 않도록
             else if(currSpeed < maxRunSpeed * 2/7)
@@ -369,7 +372,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(Mathf.Abs(Rbody.velocity.x) > maxSpeed)
         {   
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
-            if(pressingX && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면
+            if(pressingX && grounded && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면 // #41 보완 : && 땅에 발 디디고 있다면
             {
                 maxRunAudioSource.clip = maxRunClip;
                 maxRunAudioSource.volume = 0.1f;        // 소리 너무 커.. 줄이자..
