@@ -15,7 +15,6 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
 [SerializeField]
     private bool followPlayer = false;      // #64
-[SerializeField]
     private Vector3 offset;                 // #64 플레이어를 따라다니는 라이프 바의 offset
 
     private Transform playerTransform;      // #64
@@ -62,15 +61,15 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     }
     private void Update()
     {
-        if(followPlayer)    // #64 플레이어 따라다니기 시작되면
-        {
-            transform.position = playerTransform.position + offset;
+        // if(followPlayer)    // #64 플레이어 따라다니기 시작되면
+        // {
+        //     transform.position = playerTransform.position + offset;
             
-            if(!playerCtrl.pressingX)   // 거북 껍질 들고 있는데 X 버튼 놓는다면
-            {
-                followPlayer = false;
-            }
-        }
+        //     if(!playerCtrl.pressingX)   // 거북 껍질 들고 있는데 X 버튼 놓는다면
+        //     {
+        //         followPlayer = false;
+        //     }
+        // }
     }
     private void OnCollisionEnter2D(Collision2D other)  // 콜라이더 위치상, ㅡIsTrigger 체크가 된 함수 먼저 실행 -> IsTrigger 체크 안 된 함수 실행되기 때문에~
     {
@@ -114,7 +113,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     if(playerCtrl.pressingX)    // #64 만약 X를 누르고 있는 상태였다면 - 거북 껍질 들어야지
                     {
                         this.gameObject.layer = 17; // 플레이어와 충돌 일어나지 않도록 레이어 변경 (PlayerHolding)
-                        followPlayer = true;    // 플레이어 옆에 붙어있도록
+                        // followPlayer = true;    // 플레이어 옆에 붙어있도록
+                        PlayerHolding();    // #64
                         break;
                     }
 
@@ -464,6 +464,24 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
             enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.TURTLE;   
         }
+    }
+
+    private void PlayerHolding()    // #64
+    {
+        Debug.Log("//#64 플레이어 - Shell 들고다니기/ 위치는 : " + transform.position + "//" + transform.localPosition);
+        rBody.simulated = false;    // rBody가 살아있어서 자꾸 플레이어를 안 따라오는 것 같아서
+        // rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
+
+        // rBody.gravityScale = 0;
+        // rBody.mass=0;
+        transform.SetParent(playerTransform);
+
+        if(playerCtrl.dirRight) // 플레이어가 오른쪽을 보고있다면 껍질도 오른쪽으로 들고 있도록
+            offset = new Vector3(0.7f, 0, 0);   
+        else
+            offset = new Vector3(-0.7f, 0, 0);
+            
+        transform.localPosition = offset;
     }
 
     // private void OnTriggerEnter2D(Collider2D col)   
