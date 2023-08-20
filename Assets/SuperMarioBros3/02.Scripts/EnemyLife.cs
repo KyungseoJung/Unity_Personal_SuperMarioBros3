@@ -13,6 +13,12 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     public bool beStepped = false;          // PlayerCtrl에서 true, false 적용됨
     public bool shellBeStepped = false;     // #30 보완
     private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
+[SerializeField]
+    private bool followPlayer = false;      // #64
+[SerializeField]
+    private Vector3 offset;                 // #64 플레이어를 따라다니는 라이프 바의 offset
+
+    private Transform playerTransform;      // #64
     private EnemyCtrl enemyCtrl;    // #15
     private GameObject trampledBody;       // #15
     private GameObject body;        // #15
@@ -37,7 +43,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private void Awake() 
     {
         playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
-        
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;         // #64
+
         enemyCtrl = GetComponent<EnemyCtrl>();      // #15
         boxCollider2D = GetComponent<BoxCollider2D>();
 
@@ -53,7 +60,18 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 break;
         }
     }
-
+    private void Update()
+    {
+        if(followPlayer)    // #64 플레이어 따라다니기 시작되면
+        {
+            transform.position = playerTransform.position + offset;
+            
+            if(!playerCtrl.pressingX)   // 거북 껍질 들고 있는데 X 버튼 놓는다면
+            {
+                followPlayer = false;
+            }
+        }
+    }
     private void OnCollisionEnter2D(Collision2D other)  // 콜라이더 위치상, ㅡIsTrigger 체크가 된 함수 먼저 실행 -> IsTrigger 체크 안 된 함수 실행되기 때문에~
     {
         if(enemystate == ENEMY_STATE.DIE)       // 이미 죽었으면 아래 코드 실행 X   //#9 리팩터링
@@ -92,6 +110,14 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     break;
 
                 case EnemyCtrl.ENEMY_TYPE.SHELL :   // #16 등껍질 밟았을 때 
+
+                    if(playerCtrl.pressingX)    // #64 만약 X를 누르고 있는 상태였다면 - 거북 껍질 들어야지
+                    {
+                        this.gameObject.layer = 17; // 플레이어와 충돌 일어나지 않도록 레이어 변경 (PlayerHolding)
+                        followPlayer = true;    // 플레이어 옆에 붙어있도록
+                        break;
+                    }
+
                     this.gameObject.layer = 16;     // #24 껍질 날라갈 때, (LargeBlock 레이어) 블록에 부딪히지 않도록
                     if(other.gameObject.transform.position.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
                     {

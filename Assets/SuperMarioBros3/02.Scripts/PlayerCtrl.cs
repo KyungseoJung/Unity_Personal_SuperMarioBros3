@@ -11,12 +11,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
     [SerializeField]
     private GameObject playerTailObj;       // #56 레벨3 플레이어 꼬리 오브젝트
-    private bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)
+    public bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)   // #64 EnemyLife에서 사용하기 위해 공개 범위 변경
 
     private float moveForce = 30f;          // 이동 속도 (50 > 20)
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
-    private bool pressingX = false;           // #32 빠르게 달리기 (X키)
+    public bool pressingX = false;          // #32 빠르게 달리기 (X키)  // #64 : 
     private bool runSlowDown = false;       // #41 함수 중복 실행 방지 목적의 bool형 변수
     private float normalRunSpeed = 5f;      // #32 원래 최고 속도
     private float maxRunSpeed = 15f;        // #32 더 빠르게 달리기 가속도. 최고 속도
@@ -536,7 +536,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(col.gameObject.tag == "Enemy")
         {
             Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
-            if(! col.gameObject.GetComponent<EnemyLife>().beStepped)
+            if(! col.gameObject.GetComponent<EnemyLife>().beStepped)    // 일반 거북 껍질에 닿아도 플레이어가 GetHurt 되지 않도록
                 playerLife.GetHurt();
         }
 
