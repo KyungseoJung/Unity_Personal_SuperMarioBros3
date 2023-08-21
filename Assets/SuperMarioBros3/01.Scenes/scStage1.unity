@@ -494,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 3783642477027625813, guid: 0e48c2ca039bc5141990364e2c6e0965,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e48c2ca039bc5141990364e2c6e0965, type: 3}
@@ -788,6 +788,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy2-green
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750925778402219120, guid: 4d1e382ef45a0944ab6c772cca5d7f59,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5750925778402219121, guid: 4d1e382ef45a0944ab6c772cca5d7f59,
         type: 3}

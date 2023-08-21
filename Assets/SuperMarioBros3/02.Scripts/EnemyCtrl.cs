@@ -160,6 +160,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     public void Flip()
     {
+        Debug.Log("//#64 Enemy 뒤집힘");
+        
         enemyDir *= -1;
 
         Vector3 enemyScale = transform.localScale;

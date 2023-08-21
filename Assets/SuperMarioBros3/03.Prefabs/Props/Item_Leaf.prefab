@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7843002116756778276}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: frontCheck
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2878855749352330144}
   - component: {fileID: 5602491295602958374}
   - component: {fileID: 339110965493228262}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Item_Leaf
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7843002117849841963}
   - component: {fileID: 7843002117849841960}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

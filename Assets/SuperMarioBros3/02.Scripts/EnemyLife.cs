@@ -8,13 +8,14 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     public ENEMY_STATE enemystate = ENEMY_STATE.IDLE;
 
     private PlayerCtrl playerCtrl;
-    
+    private PlayerLife playerLife;
+
 // #15 플레이어에게 머리 밟혔는지 확인용 & 등껍질로 변신하도록
     public bool beStepped = false;          // PlayerCtrl에서 true, false 적용됨
     public bool shellBeStepped = false;     // #30 보완
     private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
-[SerializeField]
-    private bool followPlayer = false;      // #64
+    // private bool followPlayer = false;   // #64
+    private bool caughtByPlayer = false;    // #64 플레이어에게 잡혀있는 상태인지 확인
     private Vector3 offset;                 // #64 플레이어를 따라다니는 라이프 바의 offset
 
     private Transform playerTransform;      // #64
@@ -42,6 +43,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private void Awake() 
     {
         playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;         // #64
 
         enemyCtrl = GetComponent<EnemyCtrl>();      // #15
@@ -70,6 +73,15 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         //         followPlayer = false;
         //     }
         // }
+
+        if(Input.GetKeyUp(KeyCode.X))   // #64 누르고 있던 X키를 놓았을 때
+        {
+            if(caughtByPlayer)
+            {
+                caughtByPlayer = false;
+                PlayerReleasing();      // 놓여짐
+            }
+        }
     }
     private void OnCollisionEnter2D(Collision2D other)  // 콜라이더 위치상, ㅡIsTrigger 체크가 된 함수 먼저 실행 -> IsTrigger 체크 안 된 함수 실행되기 때문에~
     {
@@ -112,7 +124,6 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
                     if(playerCtrl.pressingX)    // #64 만약 X를 누르고 있는 상태였다면 - 거북 껍질 들어야지
                     {
-                        this.gameObject.layer = 17; // 플레이어와 충돌 일어나지 않도록 레이어 변경 (PlayerHolding)
                         // followPlayer = true;    // 플레이어 옆에 붙어있도록
                         PlayerHolding();    // #64
                         break;
@@ -463,12 +474,23 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             boxCollider2D.size = size;
 
             enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.TURTLE;   
+
+            if(caughtByPlayer)          // #64 만약 껍질 -> 거북으로 변하려고 하는데 - 껍질이 플레이어에게 잡혀있는 상태라면 - 놓아지도록
+            {
+                caughtByPlayer = false;
+                PlayerReleasing(true);      // 놓여짐
+                playerLife.GetHurt();
+            }
         }
     }
 
     private void PlayerHolding()    // #64
     {
-        Debug.Log("//#64 플레이어 - Shell 들고다니기/ 위치는 : " + transform.position + "//" + transform.localPosition);
+        caughtByPlayer = true;      // 플레이어에게 잡혀있는 상태로 설정
+
+        this.gameObject.layer = 17; // 플레이어와 충돌 일어나지 않도록 레이어 변경 (PlayerHolding)
+
+        // Debug.Log("//#64 플레이어 - Shell 들고다니기/ 위치는 : " + transform.position + "//" + transform.localPosition);
         rBody.simulated = false;    // rBody가 살아있어서 자꾸 플레이어를 안 따라오는 것 같아서
         // rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
 
@@ -476,12 +498,65 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         // rBody.mass=0;
         transform.SetParent(playerTransform);
 
-        if(playerCtrl.dirRight) // 플레이어가 오른쪽을 보고있다면 껍질도 오른쪽으로 들고 있도록
-            offset = new Vector3(0.7f, 0, 0);   
-        else
-            offset = new Vector3(-0.7f, 0, 0);
+        // if(playerCtrl.dirRight) // 플레이어가 오른쪽을 보고있다면 껍질도 오른쪽으로 들고 있도록
+        offset = new Vector3(0.7f, 0, 0);   
+        // else
+        //     offset = new Vector3(-0.7f, 0, 0);
             
         transform.localPosition = offset;
+    }
+    private void PlayerReleasing(bool timeOver = false)  // #64  거북 껍질 손에서 놓기 // 직접 놓은 건지 or 시간 지나서 놓여진 건지 상황 구분
+    {
+// timeOver가 아니면, 자동으로 OnCollisionEnter2D에서 거북 껍질과 부딪히는 걸로 판단돼서 - 거북 껍질 발로 차는 것처럼 연출됨
+        Debug.Log("//#64 플레이어가 Shell 놓음");
+
+        if(timeOver)    // 시간이 오버돼서 껍질을 놓게 되면 - 플레이어로부터 조금 먼 곳에 떨어지도록
+        {   
+            offset = new Vector3(1.5f, 0, 0);       // 조금 먼 곳에서 껍질 떨어뜨리도록
+            transform.localPosition = offset;
+            transform.parent = null;    // 플레이어에게 잡힌 상태 -> 다시 독립적인 상태로 변경
+        }
+
+        rBody.simulated = true;     // 자유롭게 움직이도록
+        this.gameObject.layer = 13; // 이제 플레이어랑 부딪힐 수 있음
+
+        if(timeOver)
+     {
+        if(playerCtrl.dirRight)   // 나아가는 방향 설정
+        {
+            Debug.Log("//#64 거북이 오른쪽으로 풀어주기");
+
+            // 플레이어가 오른쪽을 보고 있다면 거북도 오른쪽으로 가도록
+            enemyCtrl.enemyDir = 1; 
+
+            if(transform.localScale.x > 0)   // 근데 왼쪽 방향 바라보고 있다면(스케일 값이 양수) - 뒤집도록
+            {
+                Debug.Log("//#64 거북이 방향 조정1");
+                Vector3 enemyScale = transform.localScale;
+                enemyScale.x *= -1;
+                transform.localScale = enemyScale;
+            }
+        }
+        else
+        {
+            Debug.Log("//#64 거북이 왼쪽으로 풀어주기");
+            // 플레이어가 왼쪽을 보고 있다면 거북도 왼쪽으로 가도록
+            enemyCtrl.enemyDir = -1;
+
+            if(transform.localScale.x < 0)   // 근데 오른쪽 방향 바라보고 있다면(스케일 값이 음수) - 뒤집도록
+            {
+                Debug.Log("//#64 거북이 방향 조정2");
+
+                Vector3 enemyScale = transform.localScale;
+                enemyScale.x *= -1;
+                transform.localScale = enemyScale;
+            }
+        }
+
+     }
+
+
+
     }
 
     // private void OnTriggerEnter2D(Collider2D col)   

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1640908911756101075}
   - component: {fileID: 1640908911756101072}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6764860894394570584}
   - component: {fileID: 4022366542955848926}
   - component: {fileID: 5111419274173029183}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Item_Mushroom
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1640908912846825948}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: frontCheck
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
