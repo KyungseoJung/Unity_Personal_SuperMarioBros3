@@ -51,6 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   playerTailObj: {fileID: 0}
+  dirRight: 1
+  pressingX: 0
   jumpForce: 70
   minJump: 100
   pushPButton: 0
