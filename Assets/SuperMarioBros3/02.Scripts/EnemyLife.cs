@@ -486,6 +486,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void PlayerHolding()    // #64
     {
+        playerCtrl.HoldingShell(true);  // #65 플레이어가 껍질 잡음
         caughtByPlayer = true;      // 플레이어에게 잡혀있는 상태로 설정
 
         this.gameObject.layer = 17; // 플레이어와 충돌 일어나지 않도록 레이어 변경 (PlayerHolding)
@@ -507,8 +508,10 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     }
     private void PlayerReleasing(bool timeOver = false)  // #64  거북 껍질 손에서 놓기 // 직접 놓은 건지 or 시간 지나서 놓여진 건지 상황 구분
     {
+        playerCtrl.HoldingShell(false);  // #65 플레이어가 껍질 놓음
+
 // timeOver가 아니면, 자동으로 OnCollisionEnter2D에서 거북 껍질과 부딪히는 걸로 판단돼서 - 거북 껍질 발로 차는 것처럼 연출됨
-        Debug.Log("//#64 플레이어가 Shell 놓음");
+        // Debug.Log("//#64 플레이어가 Shell 놓음");
 
         if(timeOver)    // 시간이 오버돼서 껍질을 놓게 되면 - 플레이어로부터 조금 먼 곳에 떨어지도록
         {   

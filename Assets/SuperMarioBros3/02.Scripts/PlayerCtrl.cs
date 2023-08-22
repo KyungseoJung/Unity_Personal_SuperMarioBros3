@@ -673,4 +673,16 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             yield return null;
         }
     }
+
+    public void HoldingShell(bool nowHolding)   // #65
+    {
+        if(nowHolding)  // 만약 지금 들고 있다면
+        {
+            anim.SetBool("HoldingShell", true);
+        }
+        else            // 껍질 놓았다면
+        {
+            anim.SetBool("HoldingShell", false);
+        }
+    }
 }

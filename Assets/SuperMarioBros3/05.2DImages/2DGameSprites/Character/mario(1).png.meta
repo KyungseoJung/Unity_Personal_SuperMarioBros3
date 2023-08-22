@@ -40,13 +40,13 @@ TextureImporter:
     second: 1Mario1_12
   - first:
       213: 1354130993639389855
-    second: mario(1)_12
+    second: 1Mario1_13
   - first:
       213: 7928559585790055883
-    second: mario(1)_13
+    second: 1Mario1_14
   - first:
       213: -5087571187915588487
-    second: mario(1)_14
+    second: 1Mario1_15
   - first:
       213: -5452856021652728379
     second: mario(1)_15
@@ -172,16 +172,16 @@ TextureImporter:
     second: 2Mario2_14
   - first:
       213: 4401089656445788691
-    second: mario(1)_56
+    second: 2Mario2_15
   - first:
       213: 3364099209770672288
-    second: mario(1)_57
+    second: 2Mario2_16
   - first:
       213: -3968170398471828322
-    second: mario(1)_58
+    second: 2Mario2_17
   - first:
       213: 7238612689490740383
-    second: mario(1)_59
+    second: 2Mario2_18
   - first:
       213: -4004758333832224353
     second: mario(1)_60
@@ -445,19 +445,19 @@ TextureImporter:
     second: 3Mario3_20
   - first:
       213: 7919018718805458649
-    second: mario(1)_147
+    second: 3Mario3_21
   - first:
       213: 6521210815740575270
-    second: mario(1)_148
+    second: 3Mario3_22
   - first:
       213: -5194003069253228478
-    second: mario(1)_149
+    second: 3Mario3_23
   - first:
       213: -6231067073918813832
-    second: mario(1)_150
+    second: 3Mario3_24
   - first:
       213: 7898194417968683455
-    second: mario(1)_151
+    second: 3Mario3_25
   - first:
       213: 7150306035033735540
     second: mario(1)_152
@@ -1536,7 +1536,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_12
+      name: 1Mario1_13
       rect:
         serializedVersion: 2
         x: 435
@@ -1557,7 +1557,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_13
+      name: 1Mario1_14
       rect:
         serializedVersion: 2
         x: 452
@@ -1578,7 +1578,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_14
+      name: 1Mario1_15
       rect:
         serializedVersion: 2
         x: 470
@@ -2460,7 +2460,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_56
+      name: 2Mario2_15
       rect:
         serializedVersion: 2
         x: 434
@@ -2481,7 +2481,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_57
+      name: 2Mario2_16
       rect:
         serializedVersion: 2
         x: 451
@@ -2502,7 +2502,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_58
+      name: 2Mario2_17
       rect:
         serializedVersion: 2
         x: 469
@@ -2523,7 +2523,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_59
+      name: 2Mario2_18
       rect:
         serializedVersion: 2
         x: 488
@@ -4371,7 +4371,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_147
+      name: 3Mario3_21
       rect:
         serializedVersion: 2
         x: 547
@@ -4392,7 +4392,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_148
+      name: 3Mario3_22
       rect:
         serializedVersion: 2
         x: 566
@@ -4413,7 +4413,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_149
+      name: 3Mario3_23
       rect:
         serializedVersion: 2
         x: 590
@@ -4434,7 +4434,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_150
+      name: 3Mario3_24
       rect:
         serializedVersion: 2
         x: 615
@@ -4455,7 +4455,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario(1)_151
+      name: 3Mario3_25
       rect:
         serializedVersion: 2
         x: 641
