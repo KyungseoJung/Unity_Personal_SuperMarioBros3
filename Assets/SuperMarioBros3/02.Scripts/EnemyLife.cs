@@ -32,6 +32,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     public GameObject pointUi;
     public GameObject bombUi;   // #57 꽃 Enemy 죽을 때 나타나는 폭탄 모양
     public GameObject hitUi;    // #63 꼬리로 죽일 때 나타나는 연기 모양
+    public GameObject shellHitUi;   // #58 껍질에 맞아 죽을 때 나타나는 연기 모양
+    
 // #34 몬스터 애니메이션
     private Animator anim;
 // #35
@@ -76,6 +78,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         if(Input.GetKeyUp(KeyCode.X))   // #64 누르고 있던 X키를 놓았을 때
         {
+            Debug.Log("//#64 X키 떼었다");
+            
             if(caughtByPlayer)
             {
                 caughtByPlayer = false;
@@ -344,13 +348,22 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바
             case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북
             case EnemyCtrl.ENEMY_TYPE.SHELL :   // 거북 등껍질
-            // 위로 튕기기
+                Vector3 shellHitPos = this.gameObject.transform.position;    // #58 연기 나오는 위치
+                
                 if(_pos.x < this.gameObject.transform.position.x)    // 플레이어가 Enemy의 왼쪽에 있을 때
                 {
+                    shellHitPos.x -= 0.5f;
+                    Instantiate(shellHitUi, shellHitPos, Quaternion.identity);
+
+                    // 위로 튕기기
                     rBody.AddForce(Vector2.right * 50f);    
                 }
                 else
                 {
+                    shellHitPos.x += 0.5f;
+                    Instantiate(shellHitUi, shellHitPos, Quaternion.identity);
+
+                    // 위로 튕기기
                     rBody.AddForce(Vector2.left * 50f);
                 }
                 rBody.AddForce(Vector2.up * shellHitForce);  // 플레이어 위치에 따라 위로 올라갔다가 추락함
@@ -517,8 +530,10 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         {   
             offset = new Vector3(1.5f, 0, 0);       // 조금 먼 곳에서 껍질 떨어뜨리도록
             transform.localPosition = offset;
-            transform.parent = null;    // 플레이어에게 잡힌 상태 -> 다시 독립적인 상태로 변경
         }
+
+        Debug.Log("//#64 거북이 다시 부모 null");
+        transform.parent = null;    // 플레이어에게 잡힌 상태 -> 다시 독립적인 상태로 변경
 
         rBody.simulated = true;     // 자유롭게 움직이도록
         this.gameObject.layer = 13; // 이제 플레이어랑 부딪힐 수 있음
