@@ -161,7 +161,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         if(other.gameObject.tag == "ShellWeapon")   // #58
         {
-            HitByShell(other.gameObject.transform.position);
+            HitByShell(other.gameObject.transform.position);    // 함수 인자 : 거북 껍질의 위치
         }
 
     }
@@ -337,7 +337,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     }
 
-    private void HitByShell(Vector3 _pos)   // #58 튕겨다니는 거북 껍질에 맞을 때
+    public void HitByShell(Vector3 _pos)   // #58 튕겨다니는 거북 껍질에 맞을 때    // #65 public 변환
     {
         Debug.Log("//# 거북 껍질에 맞음");
         
@@ -519,7 +519,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             
         transform.localPosition = offset;
     }
-    private void PlayerReleasing(bool timeOver = false)  // #64  거북 껍질 손에서 놓기 // 직접 놓은 건지 or 시간 지나서 놓여진 건지 상황 구분
+
+    public void PlayerReleasing(bool timeOver = false)  // #64  거북 껍질 손에서 놓기 // 직접 놓은 건지 or 시간 지나서 놓여진 건지 상황 구분    // #65 public 변경
     {
         playerCtrl.HoldingShell(false);  // #65 플레이어가 껍질 놓음
 

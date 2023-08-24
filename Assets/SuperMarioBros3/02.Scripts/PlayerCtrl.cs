@@ -6,6 +6,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 {
     private PlayerLife playerLife;          // #17
 
+// 플레이어 기본 이동
     public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경)
     private Rigidbody2D Rbody;
     private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
@@ -56,6 +57,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     Vector3 startInPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
     Vector3 destInPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
     Vector3 startOutPos = new Vector3(0, 0, 0); // switch문에서 할당되지 않았다고 에러 뜨는 거 방지용
+// 거북 껍질 들고다니는 상태
+    public bool holdingShell;   // #65
 
 // 오디오 ==================================
     public AudioClip jumpClip;
@@ -533,13 +536,24 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void OnCollisionEnter2D(Collision2D col)  // #17 플레이어가 Enemy와 그냥 부딪혔을 때
     {
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.tag == "Enemy" && !holdingShell)  // #65 거북 껍질을 들고 있지 않을 때 - 다른 Enemy와 부딪힌다면, 플레이어가 다침
         {
             Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
             if(! col.gameObject.GetComponent<EnemyLife>().beStepped)    // 일반 거북 껍질에 닿아도 플레이어가 GetHurt 되지 않도록
                 playerLife.GetHurt();
         }
+        else if(col.gameObject.tag == "Enemy" && holdingShell)  // #65 플레이어가 거북 껍질을 들고 있을 때 - 다른 Enemy와 부딪힌다면, 그 Enemy가 죽음
+        {
+            col.gameObject.GetComponent<EnemyLife>().HitByShell(this.transform.position);   // 함수 인자 : 플레이어의 위치 -> 부딪힌 Enemy는 그대로 껍질에 맞아서 죽도록
 
+            if(transform.GetChild(3) != null)   // #65 만약 플레이어가 거북 껍질을 들고 있다면
+            {
+                Debug.Log("//#65 플레이어의 자식 중 거북 껍질 발견");
+                transform.GetChild(3).GetComponent<EnemyLife>().HitByShell(this.transform.position);    // 거북 껍질도 죽도록
+
+                transform.GetChild(3).GetComponent<EnemyLife>().PlayerReleasing();  // 
+            }
+        }
         // #50 아래 코드 - OnTriggerEnter2D로 이동
         // if(col.gameObject.tag == "Coin")    // #28  코인 획득
         // {
@@ -678,10 +692,12 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {
         if(nowHolding)  // 만약 지금 들고 있다면
         {
+            holdingShell = true;    
             anim.SetTrigger("HoldingShell");
         }
         else            // 껍질 놓았다면
         {
+            holdingShell = false;    
             anim.SetTrigger("ReleasingShell");
         }
     }
