@@ -58,6 +58,7 @@ MonoBehaviour:
   pushPButton: 0
   groundCheck: {fileID: 0}
   isInUnderground: 0
+  holdingShell: 0
   jumpClip: {fileID: 8300000, guid: 54ce6a6c027de164489bdb0e643e7d71, type: 3}
   raccoonTailClip: {fileID: 8300000, guid: cb12743ff3372bc42abff0ee1fd6ed92, type: 3}
   coinClip: {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
@@ -151,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031772048576988742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.065, z: 0}
+  m_LocalPosition: {x: 0, y: 0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1031772049676814298}

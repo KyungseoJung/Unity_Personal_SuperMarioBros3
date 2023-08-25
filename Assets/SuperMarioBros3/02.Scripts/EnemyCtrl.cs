@@ -19,6 +19,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed = 2f;        // 이동 속도
     private Rigidbody2D rBody;      
+    [SerializeField]
     private Transform frontCheck;   // #18 부딪혔을 때 이동 방향 바꾸도록 확인용
     
     private bool grounded;              // #33 땅 밟았는지 체크
@@ -209,6 +210,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 }
                 break;
+            case ENEMY_TYPE.GOOMBA :    // #66 굼바도 Flip 하돍 
             case ENEMY_TYPE.TURTLE :
                 if(col.gameObject.tag == "Cliff")   // #18 낭떠러지에서 이동 방향 바꾸도록
                 {
