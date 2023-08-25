@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 {
@@ -28,7 +29,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // 꽃 ==========================
 // #12 꽃 움직임
-    public bool isMoving = true;               // 움직여도 되는지 확인용 bool 변수
+    private bool canMovingUp = true;               // 움직여도 되는지 확인용 bool 변수
+    private bool isMovingUp = false;               // #12 위로 움직이고 있는지 확인용
+    private bool isMovingDown = false;             // #12 이레러 음직이고 있는지 확인용
     [HideInInspector]
     public bool hideInPipe = true;      // #57 파이프 안에 숨었는지 체크
     
@@ -161,7 +164,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     public void Flip()
     {
-        Debug.Log("//#64 Enemy 뒤집힘");
+        // Debug.Log("//#64 Enemy 뒤집힘");
         
         enemyDir *= -1;
 
@@ -205,12 +208,12 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 꽃 Enemy 주위에 플레이어가 있다면 꽃 등장 X 
                 {
-                    // Debug.Log("#12 플레이어가 꽃 가까이 들어왔다");
-                    isMoving = false;
+                    Debug.Log("#12 보완 플레이어가 꽃 가까이 들어왔다");
+                    canMovingUp = false; // #12
 
                 }
                 break;
-            case ENEMY_TYPE.GOOMBA :    // #66 굼바도 Flip 하돍 
+            case ENEMY_TYPE.GOOMBA :    // #66 굼바도 Flip 하도록
             case ENEMY_TYPE.TURTLE :
                 if(col.gameObject.tag == "Cliff")   // #18 낭떠러지에서 이동 방향 바꾸도록
                 {
@@ -235,11 +238,13 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
                     flowerDownEnumerator = FlowerDown();    // #12 fix 코루틴 지정
                     
-                    StopCoroutine(flowerUpEnumerator);      // 중복 실행을 막기 위해 코루틴 종료시킨 후, 새로 시작하기
-                    StopCoroutine(flowerDownEnumerator);
+                    // #12 보완 : 아래 코드를 주석처리 하기 전 - 꽃 Enemy가 계속 중복해서 올라오고 내려오는 버그 발생했었음
+                    // StopCoroutine(flowerUpEnumerator);      // 중복 실행을 막기 위해 코루틴 종료시킨 후, 새로 시작하기
+                    // StopCoroutine(flowerDownEnumerator);
 
-                    isMoving = true;
-                    StartCoroutine(flowerUpEnumerator);   
+                    canMovingUp = true;
+                    if(!isMovingUp && !isMovingDown)    // #12 보완 : 꽃이 올라오지도, 내려가지고 않고 있다면 직접 코루틴을 작동시켜주자
+                        StartCoroutine(flowerUpEnumerator);   
  
                 }
                 break;
@@ -248,11 +253,24 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     }
     IEnumerator FlowerUp() // #12 꽃 - 위로 올라오기
     {
-        if(!isMoving)       // 움직이면 안 되는 상태라면 코루틴 아예 종료
-            yield break;
+        Debug.Log("//#12 보완 : 꽃 Enemy 올라온다");
 
         while(true)  // 올라가도 될 때에만 올라가도록
         {
+            if(!canMovingUp)       // 움직이면 안 되는 상태라면 코루틴 아예 종료
+            {
+                yield return new WaitForSeconds(0.5f);
+                moveTimer = 0f;
+
+                flowerDownEnumerator = FlowerDown();       
+                StartCoroutine(flowerDownEnumerator);      // 다시 내려가도록
+
+                if(isMovingUp)  // #12 보완 : 올라오고 있지 않음을 체크
+                    isMovingUp = false; 
+
+                yield break;    // 현재 코루틴 종료
+            }
+
             // Debug.Log("#12 업 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
             {
@@ -265,8 +283,16 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 flowerDownEnumerator = FlowerDown();       // #12 fix 코루틴 지정
                 StartCoroutine(flowerDownEnumerator);      // 다시 내려가도록
+
+                if(isMovingUp)  // #12 보완 : 올라오고 있지 않음을 체크
+                    isMovingUp = false; 
+
                 yield break;    // 현재 코루틴 종료
             }
+            
+            if(!isMovingUp)     // #12 보완 : 올라오고 있음을 체크
+                isMovingUp = true;
+
             moveTimer += Time.deltaTime;
             yield return null;  // 한 프레임 대기
         }
@@ -275,6 +301,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     IEnumerator FlowerDown()    // #12 꽃 - 밑으로 내려가기
     {
         ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
+
+        Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
 
         while(true)
         {
@@ -288,15 +316,22 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 yield return new WaitForSeconds(1.0f);
                 moveTimer = 0f;
 
-                if(isMoving)
+                if(canMovingUp)
                 {
                     flowerUpEnumerator = FlowerUp();       // #12 fix 코루틴 지정
                     StartCoroutine(flowerUpEnumerator);    // 다시 올라오도록
                 }
                 // Debug.Log("//#12 다운 함수 종료");
 
+                if(isMovingDown)    // #12 보완 : 내려가고 있지 않음을 체크
+                    isMovingDown = false;
+
                 yield break;    // 현재 코루틴 종료
             }
+
+            if(!isMovingDown)   // #12 보완 : 내려가고 있음을 체크
+                isMovingDown = true;    
+
             moveTimer += Time.deltaTime;
             yield return null;  // 한 프레임 대기
 

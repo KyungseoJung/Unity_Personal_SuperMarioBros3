@@ -417,7 +417,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void Flip() // 플레이어 바라보는 방향 
     {
-        Debug.Log("//#37 방향 바꾸기");
+        // Debug.Log("//#37 방향 바꾸기");
         // Debug.Log("뒤집어");
         dirRight = !dirRight;   //바라보는 방향 변경
 
@@ -441,7 +441,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {
         if(col.gameObject.tag == "EnemyHeadCheck")   
         {
-            Debug.Log("//#30 Enemy의 머리 밟음");
+            // Debug.Log("//#30 Enemy의 머리 밟음");
             if(!col.gameObject.GetComponentInParent<EnemyLife>().beStepped) //  아직 beStepped가 true가 아니라면
             {
                 // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");

@@ -78,7 +78,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         if(Input.GetKeyUp(KeyCode.X))   // #64 누르고 있던 X키를 놓았을 때
         {
-            Debug.Log("//#64 X키 떼었다");
+            // Debug.Log("//#64 X키 떼었다");
             
             if(caughtByPlayer)
             {
