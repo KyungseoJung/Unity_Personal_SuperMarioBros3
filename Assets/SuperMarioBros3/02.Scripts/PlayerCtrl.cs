@@ -554,6 +554,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 transform.GetChild(3).GetComponent<EnemyLife>().PlayerReleasing();  // 
             }
         }
+        else if(col.gameObject.tag == "EnemyWeapon")    // #14
+        {
+            Destroy(col.gameObject);    // 파이어볼 자체 소멸
+            Debug.Log("//#14 플레이어가 파이어볼에 맞아서 다침");
+            // 디테일 - 거북 껍질을 잡고 있는 상태에서 다치더라도, 거북 껍질은 놓치지 않음
+            playerLife.GetHurt();
+        }
         // #50 아래 코드 - OnTriggerEnter2D로 이동
         // if(col.gameObject.tag == "Coin")    // #28  코인 획득
         // {
