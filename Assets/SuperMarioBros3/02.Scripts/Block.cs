@@ -122,7 +122,7 @@ public class Block : MonoBehaviour  // 물음표 블록
 
                 {
                     isTouched = true;
-                    FragileBlockBroken();   
+                    FragileBlockBroken();   // #22 거북 껍질에 박았을 때에는 - Enemy에서 해당 함수 실행하도록 설정함
                 }
                 break;
         }
@@ -135,8 +135,9 @@ public class Block : MonoBehaviour  // 물음표 블록
             case BLOCK_TYPE.ITEMBLOCK:
             case BLOCK_TYPE.ITEMBLOCK_GREEN:    // #60
 
-                if(other.gameObject.tag == "Enemy" && !isTouched)       // #22 보완 - 한번만 등장하도록 isTouched 변수 추가
+                if(other.gameObject.tag == "ShellWeapon" && !isTouched)       // #22 보완 - 한번만 등장하도록 isTouched 변수 추가
                 {
+                    Debug.Log("//#22 보완 : 거북 껍질이 블록에 부딪힘");
                     if(other.gameObject.GetComponent<EnemyCtrl>().enemyType == EnemyCtrl.ENEMY_TYPE.SHELL)  // #22 거북 등껍질에 부딪혔을 때에도 블록 부숴지도록
                     {
                         StartCoroutine(BlockUpDown());
@@ -148,7 +149,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                         if(other.gameObject.transform.root.position.x < transform.position.x) // #4 보완: 블록에 부딪힌 껍질의 위치가 블록보다 왼쪽에 있다면
                             BlockIsTouched(1);    // 코인 또는 아이템 등장 - 오른쪽으로 등장
                         else
-                            BlockIsTouched(-1);   // 플레이어가 블록보다 오른쪽이면 - 버섯은 등장 후 왼쪽으로 이동
+                            BlockIsTouched(-1);   // Enemy가 블록보다 오른쪽이면 - 버섯은 등장 후 왼쪽으로 이동
                     }
                 }
 

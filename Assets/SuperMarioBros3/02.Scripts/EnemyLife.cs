@@ -339,7 +339,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     public void HitByShell(Vector3 _pos)   // #58 튕겨다니는 거북 껍질에 맞을 때    // #65 public 변환
     {
-        Debug.Log("//# 거북 껍질에 맞음");
+        Debug.Log("// #58 " + gameObject + " - Enemy가 거북 껍질에 맞음");
         
         enemystate = ENEMY_STATE.DIE;   // 일단 모두 죽은 상태로
 
