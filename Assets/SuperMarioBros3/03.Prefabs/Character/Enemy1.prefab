@@ -87,7 +87,6 @@ MonoBehaviour:
   enemyDir: -1
   moveSpeed: 0
   frontCheck: {fileID: 0}
-  isMoving: 1
   hideInPipe: 1
   destPos: {x: 0, y: 0, z: 0}
   lookingUp: {fileID: 0}

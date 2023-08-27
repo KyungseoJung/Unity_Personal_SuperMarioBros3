@@ -154,6 +154,10 @@ public class Block : MonoBehaviour  // 물음표 블록
                 }
 
                 break;
+            case BLOCK_TYPE.FRAGILE:    // #60
+                if(other.gameObject.tag == "ShellWeapon")   // #25 보완
+                    FragileBlockBroken();
+                break;
         }
     }
     
@@ -270,7 +274,7 @@ public class Block : MonoBehaviour  // 물음표 블록
         }
     }
 
-    public void FragileBlockBroken()   // #25 SHELL에 부딪히면 약한 블록 부숴짐 - EnemyCtrl에서 실행됨
+    public void FragileBlockBroken()   // #25 SHELL(정확히 말하자면 플레이어가 던진 or 발로 찬 ShellWeapon)에 부딪히면 약한 블록 부숴짐 - EnemyCtrl에서 실행됨
     {
         FragementsVisible();
         anim.SetTrigger("Broken");  // 부숴지는 파편 효과 - 애니메이션으로 표현

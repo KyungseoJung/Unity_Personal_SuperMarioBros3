@@ -506,6 +506,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         // Debug.Log("//#64 플레이어 - Shell 들고다니기/ 위치는 : " + transform.position + "//" + transform.localPosition);
         rBody.simulated = false;    // rBody가 살아있어서 자꾸 플레이어를 안 따라오는 것 같아서
+
         // rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
 
         // rBody.gravityScale = 0;
@@ -537,6 +538,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         transform.parent = null;    // 플레이어에게 잡힌 상태 -> 다시 독립적인 상태로 변경
 
         rBody.simulated = true;     // 자유롭게 움직이도록
+
         this.gameObject.layer = 13; // 이제 플레이어랑 부딪힐 수 있음
 
         if(timeOver)

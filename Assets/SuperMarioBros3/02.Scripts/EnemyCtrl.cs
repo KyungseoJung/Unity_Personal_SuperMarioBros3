@@ -178,6 +178,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
+            case ENEMY_TYPE.SHELL : // #25 보완
+
                 if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
                     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
                 {
@@ -186,19 +188,20 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 break;
 
-            case ENEMY_TYPE.SHELL :
-                if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
-                    || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
-                {
-                    if(col.gameObject.tag == "FragileBlock")   // #25 SHELL의 frontCheck가 부숴지는 블록과 부딪힌 거라면 - 블록이 부숴지도록
-                    {
-                        col.gameObject.GetComponent<Block>().FragileBlockBroken();
-                    }
+    // #25 보완 : 아래 코드는 Block.cs에서 실행되도록 - 그 방식이 더 적합하다고 생각 - 하나하나 col에 접근하는 것보다는, 처음부터 Block.cs에서 실행하는 게 낫지
+            // case ENEMY_TYPE.SHELL :
+            //     if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
+            //         || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+            //     {
+            //         if(col.gameObject.tag == "FragileBlock")   // #25 SHELL의 frontCheck가 부숴지는 블록과 부딪힌 거라면 - 블록이 부숴지도록
+            //         {
+            //             col.gameObject.GetComponent<Block>().FragileBlockBroken();
+            //         }
                     
-                    Flip();
-                }
+            //         Flip();
+            //     }
                 
-                break;
+            //     break;
         }
     }
     private void OnTriggerEnter2D(Collider2D col)   
