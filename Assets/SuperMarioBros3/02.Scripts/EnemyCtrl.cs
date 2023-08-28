@@ -57,7 +57,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 // 거북 껍질 ==========================
 // #16 거북 껍질 발로 차기
     public bool kickShell;
-    private float kickSpeed = 15f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
+    private float kickSpeed = 18f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 
 
 
@@ -184,6 +184,20 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
                 {
                     Flip();
+
+                    if(kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
+                    {
+                        if(col.gameObject.transform.position.x < this.transform.position.x)
+                        {
+                            rBody.AddForce(Vector2.right * 10f);    
+                            Debug.Log("//#16 보완 : 오른쪽으로 튕겨");
+                        }
+                        else
+                        {
+                            rBody.AddForce(Vector2.left * 10f);
+                            Debug.Log("// #16 보완 : 왼쪽으로 튕겨");
+                        }
+                    }
                 }
 
                 break;

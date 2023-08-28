@@ -23,6 +23,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private GameObject trampledBody;       // #15
     private GameObject body;        // #15
     private BoxCollider2D boxCollider2D; // #15
+    private CircleCollider2D circleCollider2D;  // #16 보완
 
     private Rigidbody2D rBody;      // #19
 
@@ -59,8 +60,24 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         switch(enemyCtrl.enemyType)
         {
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :
+                rBody = GetComponent<Rigidbody2D>();    // #19
+                break;
             case EnemyCtrl.ENEMY_TYPE.TURTLE : 
                 rBody = GetComponent<Rigidbody2D>();    // #19
+                circleCollider2D = GetComponent<CircleCollider2D>();    // #16 보완
+                break;
+        }
+    }
+
+    private void Start()
+    {
+        switch(enemyCtrl.enemyType)
+        {
+            case EnemyCtrl.ENEMY_TYPE.TURTLE : // #16 보완
+                if(circleCollider2D.enabled)
+                {
+                    circleCollider2D.enabled = false;   // 써클 콜라이더 - 만약 활성화 되어 있다면, 비활성화로 시작하도록
+                }
                 break;
         }
     }
@@ -462,9 +479,11 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         body.SetActive(false);              // 기존 바디 비활성화
         trampledBody.SetActive(true);       // 등껍질 이미지 활성화
 
-        Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
-        size.y = 0.7f;
-        boxCollider2D.size = size;
+        // Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
+        // size.y = 0.7f;
+        // boxCollider2D.size = size;
+        boxCollider2D.enabled = false;      // #16 보완 : 위 코드 주석하고, 써클 콜라이더 이용하기
+        circleCollider2D.enabled = true;    
 
         enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
 
@@ -482,9 +501,11 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             trampledBody.SetActive(false);       // 등껍질 이미지 비활성화
             body.SetActive(true);              // 기존 바디 활성화
 
-            Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
-            size.y = 1.164f;
-            boxCollider2D.size = size;
+            // Vector2 size = boxCollider2D.size;  // 등껍질로 사이즈 맞추기
+            // size.y = 1.164f;
+            // boxCollider2D.size = size;
+            circleCollider2D.enabled = false;       // #16 보완 : 위 코드 주석하고, 써클 콜라이더 이용하기
+            boxCollider2D.enabled = true;      
 
             enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.TURTLE;   
 
