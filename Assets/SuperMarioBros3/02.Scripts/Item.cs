@@ -69,7 +69,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
                 startPos = transform.position;          // #4 버섯 등장하기
                 destPos = transform.position;
-                destPos.y += 1f;    
+                destPos.y += 1.2f;      // #4 위로 올라오다가 블록에 걸리는 일 방지 
 
                 break;
             
