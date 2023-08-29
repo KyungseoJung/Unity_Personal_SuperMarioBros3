@@ -180,22 +180,26 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.TURTLE : 
             case ENEMY_TYPE.SHELL : // #25 보완
 
-                if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
-                    || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+                // if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
+                //     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
+                if(col.gameObject.tag == "Obstacle")    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
                 {
+                    Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘");
                     Flip();
 
                     if(kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
                     {
+                        Debug.Log("//#64 보완 : kickShell 확인됨");
+
                         if(col.gameObject.transform.position.x < this.transform.position.x)
                         {
-                            rBody.AddForce(Vector2.right * 10f);    
-                            Debug.Log("//#16 보완 : 오른쪽으로 튕겨");
+                            rBody.AddForce(Vector2.right * 50f);    // 너무 무거워서 안 튕기는 상황을 방지하기 위함
+                            Debug.Log("//#16 //#64 보완 : 오른쪽으로 튕겨");
                         }
                         else
                         {
-                            rBody.AddForce(Vector2.left * 10f);
-                            Debug.Log("// #16 보완 : 왼쪽으로 튕겨");
+                            rBody.AddForce(Vector2.left * 50f);
+                            Debug.Log("// #16 //#64 보완 : 왼쪽으로 튕겨");
                         }
                     }
                 }

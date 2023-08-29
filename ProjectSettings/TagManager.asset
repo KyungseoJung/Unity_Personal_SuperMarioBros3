@@ -18,6 +18,7 @@ TagManager:
   - PlayerTail
   - ShellWeapon
   - Item
+  - Obstacle
   layers:
   - Default
   - TransparentFX

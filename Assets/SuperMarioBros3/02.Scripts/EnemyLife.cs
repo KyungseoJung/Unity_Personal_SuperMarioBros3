@@ -15,7 +15,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     public bool shellBeStepped = false;     // #30 보완
     private bool getHitByTail = false;      // #57 꼬리에 한번만 치이도록 하기 위한 bool형 변수
     // private bool followPlayer = false;   // #64
-    private bool caughtByPlayer = false;    // #64 플레이어에게 잡혀있는 상태인지 확인
+    private bool caughtByPlayer = false;    // #64 플레이어에게 잡혀있는 상태인지 확인 - ENEMY_TYPE.SHELL 에게만 해당
     private Vector3 offset;                 // #64 플레이어를 따라다니는 라이프 바의 offset
 
     private Transform playerTransform;      // #64
@@ -93,15 +93,21 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         //     }
         // }
 
-        if(Input.GetKeyUp(KeyCode.X))   // #64 누르고 있던 X키를 놓았을 때
+        switch(enemyCtrl.enemyType)
         {
-            // Debug.Log("//#64 X키 떼었다");
-            
-            if(caughtByPlayer)
-            {
-                caughtByPlayer = false;
-                PlayerReleasing();      // 놓여짐
-            }
+            case EnemyCtrl.ENEMY_TYPE.SHELL :
+
+                if(Input.GetKeyUp(KeyCode.X))   // #64 누르고 있던 X키를 놓았을 때
+                {
+                    // Debug.Log("//#64 X키 떼었다");
+                    
+                    if(caughtByPlayer)
+                    {
+                        caughtByPlayer = false;
+                        PlayerReleasing();      // 놓여짐
+                    }
+                }
+            break;
         }
     }
     private void OnCollisionEnter2D(Collision2D other)  // 콜라이더 위치상, ㅡIsTrigger 체크가 된 함수 먼저 실행 -> IsTrigger 체크 안 된 함수 실행되기 때문에~
@@ -596,6 +602,11 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         }
 
      }
+
+        // if(!timeOver)
+        //     enemyCtrl.kickShell = true; // #64 보완 : 그래야 발로 차는 것과 같은 현상 일어남 - 부모를 null로 만든 후에 true로 바꿔줘야 함.
+        // 왜냐: 부모를 null로 바꾸기 전에 kickShell = true로 해주면, 부모가 플레이어인채로 날라다님
+        // 애초에 해줄 필요가 없었네 - 부모를 null로 바꾸는 동시에, 플레이어와 부딪히며 kickShell = true로 바뀌게 됨
 
 
 
