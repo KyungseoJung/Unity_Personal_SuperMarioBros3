@@ -41,6 +41,7 @@
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\DontDestroy.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyCtrl.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyLife.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyMovement.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\FollowCamera.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\GameMgr.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Goal.cs" />

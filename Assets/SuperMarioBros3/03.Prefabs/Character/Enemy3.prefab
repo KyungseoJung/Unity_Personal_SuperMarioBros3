@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1499156012293689805}
   - component: {fileID: 1499156012293689794}
   - component: {fileID: 1499156012293689799}
+  - component: {fileID: 3845070746831800035}
   m_Layer: 14
   m_Name: Enemy3
   m_TagString: Enemy
@@ -133,7 +134,7 @@ MonoBehaviour:
   wingsType: 2
   enemyDir: -1
   moveSpeed: 0
-  isMoving: 1
+  frontCheck: {fileID: 0}
   hideInPipe: 1
   destPos: {x: 0, y: 0, z: 0}
   lookingUp: {fileID: -991036465199342561, guid: 0f379e43d2d2af045827b3e5e44f518b,
@@ -216,3 +217,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &3845070746831800035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499156012293689793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0806fb1024d1c646bcdef83d5aabaaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
