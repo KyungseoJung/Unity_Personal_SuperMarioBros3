@@ -40,7 +40,9 @@ public class FollowCamera : MonoBehaviour   // #7 플레이어 따라다니느 �
 
     void TrackPlayer()
     {
-        
+        if(player == null)  // #68 플레이어가 소멸되고 없다면 아래 코드가 실행되지 않도록
+            return;
+            
         float targetX = transform.position.x;
         float targetY = transform.position.y;
 

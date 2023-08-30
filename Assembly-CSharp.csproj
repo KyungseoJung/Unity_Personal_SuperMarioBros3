@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Block.cs" />
+     <Compile Include="Assets\SuperMarioBros3\02.Scripts\DestroyZone.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Destructor.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\DontDestroy.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\EnemyCtrl.cs" />
