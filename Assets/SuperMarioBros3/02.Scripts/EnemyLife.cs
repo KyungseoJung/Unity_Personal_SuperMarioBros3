@@ -138,11 +138,12 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             enemyCtrl.wingsType = EnemyCtrl.WINGS_TYPE.NO;  // 날개 없애기
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
+                            Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp");
+                            playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
+
                             break;
                         }
 
-                        Debug.Log("#11 플레이어가 Enemy 머리 밟음");
-                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         IsDieByBeingTrampled();               // #15 등껍질로 변신
                     }
                     break;
