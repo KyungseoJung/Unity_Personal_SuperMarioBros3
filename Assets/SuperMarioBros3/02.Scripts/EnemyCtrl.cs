@@ -25,7 +25,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     
     private bool grounded;              // #33 땅 밟았는지 체크
     private Transform groundCheck;      // #33 땅 밟았는지 체크 - Enemy 각각 자기 자신의 그라운드체크 가져오기 
-    private float jumpForce = 3000f;    // #33 날개가 달려서 점프하면서 다니는 Enemy
+    private float jumpForce = 5000f;    // #33 날개가 달려서 점프하면서 다니는 Enemy
 
 // 꽃 ==========================
 // #12 꽃 움직임
@@ -172,6 +172,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         enemyScale.x *= -1;
         transform.localScale = enemyScale;
     }
+    
     void OnCollisionEnter2D(Collision2D col) 
     {
         switch(enemyType)
@@ -182,7 +183,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 // if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
                 //     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
-                if(col.gameObject.tag == "Obstacle")    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
+                if(col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
+                    || col.gameObject.tag == "FragileBlock")    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
                 {
                     Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘");
                     Flip();
