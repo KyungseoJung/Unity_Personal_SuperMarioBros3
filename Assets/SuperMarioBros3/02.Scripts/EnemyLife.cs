@@ -123,6 +123,16 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 case EnemyCtrl.ENEMY_TYPE.GOOMBA : 
                     if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
                     {
+                        if(enemyCtrl.wingsType == EnemyCtrl.WINGS_TYPE.YES) // #34 밟았는데, 그게 날개 달린 거북이었다면
+                        {
+                            enemyCtrl.wingsType = EnemyCtrl.WINGS_TYPE.NO;  // 날개 없애기
+                            anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
+
+                            Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp");
+                            playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
+
+                            break;
+                        }
                         // Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
                         playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         enemystate = ENEMY_STATE.DIE;  //#9 리팩터링

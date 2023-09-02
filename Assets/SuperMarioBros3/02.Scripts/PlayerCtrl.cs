@@ -122,6 +122,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
         if(Input.GetKeyDown(KeyCode.Z) && grounded && (playerLife.playerState != PlayerLife.MODE_STATE.HURT))     // #1 리팩토링 점프 키 변경 (Input.GetButtonDown("Jump")) -> Input.GetKeyDown(KeyCode.Z)
         {
+            Debug.Log("// X 누름");
+            
             isJumping = true;
             Rbody.AddForce(Vector2.up * minJump);                       // 위로 
             // anim.SetTrigger("Jump");                                    // 애니메이션

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,7 +26,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     
     private bool grounded;              // #33 땅 밟았는지 체크
     private Transform groundCheck;      // #33 땅 밟았는지 체크 - Enemy 각각 자기 자신의 그라운드체크 가져오기 
-    private float jumpForce = 5000f;    // #33 날개가 달려서 점프하면서 다니는 Enemy
+    private float turtleJumpForce = 13000f;   // #33 거북 - 날개가 달려서 점프하면서 다니는 Enemy
+    private float goombaJumpForce = 1000f;    // #69 굼바 - 날개가 달려서 점프하면서 다니는 Enemy
+    private float jumpTimeCheck = 0f;   // #69 0.1초마다 뛰도록 - Time.deltaTime 이용 (전 프레임이 완료되기까지 걸린 시간)
+    private int jumpNum = 0;            // #69 점프한 횟수 - 날개 달린 굼바의 경우 3번 낮게 뛰고, 1번 높게 뛰기 때문에
 
 // 꽃 ==========================
 // #12 꽃 움직임
@@ -87,7 +91,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.TURTLE :   
                 if(wingsType == WINGS_TYPE.YES) // #34 날개가 있는 거북이라면
                 {
-                    anim.SetBool("Fly", true);  // 처음부터 날개 애니메이션 실행
+                    anim.SetBool("Fly", true);  // 처음부터 날개 애니메이션 실행    // #69 굼바도 적용
                 } 
 
                 moveSpeed = 2f;
@@ -109,32 +113,65 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void Update()
     {
+        if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+            return;
+
+// #33 #69 Enemy 점프 조정 =================================
+        if(jumpTimeCheck < 0.1)
+        {
+            jumpTimeCheck += Time.deltaTime;
+            return;
+        }
+
         switch(enemyType)
         {
             case ENEMY_TYPE.GOOMBA : 
-            case ENEMY_TYPE.TURTLE : 
-                if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
-                    return;
-
                 CheckGroundCheck(); // #33
-                if(grounded && (wingsType == WINGS_TYPE.YES)) 
-                {
-                    Jump();
-                    grounded = false;
-                }
+                // Debug.Log("//#69 땅 밟았나?: " + grounded);
 
+                if(grounded && (wingsType == WINGS_TYPE.YES)) // 땅에 닿아있을 때에만 점프!
+                {
+                    jumpTimeCheck = 0;
+                    grounded = false;
+
+                    if(jumpNum <3)      //#69 점프 - 처음 3번은 낮게, 그 후 1번은 높게 뛰기
+                    {
+                        jumpNum++;
+                        Jump(enemyType);
+                    }
+                    else
+                        JumpHigh();
+                }
+                break;
+            case ENEMY_TYPE.TURTLE : 
+                CheckGroundCheck(); // #33
+                // Debug.Log("//#69 땅 밟았나?: " + grounded);
+
+                if(grounded && (wingsType == WINGS_TYPE.YES)) // 땅에 닿아있을 때에만 점프!
+                {
+                    jumpTimeCheck = 0;
+                    grounded = false;
+
+                    Jump(enemyType);
+                }
                 break;
         }
+
     }
+
     void FixedUpdate()
     {
+        if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+            return;
+
         switch(enemyType)
         {
             case ENEMY_TYPE.GOOMBA : 
             case ENEMY_TYPE.TURTLE : 
-                if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
-                    return;
-                
+                // #69 위치 변경 (switch문 이후 -> 이전으로)
+                // if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+                //     return;
+
                 rBody.velocity = new Vector2(enemyDir * moveSpeed, rBody.velocity.y);
                     // #9 Mathf.Sign : 부호를 반환하는 함수
                 break;
@@ -404,12 +441,36 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     || Physics2D.Linecast(transform.position, groundCheck.position, 1<<LayerMask.NameToLayer("Obstacle"));
     }
 
-    void Jump() // #33 껑충껑충 뛰어다니는
+    void Jump(ENEMY_TYPE _type) // #33 껑충껑충 뛰어다니는
     {
-        rBody.AddForce(Vector2.up * jumpForce);
-        Debug.Log("//#33 점프");
+        switch(_type)
+        {
+            case ENEMY_TYPE.GOOMBA :
+                Debug.Log("//#69 굼바 낮게 점프");
 
-        grounded = false;   // 점프 1번 한 후에는 false로
+                rBody.AddForce(Vector2.up * goombaJumpForce);
+                // grounded = false;   // 점프 1번 한 후에는 false로 - 이미 Update 문에서 실행함
+
+                break;
+
+            case ENEMY_TYPE.TURTLE :
+                Debug.Log("//#33 거북 점프");
+
+                rBody.AddForce(Vector2.up * turtleJumpForce);
+                // grounded = false;   // 점프 1번 한 후에는 false로
+                
+                break;
+            
+            
+        }
+    }
+
+    void JumpHigh() // #69 높게 점프하기 - 날개 달린 굼바의 경우에만 해당
+    {
+        Debug.Log("//#69 굼바 높게 점프");
+
+        rBody.AddForce(Vector2.up * goombaJumpForce * 4);   // 평소보다 2배는 높게 점프하도록
+        jumpNum = 0;    // 다시 초기화 - 다시 낮게 뛰기 시작하도록
     }
     
     void TurnToWeapon() //#59
