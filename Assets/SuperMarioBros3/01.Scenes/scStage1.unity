@@ -11878,7 +11878,7 @@ PrefabInstance:
     - target: {fileID: 8500825566119461073, guid: b5160862707b95346acf3b6eeda78d0f,
         type: 3}
       propertyPath: wingsType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8500825566119461074, guid: b5160862707b95346acf3b6eeda78d0f,
         type: 3}
@@ -11888,12 +11888,12 @@ PrefabInstance:
     - target: {fileID: 8500825566119461074, guid: b5160862707b95346acf3b6eeda78d0f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.66717
+      value: 29.19
       objectReference: {fileID: 0}
     - target: {fileID: 8500825566119461074, guid: b5160862707b95346acf3b6eeda78d0f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.7
+      value: -3.6
       objectReference: {fileID: 0}
     - target: {fileID: 8500825566119461074, guid: b5160862707b95346acf3b6eeda78d0f,
         type: 3}
@@ -11939,6 +11939,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy2-red
+      objectReference: {fileID: 0}
+    - target: {fileID: 8500825566119461079, guid: b5160862707b95346acf3b6eeda78d0f,
+        type: 3}
+      propertyPath: m_Mass
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5160862707b95346acf3b6eeda78d0f, type: 3}
@@ -19358,7 +19363,7 @@ Animator:
   m_GameObject: {fileID: 7788236126670244980}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fb54f4b995f4244448949b0f0ff6e48c, type: 2}
+  m_Controller: {fileID: 9100000, guid: b3dc6919850fe81498ce4b6ba782972b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -19717,7 +19722,8 @@ SpriteRenderer:
   m_SortingLayerID: -1508095767
   m_SortingLayer: 5
   m_SortingOrder: 5
-  m_Sprite: {fileID: 297761703447499198, guid: 0f379e43d2d2af045827b3e5e44f518b, type: 3}
+  m_Sprite: {fileID: -7530142797673451586, guid: 0f379e43d2d2af045827b3e5e44f518b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19765,7 +19771,7 @@ GameObject:
   - component: {fileID: 7788236126670244983}
   - component: {fileID: 5996537054172694892}
   m_Layer: 13
-  m_Name: Enemy1 (1)
+  m_Name: Enemy1-wings
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19779,7 +19785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7788236126670244980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.95, y: -5.24, z: 0}
+  m_LocalPosition: {x: 52.06, y: -4.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7788236126439469053}
