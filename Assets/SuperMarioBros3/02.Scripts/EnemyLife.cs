@@ -131,6 +131,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp");
                             playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
 
+                            beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
+
                             break;
                         }
                         // Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
@@ -148,11 +150,13 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             enemyCtrl.wingsType = EnemyCtrl.WINGS_TYPE.NO;  // 날개 없애기
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
-                            Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp");
-                            playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
+
+                            beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
 
                             break;
                         }
+                        Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp"); // #34 변경 - 날개 없는 거북 밟아도 플레이어 위로 Bounce 되도록
+                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
 
                         IsDieByBeingTrampled();               // #15 등껍질로 변신
                     }
@@ -183,7 +187,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
                     gameObject.tag = "ShellWeapon"; // #58 태그 변경
-                    enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
+                    // enemystate = ENEMY_STATE.DIE;  //#9 리팩터링 -> #34 fix: 바로 DIE 처리하면, 거북 껍질 안 날라가(EnemyCtrl의 FixedUpdate) -> 소멸되기 직전에 DIE처리해주자
                     IsDieByBeingTrampled();
                     break;
             }
@@ -218,7 +222,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         switch(enemyCtrl.enemyType)
         {
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :      // #19 죽을 때 - 굼바는 찌그러짐
-                rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
+                rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록 
+                Debug.Log("/#34 플레이어 - 껍질 밟았다!");
 
                 body = transform.GetChild(0).gameObject;
                 trampledBody = transform.GetChild(2).gameObject;
@@ -250,7 +255,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 break;
             
             case EnemyCtrl.ENEMY_TYPE.SHELL :       // #19 등껍질 밟거나 차면 3초 후 소멸
-                rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록
+                // rBody.velocity = new Vector2(0f, 0f);   // ((발로 찬 그 순간에는)) 가만히 움직이지 않도록 
+                Debug.Log("/#34 플레이어 - 껍질 밟았다!");
 
                 if(shellBeStepped)  // #30 보완 : 머리가 밟혀서 죽는 거라면 - 점수 획득 있음
                 // #30 보완 : 밟혀서 죽는 게 아닌 방법으로 (옆에서 밀어서) 죽는 거라면 - 점수 획득 없음 
@@ -259,7 +265,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     lobbyManager.CheckPoint();          // #35 포인트 확인용
                     ShowPointUi();                      // #19 획득 점수 표시
                 }
-                enemystate = ENEMY_STATE.DIE;           //#62
+                // enemystate = ENEMY_STATE.DIE;           //#62 -> #34 fix: 바로 DIE 처리하면 껍질이 안 나라가 (EnemyCtrl의 FixedUpdate) -> 소멸되기 직전에 DIE 처리 해주자
 
                 Invoke("DestroyEnemy", 2.0f);   
                 break;
@@ -464,6 +470,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private void DestroyEnemy() // #16 Enemy 소멸
     {
+        enemystate = ENEMY_STATE.DIE;   // #34 fix: 소멸되기 직전에 DIE 처리해야 거북 껍질이 날라가서.. 문제 해결을 위해 여기서 처리해보자
         Destroy(this.gameObject);
     }
 
