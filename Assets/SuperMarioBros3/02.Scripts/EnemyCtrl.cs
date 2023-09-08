@@ -38,6 +38,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     private bool isMovingDown = false;             // #12 이레러 음직이고 있는지 확인용
     [HideInInspector]
     public bool hideInPipe = true;      // #57 파이프 안에 숨었는지 체크
+    private bool playerDir;             // #70 확인
     
     private float moveTimer = 0f;           // 현재 움직임 파악
     private float upDownTimer = 1f;         // 위로 올라와서 등장하는 데 1초 소모
@@ -193,7 +194,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     hideInPipe = true;
 
 
-                CheckDirection();       // #13 바라보는 방향 (좌/우)(위/아래) 체크
+                CheckDirection(ENEMY_TYPE.FLOWER);       // #13 바라보는 방향 (좌/우)(위/아래) 체크
                 break;
         }
 
@@ -398,23 +399,41 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         }
     }
 
-    void CheckDirection()
+    void CheckDirection(ENEMY_TYPE _type)
     {
-        bool playerDir = playerTransform.position.x > transform.position.x; // Enemy 기준으로 플레이어가 오른쪽에 있는지 확인
+        switch(_type)
+        {
+            case ENEMY_TYPE.FLOWER :    //#70 코드 위치만 조금 수정 - 같은 함수에 GOOMBA 케이스도 넣기 위해서
+                playerDir = playerTransform.position.x > transform.position.x; // Enemy 기준으로 플레이어가 오른쪽에 있는지 확인
 
-        if((!playerDir && (enemyDir == 1))  // Enemy 기준으로 플레이어가 왼쪽에 있고 && Enemy가 보는 방향이 오른쪽이라면
-            || (playerDir && (enemyDir == -1)) )   // 플레이어가 오른쪽에 있고 && Enemy가 보는 방향이 왼쪽이라면
-        {
-            Flip();
-        }    
+                if((!playerDir && (enemyDir == 1))  // Enemy 기준으로 플레이어가 왼쪽에 있고 && Enemy가 보는 방향이 오른쪽이라면
+                    || (playerDir && (enemyDir == -1)) )   // 플레이어가 오른쪽에 있고 && Enemy가 보는 방향이 왼쪽이라면
+                {
+                    Flip();
+                }    
 
-        if(playerTransform.position.y > transform.position.y)   // 플레이어가 Enemy보다 위에 위치한다면
-        {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingUp;
-        }
-        else
-        {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingDown;
+                if(playerTransform.position.y > transform.position.y)   // 플레이어가 Enemy보다 위에 위치한다면
+                {
+                    transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingUp;
+                }
+                else
+                {
+                    transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = lookingDown;
+                }
+
+                break;
+
+            case ENEMY_TYPE.GOOMBA :    // #70 날아다니는 굼바 - JumpHigh 하고 나서 플레이어 위치 확인 후, 플레이어 따라가도록
+                playerDir = playerTransform.position.x > transform.position.x; // Enemy 기준으로 플레이어가 오른쪽에 있는지 확인
+
+                if((!playerDir && (enemyDir == 1))         // Enemy 기준으로 플레이어가 왼쪽에 있고 && Enemy가 보는 방향이 오른쪽이라면
+                    || (playerDir && (enemyDir == -1)) )   // 플레이어가 오른쪽에 있고 && Enemy가 보는 방향이 왼쪽이라면
+                {
+                    Flip();
+                }    
+
+                break;
+
         }
     }
 
@@ -471,8 +490,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         rBody.AddForce(Vector2.up * goombaJumpForce * 4);   // 평소보다 2배는 높게 점프하도록
         jumpNum = 0;    // 다시 초기화 - 다시 낮게 뛰기 시작하도록
+
+        CheckDirection(ENEMY_TYPE.GOOMBA);  // #70 날아다니는 굼바가 플레이어 따라다니도록
     }
-    
+
     void TurnToWeapon() //#59
     {
         Debug.Log("//#59 무기로 바뀜");
