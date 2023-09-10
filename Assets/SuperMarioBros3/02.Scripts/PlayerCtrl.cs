@@ -22,6 +22,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private float normalRunSpeed = 5f;      // #32 원래 최고 속도
     private float maxRunSpeed = 15f;        // #32 더 빠르게 달리기 가속도. 최고 속도
     private bool playMaxRunClip = false;    // #40 빨리 달리는 소리 
+    private bool playerSlipping = false;    // #71 플레이어 급 방향전환 - 미끄러지고 있는지 확인
     private float currSpeed;                // #41 현재 속도
     private float fallSpeed;                // 떨어질 때 속도
 
@@ -64,9 +65,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     public AudioClip jumpClip;
     public AudioClip raccoonTailClip;       // #43
     public AudioClip coinClip;              // 코인 획득 클립
-    public AudioSource maxRunAudioSource;
+    public AudioSource playerAudioSource;   // #71 maxRunClip 뿐만 아니라 slippingClip에도 사용하기 위해 이름 변경  (maxRunAudioSource -> playerAudioSource)
     public AudioClip maxRunClip;            // #40 최고 속도로 달릴 때 사운드 클립
     public AudioClip teleportClip;          // #49 순간이동할 때 사운드 클립
+    // public AudioSource slippingAudioSource; // #71
+    public AudioClip slippingClip;          // #71 효과음 - 플레이어 급 방향전환 시, 미끄러지는 소리
 
     private Music music;                    // #53 게임 백그라운드 음악(BGM) 설정
 
@@ -96,7 +99,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         boxCollider2D = GetComponent<BoxCollider2D>();  // #39
         playerTailObj = transform.GetChild(2).Find("playerTail").gameObject;    // #56 레벨3 플레이어 꼬리 오브젝트
 
-        maxRunAudioSource = gameObject.AddComponent<AudioSource>(); // #40 오디오소스 없기 때문에, 추가해서 지정해줘야 함
+        playerAudioSource = gameObject.AddComponent<AudioSource>(); // #40 오디오소스 없기 때문에, 추가해서 지정해줘야 함   // #71 이름 변경 
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();    // #53 BGM 설정
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
@@ -198,7 +201,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if(playMaxRunClip && !isFlying)      // X키 안누르고 있고 && 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
             {
                 playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-                maxRunAudioSource.Stop();
+                playerAudioSource.Stop();   
             }
 
             if( anim.GetBool("RunFast") )  // #55 빠르게 달리는 애니메이션 설정 해제
@@ -260,7 +263,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         fallSpeed = Rbody.velocity.y;           // #38 점프(떨어질 때) 속도
         anim.SetFloat("JumpSpeed", fallSpeed);  // 양수, 음수 모두 각각 다르게 작동해야 하므로
         
-    // #46 급 방향 전환
+    // #46 급 방향전환
         if(((Rbody.velocity.x>0) && (h<0)) || (Rbody.velocity.x<0) && (h>0))    // 움직이는 방향과 방향키의 방향이 다르다면
         {
             if(/*(currSpeed < -0.1) &&*/ !anim.GetBool("SuddenChangeDir"))       // #46 만약 급 방향전환 상태라면(Flip을 하기 전, 속도가 꽤 높은 편이라면) 
@@ -270,12 +273,24 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 // anim.SetTrigger("SuddenChangeDir");
                 anim.SetBool("SuddenChangeDir", true);
             }
+
+            if(!playerSlipping) // #71
+            {
+                playerSlipping = true;  
+                PlayerAudioSourcePlay(slippingClip, 0.3f); 
+            }
         }
         else if(((Rbody.velocity.x>0) && (h>0)) || ((Rbody.velocity.x<0) && (h<0))) // 움직이는 방향과 방향키의 방향이 같다면
         {
             if(anim.GetBool("SuddenChangeDir"))
             {
                 anim.SetBool("SuddenChangeDir", false);
+            }
+
+            if(playerSlipping)  // #71
+            {
+                playerSlipping = false; 
+                playerAudioSource.Stop();
             }
         }
 
@@ -353,7 +368,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip && !isFlying) // 속도 느려졌고, 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
         {
             playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-            maxRunAudioSource.Stop();
+            playerAudioSource.Stop();
         }
 
         if( (h*Rbody.velocity.x < normalRunSpeed) && (anim.GetBool("RunFast")) )  // #55 빠르게 달리는 애니메이션 설정 해제
@@ -379,9 +394,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Rbody.velocity = new Vector2(Mathf.Sign(Rbody.velocity.x) * maxSpeed, Rbody.velocity.y);
             if(pressingX && grounded && !playMaxRunClip) // #40 X키 누르는 상태에서 최고 속도라면 && 효과음 아직 안 나오고 있다면 // #41 보완 : && 땅에 발 디디고 있다면
             {
-                maxRunAudioSource.clip = maxRunClip;
-                maxRunAudioSource.volume = 0.1f;        // 소리 너무 커.. 줄이자..
-                maxRunAudioSource.Play();
+                // playerAudioSource.clip = maxRunClip;
+                // playerAudioSource.volume = 0.1f;        // 소리 너무 커.. 줄이자..
+                // playerAudioSource.Play();
+                PlayerAudioSourcePlay(maxRunClip, 0.1f);    // #71 오디어클립과 볼륨 지정
 
                 playMaxRunClip = true;
             }
@@ -709,5 +725,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             holdingShell = false;    
             anim.SetTrigger("ReleasingShell");
         }
+    }
+
+    private void PlayerAudioSourcePlay(AudioClip _clip, float _volume)  // #71
+    {
+        Debug.Log("//#71 클립 재생 : " + _clip);
+
+        playerAudioSource.clip = _clip;
+        playerAudioSource.volume = _volume;        // 소리 너무 커.. 줄이자..
+        playerAudioSource.Play();
     }
 }

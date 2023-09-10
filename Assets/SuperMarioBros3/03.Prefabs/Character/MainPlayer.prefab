@@ -65,6 +65,7 @@ MonoBehaviour:
   maxRunAudioSource: {fileID: 0}
   maxRunClip: {fileID: 8300000, guid: 10930a28cecd97a45a2ee9cd2bc20a19, type: 3}
   teleportClip: {fileID: 8300000, guid: cdd74e6f822f606418a14d296b856487, type: 3}
+  slippingClip: {fileID: 8300000, guid: eed4b5a741bbe67419d2437bcef1922f, type: 3}
 --- !u!114 &1031772047837095217
 MonoBehaviour:
   m_ObjectHideFlags: 0
