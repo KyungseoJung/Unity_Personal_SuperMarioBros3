@@ -27,7 +27,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     private Rigidbody2D rBody;      // #19
 
-    public AudioClip tailHitClip;   // #63
+    public AudioClip HitClip;   // #63  // #71 거북 껍질 발로 찼을 때 효과음과 동일
 
 // #19 몬스터 죽인 후 등장하는 PointUi
     public GameObject pointUi;
@@ -257,6 +257,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
             case EnemyCtrl.ENEMY_TYPE.SHELL :       // #19 등껍질 밟거나 차면 3초 후 소멸
                 // rBody.velocity = new Vector2(0f, 0f);   // ((발로 찬 그 순간에는)) 가만히 움직이지 않도록 
                 Debug.Log("/#34 플레이어 - 껍질 밟았다!");
+                AudioSource.PlayClipAtPoint(HitClip, transform.position);  // #71 거북 발로 차는 소리
 
                 if(shellBeStepped)  // #30 보완 : 머리가 밟혀서 죽는 거라면 - 점수 획득 있음
                 // #30 보완 : 밟혀서 죽는 게 아닌 방법으로 (옆에서 밀어서) 죽는 거라면 - 점수 획득 없음 
@@ -275,7 +276,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private void HitByTail(Vector3 _pos)  // #57 꼬리에 맞을 때
     {
         
-        AudioSource.PlayClipAtPoint(tailHitClip, transform.position);   // #63 꼬리로 맞으면 효과음 발생함  - 모든 Enemy 해당
+        AudioSource.PlayClipAtPoint(HitClip, transform.position);   // #63 꼬리로 맞으면 효과음 발생함  - 모든 Enemy 해당
 
         switch(enemyCtrl.enemyType)     // 꽃 Enemy만 제외하고 실행할 내용 (위로 튀어오르기, 상태 뒤집기)
         {   
@@ -617,6 +618,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 enemyScale.x *= -1;
                 transform.localScale = enemyScale;
             }
+            AudioSource.PlayClipAtPoint(HitClip, transform.position);  // #71 거북 발로 차는 소리
         }
 
      }
