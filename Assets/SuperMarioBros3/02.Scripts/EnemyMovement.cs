@@ -22,7 +22,6 @@ public class EnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(this.transform.position.x - followCamTransform.position.x < 7.5)
         if(this.transform.position.x - followCamTransform.position.x < 12)  
         // #67 보완: 7.5 -> 12로 변경: 화면에 들어오지 않아도 출발하도록 해서(Enemy가 움직이는 시점인 카메라 위치를 더 넓게) 움직임을 좀 더 자연스럽도록  
         {
