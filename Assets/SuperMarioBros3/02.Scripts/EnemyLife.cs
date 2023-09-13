@@ -28,7 +28,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     private Rigidbody2D rBody;      // #19
 
     public AudioClip HitClip;   // #63  // #71 거북 껍질 발로 찼을 때 효과음과 동일
-
+    public AudioClip squishClip;    // #71 Enemy를 발로 밟았을 때 효과음
 // #19 몬스터 죽인 후 등장하는 PointUi
     public GameObject pointUi;
     public GameObject bombUi;   // #57 꽃 Enemy 죽을 때 나타나는 폭탄 모양
@@ -125,6 +125,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     {
                         if(enemyCtrl.wingsType == EnemyCtrl.WINGS_TYPE.YES) // #34 밟았는데, 그게 날개 달린 거북이었다면
                         {
+                            AudioSource.PlayClipAtPoint(squishClip, transform.position);  // #71 Enemy 밟는 소리
+
                             enemyCtrl.wingsType = EnemyCtrl.WINGS_TYPE.NO;  // 날개 없애기
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
@@ -147,6 +149,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     {
                         if(enemyCtrl.wingsType == EnemyCtrl.WINGS_TYPE.YES) // #34 밟았는데, 그게 날개 달린 거북이었다면
                         {
+                            AudioSource.PlayClipAtPoint(squishClip, transform.position);  // #71 Enemy 밟는 소리
+
                             enemyCtrl.wingsType = EnemyCtrl.WINGS_TYPE.NO;  // 날개 없애기
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
@@ -222,6 +226,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         switch(enemyCtrl.enemyType)
         {
             case EnemyCtrl.ENEMY_TYPE.GOOMBA :      // #19 죽을 때 - 굼바는 찌그러짐
+                AudioSource.PlayClipAtPoint(squishClip, transform.position);  // #71 Enemy 밟는 소리
+
                 rBody.velocity = new Vector2(0f, 0f);   // 가만히 움직이지 않도록 
                 Debug.Log("/#34 플레이어 - 껍질 밟았다!");
 
@@ -242,6 +248,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 break;
 
             case EnemyCtrl.ENEMY_TYPE.TURTLE :      // #15 등껍질로 변신
+                AudioSource.PlayClipAtPoint(squishClip, transform.position);  // #71 Enemy 밟는 소리
 
                 body = transform.GetChild(0).gameObject;
                 trampledBody = transform.GetChild(2).gameObject;

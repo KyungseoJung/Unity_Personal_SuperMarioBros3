@@ -70,8 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: -1508095767
   m_SortingLayer: 5
   m_SortingOrder: 5
-  m_Sprite: {fileID: -6810697999950630716, guid: 0f379e43d2d2af045827b3e5e44f518b,
-    type: 3}
+  m_Sprite: {fileID: 805673727648305783, guid: 0f379e43d2d2af045827b3e5e44f518b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -304,6 +303,7 @@ MonoBehaviour:
   beStepped: 0
   shellBeStepped: 0
   HitClip: {fileID: 8300000, guid: 3298694042388324fb19ef6dc9489489, type: 3}
+  squishClip: {fileID: 8300000, guid: 5f50bb02b39a5ae439f470b96f682d95, type: 3}
   pointUi: {fileID: 8202056514347503736, guid: 1f18731db97135d40b4d83290a1fc990, type: 3}
   bombUi: {fileID: 6552144888121357942, guid: 5a6c77a7299578246bb79a03d2dfc0fd, type: 3}
   hitUi: {fileID: 3152668407306800864, guid: 2faa3256f679dd940ab72780efcbe5c1, type: 3}
