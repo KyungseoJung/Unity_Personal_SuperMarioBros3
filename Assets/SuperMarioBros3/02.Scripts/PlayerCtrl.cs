@@ -35,7 +35,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private bool grounded;                  // 땅 밟았는지 체크
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
-    public bool pushPButton;                // #27 P버튼 밟았는지 체크
+    // public bool pushPButton;                // #27 P버튼 밟았는지 체크   // #72 사용 안 해서 주석 처리
     public Transform groundCheck;           // 땅 밟았는지 체크
 
     private bool fallDown;                  // 지금 추락하고 있는지 체크
@@ -488,6 +488,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 {
                     obj.GetComponent<Block>().TurnsIntoCoin();  // #27 현재 존재하는 FRAGILE 블록들은 모두 코인으로 변하도록
                 }
+
+                music.SelectAnItemMusicOn();    // #72
             }
         }
 

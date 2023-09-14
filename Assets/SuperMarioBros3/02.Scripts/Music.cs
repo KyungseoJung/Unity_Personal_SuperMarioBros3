@@ -10,7 +10,7 @@ public class Music : MonoBehaviour  // #51
     /*
     0 : mainMusic
     1 : Level Completed
-    2 : 
+    2 : SelectAnItem (P버튼 밟았을 때)  // #72
     3 : 
     4 : 
     5 : 
@@ -32,6 +32,15 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[0];
         gameMusicArr.Play();
+    }
+
+    public void SelectAnItemMusicOn()   // #72
+    {
+        gameMusicArr.Stop();
+        gameMusicArr.clip = audioClips[2];
+        gameMusicArr.Play();
+
+        Invoke("MainMusicOn", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록
     }
 
     public void LevelCompleted()    // #53 게임 성공 종료 BGM

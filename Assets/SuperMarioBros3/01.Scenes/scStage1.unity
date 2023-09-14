@@ -18570,7 +18570,8 @@ MonoBehaviour:
   enemystate: 1
   beStepped: 0
   shellBeStepped: 0
-  tailHitClip: {fileID: 8300000, guid: 3298694042388324fb19ef6dc9489489, type: 3}
+  HitClip: {fileID: 0}
+  squishClip: {fileID: 0}
   pointUi: {fileID: 8202056514347503736, guid: 1f18731db97135d40b4d83290a1fc990, type: 3}
   bombUi: {fileID: 6552144888121357942, guid: 5a6c77a7299578246bb79a03d2dfc0fd, type: 3}
   hitUi: {fileID: 3152668407306800864, guid: 2faa3256f679dd940ab72780efcbe5c1, type: 3}
@@ -19717,6 +19718,11 @@ PrefabInstance:
     - target: {fileID: 8763790749758121587, guid: f3703c88aaeb0cc4790a5c1d94e702e6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763790750636548926, guid: f3703c88aaeb0cc4790a5c1d94e702e6,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
