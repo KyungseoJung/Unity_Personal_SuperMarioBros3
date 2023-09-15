@@ -55,14 +55,13 @@ MonoBehaviour:
   pressingX: 0
   jumpForce: 70
   minJump: 100
-  pushPButton: 0
   groundCheck: {fileID: 0}
   isInUnderground: 0
   holdingShell: 0
   jumpClip: {fileID: 8300000, guid: 54ce6a6c027de164489bdb0e643e7d71, type: 3}
   raccoonTailClip: {fileID: 8300000, guid: cb12743ff3372bc42abff0ee1fd6ed92, type: 3}
   coinClip: {fileID: 8300000, guid: 0bac4f743cdc1fa4d9ae399483fb269b, type: 3}
-  maxRunAudioSource: {fileID: 0}
+  playerAudioSource: {fileID: 0}
   maxRunClip: {fileID: 8300000, guid: 10930a28cecd97a45a2ee9cd2bc20a19, type: 3}
   teleportClip: {fileID: 8300000, guid: cdd74e6f822f606418a14d296b856487, type: 3}
   slippingClip: {fileID: 8300000, guid: eed4b5a741bbe67419d2437bcef1922f, type: 3}
@@ -126,7 +125,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.91, y: 0.9}
+  m_Size: {x: 0.8, y: 0.9}
   m_EdgeRadius: 0
 --- !u!1 &1031772048576988742
 GameObject:
