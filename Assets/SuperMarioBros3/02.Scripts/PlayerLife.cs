@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;  // #73 
+
+
+//using UnityEngine.UI; // #73 안 써서 주석 처리
 
 public class PlayerLife : MonoBehaviour
 {
@@ -21,6 +24,8 @@ public class PlayerLife : MonoBehaviour
     public AudioClip hurtClip;
 
     private PlayerCtrl playerCtrl;
+    private LobbyManager lobbyManager;           // #73 게임 재시작용
+
     private Vector2 lifeScale;
 // #36 레벨 변경시
     private BoxCollider2D boxCollider2D;        // #36
@@ -29,6 +34,7 @@ public class PlayerLife : MonoBehaviour
     void Awake()
     {
         playerCtrl = GetComponent<PlayerCtrl>();
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // #73
 
         boxCollider2D = GetComponent<BoxCollider2D>();  // #36
     }
@@ -41,6 +47,8 @@ public class PlayerLife : MonoBehaviour
             {
                 case MODE_TYPE.LEVEL1 : // 죽음
                     Debug.Log("플레이어 죽음");
+                    lobbyManager.RestartGame();
+                    
                     break;
                 case MODE_TYPE.LEVEL2 : 
                 case MODE_TYPE.LEVEL3 :
