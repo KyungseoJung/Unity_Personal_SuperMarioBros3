@@ -7,7 +7,7 @@ public class DestroyZone : MonoBehaviour    // #68 이 DestroyZone 안에 들어
 
     private void OnTriggerEnter2D(Collider2D col) 
     {
-        if(col.gameObject != null)
+        if((col.gameObject != null) && (col.gameObject.tag != "Player"))    // #74 에러 방지 - 플레이어는 Destroy 되지 않도록
             Destroy(col.gameObject);    
     }
 

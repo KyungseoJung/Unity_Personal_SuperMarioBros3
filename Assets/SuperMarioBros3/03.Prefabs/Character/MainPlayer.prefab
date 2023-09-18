@@ -80,6 +80,8 @@ MonoBehaviour:
   playerLevel: 1
   playerState: 1
   hurtClip: {fileID: 8300000, guid: cdd74e6f822f606418a14d296b856487, type: 3}
+  deadPlayer: {fileID: 6139344502573663971, guid: 56bdf32f9e898d84c8ad34d52b729917,
+    type: 3}
 --- !u!50 &1031772047837095219
 Rigidbody2D:
   serializedVersion: 4

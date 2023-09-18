@@ -30,6 +30,16 @@ public class PlayerLife : MonoBehaviour
 // #36 레벨 변경시
     private BoxCollider2D boxCollider2D;        // #36
     
+// #74 플레이어 레벨 1에서 GetHurt해서 죽을 때
+    private Vector3 startPos;
+    private Vector3 upPos;     
+    private Vector3 downPos;
+    private float moveTimer = 0f;
+    private float upTimer = 2f;
+    private float downTimer = 13f;
+
+    AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용
+    public Sprite deadPlayer;                   // #74 레벨1에서 GetHurt로 플레이어가 죽을 때의 이미지 
 
     void Awake()
     {
@@ -47,8 +57,20 @@ public class PlayerLife : MonoBehaviour
             {
                 case MODE_TYPE.LEVEL1 : // 죽음
                     Debug.Log("플레이어 죽음");
-                    lobbyManager.RestartGame();
-                    
+
+                // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+                    playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
+                    transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+                    startPos = transform.position;
+
+                    upPos = startPos;
+                    upPos.y += 2f;
+
+                    downPos = startPos;
+                    downPos.y = -20f;
+
+                    StartCoroutine(PlayerUpDown()); // #74
+
                     break;
                 case MODE_TYPE.LEVEL2 : 
                 case MODE_TYPE.LEVEL3 :
@@ -157,4 +179,27 @@ public class PlayerLife : MonoBehaviour
 
     }
     
+
+    IEnumerator PlayerUpDown()  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+    {
+        Debug.Log("// #74 플레이어 업다운 시작");
+        while(true)
+        {
+            if(moveTimer <= upTimer)
+                transform.localPosition = Vector3.Lerp(startPos, upPos, curve.Evaluate(moveTimer/upTimer));
+            else if(moveTimer <= downTimer) //upTimer 초과이면서 downTimer 이하일 때
+                transform.localPosition = Vector3.Lerp(upPos, downPos, curve.Evaluate(moveTimer/downTimer));
+            else    // 시간이 모두 지났으면
+            {
+                moveTimer = 0f; // 다시 원상복구
+                lobbyManager.RestartGame(); // #73
+
+                yield break;    // 코루틴 탈출
+            }
+            moveTimer += Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
 }
