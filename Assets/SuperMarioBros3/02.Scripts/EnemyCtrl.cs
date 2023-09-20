@@ -64,6 +64,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     public bool kickShell;
     private float kickSpeed = 18f;       // 플레이어가 발로 찼을 때 날라가는 속도 // fix: public으로 하면 초기 선언할 때 인스펙터 값이 우선 적용됨. private으로 하거나 확실히 TURTLE -> SHELL로 변할 때 값을 설정해주자.
 
+// #75 게임 오버 체크
+    private LobbyManager lobbyManager;           // #75 점수 체크용
+
 
 
     void Awake()
@@ -82,6 +85,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         enemyLife = GetComponent<EnemyLife>();
         anim = GetComponent<Animator>();        // #34
+
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // #75 오브젝트 이름도 LobbyManager이기 때문에
     }
 
     void Start()
@@ -114,7 +119,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void Update()
     {
-        if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+        if((enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+            || lobbyManager.gameOver)   // #75 만약 게임오버 상태라면 - Enemy 움직임 멈추도록
             return;
 
 // #33 #69 Enemy 점프 조정 =================================
@@ -162,7 +168,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void FixedUpdate()
     {
-        if(enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+        if((enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
+            || lobbyManager.gameOver)   // #75 만약 게임오버 상태라면 - Enemy 움직임 멈추도록
             return;
 
         switch(enemyType)

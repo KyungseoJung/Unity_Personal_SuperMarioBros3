@@ -83,6 +83,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
     }
     private void Update()
     {
+        if(lobbyManager.gameOver)   // #75
+            return;
         // if(followPlayer)    // #64 플레이어 따라다니기 시작되면
         // {
         //     transform.position = playerTransform.position + offset;

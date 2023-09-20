@@ -15,6 +15,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
     private int timeLeftInt;                // #50 표시 목적 int형 변수
 
+    public bool gameOver = false;           // #75 
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
 

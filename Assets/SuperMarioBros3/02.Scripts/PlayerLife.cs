@@ -57,6 +57,8 @@ public class PlayerLife : MonoBehaviour
             {
                 case MODE_TYPE.LEVEL1 : // 죽음
                     Debug.Log("플레이어 죽음");
+                // #75
+                    lobbyManager.gameOver = true;       // 게임 오버 true 설정
 
                 // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
                     playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
