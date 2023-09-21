@@ -22,6 +22,8 @@ public class PlayerLife : MonoBehaviour
     private float hurtForce = 10f;        
     
     public AudioClip hurtClip;
+    public AudioClip mushroomObtained;          // #36
+    public AudioClip leafObtained;              // #36
 
     private PlayerCtrl playerCtrl;
     private LobbyManager lobbyManager;           // #73 게임 재시작용
@@ -114,10 +116,14 @@ public class PlayerLife : MonoBehaviour
         {
             case MODE_TYPE.LEVEL1:
                 playerLevel = MODE_TYPE.LEVEL2;
+                AudioSource.PlayClipAtPoint(mushroomObtained, transform.position); // #36 레벨업
+
                 break;
             
             case MODE_TYPE.LEVEL2:
                 playerLevel = MODE_TYPE.LEVEL3;
+                AudioSource.PlayClipAtPoint(leafObtained, transform.position); // #36 레벨업
+
                 break;
             
             case MODE_TYPE.LEVEL3:
