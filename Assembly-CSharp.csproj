@@ -53,7 +53,6 @@
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerCtrl.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerLife.cs" />
      <Compile Include="Assets\SuperMarioBros3\02.Scripts\Teleport.cs" />
-     <Compile Include="Assets\SuperMarioBros3\02.Scripts\lgn.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.40f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

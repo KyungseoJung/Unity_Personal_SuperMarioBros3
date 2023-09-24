@@ -20,6 +20,7 @@ public class PlayerLife : MonoBehaviour
     private float lastHitTime =0f;
     private float repeatDamagePeriod = 2.0f;    // #17 다친 후 쿨타임(무적시간)
     private float hurtForce = 10f;        
+    private float bombRadius = 15f;             // #75
     
     public AudioClip hurtClip;
     public AudioClip mushroomObtained;          // #36
@@ -59,21 +60,7 @@ public class PlayerLife : MonoBehaviour
             {
                 case MODE_TYPE.LEVEL1 : // 죽음
                     Debug.Log("플레이어 죽음");
-                // #75
-                    lobbyManager.gameOver = true;       // 게임 오버 true 설정
-
-                // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
-                    playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
-                    transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
-                    startPos = transform.position;
-
-                    upPos = startPos;
-                    upPos.y += 2f;
-
-                    downPos = startPos;
-                    downPos.y = -20f;
-
-                    StartCoroutine(PlayerUpDown()); // #74
+                    PlayerDie();
 
                     break;
                 case MODE_TYPE.LEVEL2 : 
@@ -187,7 +174,45 @@ public class PlayerLife : MonoBehaviour
 
     }
     
+    void PlayerDie()
+    {
+    // #75
+        lobbyManager.gameOver = true;       // 게임 오버 true 설정
 
+    // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+        playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+        startPos = transform.position;
+
+        upPos = startPos;
+        upPos.y += 2f;
+
+        downPos = startPos;
+        downPos.y = -20f;
+
+        StartCoroutine(PlayerUpDown()); // #74
+
+        StopFireball(); // #75
+    }
+
+    void StopFireball() // #75 플레이어 주위의 Fireball 찾아서 멈추게 하기 위한 목적 ========================================
+    {
+        Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, bombRadius);    
+        foreach(Collider2D coll in colls)
+        {   
+            Rigidbody2D rbody = coll.GetComponent<Rigidbody2D>();
+            if(rbody != null)
+            {   
+                if(rbody.gameObject.tag == "EnemyWeapon")
+                {
+                    // rbody.enabled = false;
+                    // rbody.gameObject.SendMessage("StopFireball", SendMessageOptions.DontRequireReceiver);   //잘못된 방식 - Fireball 오브젝트에는 따로 스크립트가 없기 때문에 
+
+                    rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+                }
+            }
+        }
+    }
     IEnumerator PlayerUpDown()  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
     {
         Debug.Log("// #74 플레이어 업다운 시작");
