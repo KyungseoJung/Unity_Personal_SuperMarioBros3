@@ -113,6 +113,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
         timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
+        gameOver = false;                   // #73 fix
     }
 
 
