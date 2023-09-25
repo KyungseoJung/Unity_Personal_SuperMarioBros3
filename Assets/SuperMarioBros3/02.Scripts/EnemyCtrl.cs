@@ -308,6 +308,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     
     private void OnTriggerExit2D(Collider2D col) 
     {
+        if(lobbyManager.gameOver)   // #75 게임 오버되면, 이동하지 않도록
+            return;
+
         switch(enemyType)
         {
             case ENEMY_TYPE.FLOWER : 
@@ -335,7 +338,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     {
         Debug.Log("//#12 보완 : 꽃 Enemy 올라온다");
 
-        while(true)  // 올라가도 될 때에만 올라가도록
+        while(true && (!lobbyManager.gameOver))  // 올라가도 될 때에만 올라가도록   // #75
         {
             if(!canMovingUp)       // 움직이면 안 되는 상태라면 코루틴 아예 종료
             {
@@ -384,7 +387,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
 
-        while(true)
+        while(true && (!lobbyManager.gameOver)) // #75
         {
             // Debug.Log("#12 다운 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
