@@ -507,6 +507,7 @@ MonoBehaviour:
   txtScore: {fileID: 634909270}
   txtTimeLeft: {fileID: 584919739}
   txtLife: {fileID: 332894051}
+  gameOver: 0
   fastIndicator:
   - {fileID: 2072097379}
   - {fileID: 1803674093}
@@ -1415,6 +1416,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 15bbed4f46632a4489e39f41338b7c75, type: 3}
   - {fileID: 8300000, guid: ccfb468c414fb1b44b99d065c149fa2d, type: 3}
   - {fileID: 8300000, guid: ad847c421353f434a919fa7c829a3f3c, type: 3}
+  - {fileID: 8300000, guid: 8363183034d30934994b25b240ccfd05, type: 3}
 --- !u!1 &953390897
 GameObject:
   m_ObjectHideFlags: 0

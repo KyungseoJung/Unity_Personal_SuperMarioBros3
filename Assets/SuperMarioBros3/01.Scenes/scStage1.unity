@@ -18155,6 +18155,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1031772047837095217, guid: 4eda048d9ed84a04c98f6a5686a851ce,
+        type: 3}
+      propertyPath: downedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cba2bdb0e528d7e458cfc126fd747963, type: 3}
+    - target: {fileID: 1031772047837095217, guid: 4eda048d9ed84a04c98f6a5686a851ce,
+        type: 3}
+      propertyPath: playerDieClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8363183034d30934994b25b240ccfd05, type: 3}
     - target: {fileID: 1031772047837095218, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
       propertyPath: m_Size.x

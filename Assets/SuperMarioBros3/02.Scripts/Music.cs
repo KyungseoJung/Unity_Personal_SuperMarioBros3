@@ -10,8 +10,8 @@ public class Music : MonoBehaviour  // #51
     /*
     0 : mainMusic
     1 : Level Completed
-    2 : SelectAnItem (P버튼 밟았을 때)  // #72
-    3 : 
+    2 : SelectAnItem (P버튼 밟았을 때)      // #72
+    3 : You.have.died (플레이어 죽었을 때)  // #76
     4 : 
     5 : 
     */
@@ -48,6 +48,15 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[1];
         gameMusicArr.loop = false;   // #53 보완 - 게임 종료 시, 나오는 BGM은 LOOP로 반복할 필요 없음.
+
+        gameMusicArr.Play();
+    }
+
+    public void PlayerDie()         // #76
+    {
+        gameMusicArr.Stop();
+        gameMusicArr.clip = audioClips[3];
+        gameMusicArr.loop = false;   
 
         gameMusicArr.Play();
     }

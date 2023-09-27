@@ -27,7 +27,8 @@ public class PlayerLife : MonoBehaviour
     public AudioClip leafObtained;              // #36
 
     private PlayerCtrl playerCtrl;
-    private LobbyManager lobbyManager;           // #73 게임 재시작용
+    private LobbyManager lobbyManager;          // #73 게임 재시작용
+    private Music music;                        // #76 
 
     private Vector2 lifeScale;
 // #36 레벨 변경시
@@ -48,6 +49,7 @@ public class PlayerLife : MonoBehaviour
     {
         playerCtrl = GetComponent<PlayerCtrl>();
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // #73
+        music = GameObject.Find("Music").GetComponent<Music>();    // #73
 
         boxCollider2D = GetComponent<BoxCollider2D>();  // #36
     }
@@ -59,8 +61,12 @@ public class PlayerLife : MonoBehaviour
             switch(playerLevel)
             {
                 case MODE_TYPE.LEVEL1 : // 죽음
-                    Debug.Log("플레이어 죽음");
-                    PlayerDie();
+                    if(!lobbyManager.gameOver)       // 게임 오버 true 설정
+                        {
+                            Debug.Log("플레이어 죽음");
+                            PlayerDie();
+                        }
+
 
                     break;
                 case MODE_TYPE.LEVEL2 : 
@@ -179,6 +185,8 @@ public class PlayerLife : MonoBehaviour
     // #75
         lobbyManager.gameOver = true;       // 게임 오버 true 설정
 
+        music.PlayerDie();              // #76
+
     // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
         playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
@@ -194,6 +202,7 @@ public class PlayerLife : MonoBehaviour
 
         StopFireball(); // #75
     }
+
 
     void StopFireball() // #75 플레이어 주위의 Fireball 찾아서 멈추게 하기 위한 목적 ========================================
     {
