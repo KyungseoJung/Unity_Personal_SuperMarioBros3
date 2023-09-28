@@ -120,6 +120,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     
     void Update()
     {  
+        if(lobbyManager.gameOver)   // #75
+            return;
+
         CheckGroundCheck();
 
         // 점프 가속도   // 한번 스페이스바 누르면 > 최소 minJump만큼은 점프하도록
@@ -238,6 +241,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void FixedUpdate()
     {   
+        if(lobbyManager.gameOver)           // #75
+            return;
+
         if(transform.position.x < -6.65)    // #8 맵 기준으로 왼쪽 맨 끝까지 갈 수 없도록
         {
             playerPos = transform.position;
