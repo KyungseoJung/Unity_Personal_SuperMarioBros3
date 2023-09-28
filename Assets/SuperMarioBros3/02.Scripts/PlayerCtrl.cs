@@ -169,14 +169,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
         }
 
-        if(fallDown && (gameObject.layer != 11))   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정
+        if(fallDown && (gameObject.layer != 11) && !lobbyManager.gameOver)   // 추락하고 있을 땐, 다시 부딪히는 레이어로 변경 // #21 버그 수정  // #75 조건 추가: 게임 오버되지 않았다면
         {
             gameObject.layer = 11;  // "FallDownPlayer" 레이어
             // level1Obj.layer = 11;   
             // level2Obj.layer = 11;
             // level3Obj.layer = 11;
         }
-        else if(!fallDown && (gameObject.layer != 10))
+        else if(!fallDown && (gameObject.layer != 10) && !lobbyManager.gameOver)    // #75 조건 추가: 게임 오버되지 않았다면
         {
             gameObject.layer = 10;  // 추락하지 않는 동안에는 큰 블록들(Layer : LargeBlock) 그냥 통과하도록 -> 블록 자체가 아니라, ForegroundCollider라는 이름의 오브젝트를 만들어서 설정해줌
                                     // 왜냐하면, 추락하지 않을 때 블록을 통과하게 하면, 그냥 블록 위를 걸어다닐 때 밑으로 통과할 수 있기 때문.

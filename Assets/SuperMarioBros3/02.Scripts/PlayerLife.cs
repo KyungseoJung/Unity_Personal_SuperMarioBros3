@@ -183,6 +183,8 @@ public class PlayerLife : MonoBehaviour
     void PlayerDie()
     {
     // #75
+        this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 
+
         lobbyManager.gameOver = true;       // 게임 오버 true 설정
 
         music.PlayerDie();              // #76
