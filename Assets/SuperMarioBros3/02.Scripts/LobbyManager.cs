@@ -13,9 +13,13 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Text txtLife;                    // #61 생명 표시
 
     private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
+    private float delayTime;                // #76 n초 후에 게임 재시작 할 건지 나타내는 타이머
+    private float gameRestartTime;          
     private int timeLeftInt;                // #50 표시 목적 int형 변수
 
     public bool gameOver = false;           // #75 
+    private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
+
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
 
@@ -29,8 +33,21 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     }
 
     void Update()
-    {
+    {        
         CheckTimeLeft();                    // #50 남은 시간 체크
+
+        if(stopForAMoment)
+        {
+
+            Debug.Log("//#76-2 Time.realtimeSinceStartup : " + Time.realtimeSinceStartup);    
+
+            if(Time.realtimeSinceStartup > gameRestartTime)
+            {
+                PlayGameAfterDelay();
+                stopForAMoment = false;
+            }
+        }
+
     }
 
     public void CheckPoint()                // #35 점수, 목숨, 코인 확인용 함수 - GameMgr에서 점수 획득할 때마다 실행
@@ -116,8 +133,63 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         gameOver = false;                   // #73 fix
     }
 
+    public void StopGame(bool _replay, float _timer)   // #76 게임 멈춤
+    {
+        Time.timeScale = 0;
 
+        if(_replay) // 다시 시작할 거라면 _timer 초 후에 다시 시작하도록
+        {
+            Debug.Log("//#76 게임 " + _timer + "초 후에 재시작");
 
+            gameRestartTime = Time.realtimeSinceStartup + _timer;  // n초 후에 재시작하도록
+            Debug.Log("//#76-2 gameRestartTime : " + gameRestartTime);    
+
+            stopForAMoment = true;   
+            // StartCoroutine(PlayGameAfterDelay(_timer)); // 게임이 아예 멈춘 후이기 때문에, Invoke로 하면 실행이 안돼
+        }
+    }
+
+    void PlayGameAfterDelay() // #76 게임 시작 - 멈춘 것 풀기
+    {
+        Debug.Log("//#76 게임 재시작");
+
+        // yield return new WaitForSeconds(_timer); 
+        Time.timeScale = 1;
+    }
+
+    // public void StopGame(bool _replay, float _timer)    // #76
+    // {
+    //     StartCoroutine(StopGameIEnumerator(true, _timer));
+    // }
+
+    // IEnumerator StopGameIEnumerator(bool _replay, float _timer)   // #76 게임 멈춤
+    // {
+    //     Time.timeScale = 0;
+
+    //     if(_replay) // 다시 시작할 거라면 _timer 초 후에 다시 시작하도록
+    //     {
+    //         float stopTimer = 0f;
+    //         Debug.Log("//#76 게임 " + _timer + "초 후에 재시작");
+
+    //         while(true) // 게임이 아예 멈춘 후이기 때문에, Invoke로 하면 실행이 안돼
+    //         {
+    //             if(stopTimer > _timer)
+    //             {
+    //                 PlayGameAfterDelay();
+    //                 yield break;
+    //             }
+    //             stopTimer += Time.deltaTime;
+
+    //             yield return null;
+    //         }             
+    //     }
+    // }
+
+    // void PlayGameAfterDelay() // #76 게임 시작 - 멈춘 것 풀기
+    // {
+    //     Debug.Log("//#76 게임 재시작");
+    //     Time.timeScale = 1;
+    // }
 
 
 

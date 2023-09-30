@@ -88,9 +88,13 @@ public class PlayerLife : MonoBehaviour
         {
             case MODE_TYPE.LEVEL2 : 
                 playerLevel = MODE_TYPE.LEVEL1;
+                lobbyManager.StopGame(true, 0.7f);  // #76 게임을 1초 동안 멈추기
+
                 break;
             case MODE_TYPE.LEVEL3 : 
                 playerLevel = MODE_TYPE.LEVEL2;
+                lobbyManager.StopGame(true, 0.2f);  // #76 게임을 0.2초 동안 멈추기
+
                 break;
         }
         AudioSource.PlayClipAtPoint(hurtClip, transform.position);
@@ -110,12 +114,13 @@ public class PlayerLife : MonoBehaviour
             case MODE_TYPE.LEVEL1:
                 playerLevel = MODE_TYPE.LEVEL2;
                 AudioSource.PlayClipAtPoint(mushroomObtained, transform.position); // #36 레벨업
-
+                lobbyManager.StopGame(true, 0.7f);  // #76 게임을 1초 동안 멈추기
                 break;
             
             case MODE_TYPE.LEVEL2:
                 playerLevel = MODE_TYPE.LEVEL3;
                 AudioSource.PlayClipAtPoint(leafObtained, transform.position); // #36 레벨업
+                lobbyManager.StopGame(true, 0.2f);  // #76 게임을 0.2초 동안 멈추기
 
                 break;
             
@@ -224,6 +229,7 @@ public class PlayerLife : MonoBehaviour
             }
         }
     }
+
     IEnumerator PlayerUpDown()  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
     {
         Debug.Log("// #74 플레이어 업다운 시작");
