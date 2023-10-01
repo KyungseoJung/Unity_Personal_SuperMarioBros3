@@ -71,6 +71,9 @@ TagManager:
   - name: Character
     uniqueID: 2786871529
     locked: 0
+  - name: Obstacle
+    uniqueID: 2985768829
+    locked: 0
   - name: UI
     uniqueID: 785241683
     locked: 0

@@ -7,7 +7,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private PlayerLife playerLife;          // #17
 
 // 플레이어 기본 이동
-    public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경)
+    public Animator anim;                   // #36 플레이어 애니메이션 (접근 범위 변경) // 레벨 변경 시, PlayerLife.cs에서 수시로 바꿔줌
+    public SpriteRenderer sprite;           // #77
     private Rigidbody2D Rbody;
     private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
     [SerializeField]
@@ -94,7 +95,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         Transform firstChild = transform.GetChild(0);   // 자식 오브젝트 위치 중 0번째 자식
 
-        anim = firstChild.GetComponent<Animator>();
+        anim = firstChild.GetComponent<Animator>();     // 레벨 변경 시, PlayerLife.cs에서 수시로 바꿔줌
+        sprite = firstChild.GetComponent<SpriteRenderer>(); // #77 레벨 변경 시, PlayerLife.cs에서 수시로 바꿔줌
+        
         Rbody = GetComponent<Rigidbody2D>(); // 레벨 바꿀 때, 변경해줘도 되니까~    // #7 수정 - 지금까지 자식 오브젝트 위치가 이동하고 있었음
         boxCollider2D = GetComponent<BoxCollider2D>();  // #39
         playerTailObj = transform.GetChild(2).Find("playerTail").gameObject;    // #56 레벨3 플레이어 꼬리 오브젝트

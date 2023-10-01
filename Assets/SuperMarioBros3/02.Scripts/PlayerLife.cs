@@ -20,7 +20,7 @@ public class PlayerLife : MonoBehaviour
     private float lastHitTime =0f;
     private float repeatDamagePeriod = 2.0f;    // #17 다친 후 쿨타임(무적시간)
     private float hurtForce = 10f;        
-    private float bombRadius = 15f;             // #75
+    private float stopRadius = 15f;             // #75
     
     public AudioClip hurtClip;
     public AudioClip mushroomObtained;          // #36
@@ -45,6 +45,9 @@ public class PlayerLife : MonoBehaviour
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용
     public Sprite deadPlayer;                   // #74 레벨1에서 GetHurt로 플레이어가 죽을 때의 이미지 
 
+    [SerializeField] private string sortingName;
+    [SerializeField] private int sortingOrder;
+
     void Awake()
     {
         playerCtrl = GetComponent<PlayerCtrl>();
@@ -54,6 +57,11 @@ public class PlayerLife : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();  // #36
     }
 
+    void Start()
+    {
+        sortingName = transform.GetChild(0).GetComponent<SpriteRenderer>().sortingLayerName;   
+        sortingOrder = transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder;
+    }
     public void GetHurt()   // #17 플레이어 다침 - 현재 레벨에 따라 다르게 적용 
     {
         if(Time.time > lastHitTime + repeatDamagePeriod)    // #17 다친 후 일정 시간동안 무적 상태
@@ -88,12 +96,12 @@ public class PlayerLife : MonoBehaviour
         {
             case MODE_TYPE.LEVEL2 : 
                 playerLevel = MODE_TYPE.LEVEL1;
-                lobbyManager.StopGame(true, 0.7f);  // #76 게임을 1초 동안 멈추기
+                lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
 
                 break;
             case MODE_TYPE.LEVEL3 : 
                 playerLevel = MODE_TYPE.LEVEL2;
-                lobbyManager.StopGame(true, 0.2f);  // #76 게임을 0.2초 동안 멈추기
+                lobbyManager.StopGame(true, false, 0.2f);  // #76 게임을 0.2초 동안 멈추기
 
                 break;
         }
@@ -114,13 +122,13 @@ public class PlayerLife : MonoBehaviour
             case MODE_TYPE.LEVEL1:
                 playerLevel = MODE_TYPE.LEVEL2;
                 AudioSource.PlayClipAtPoint(mushroomObtained, transform.position); // #36 레벨업
-                lobbyManager.StopGame(true, 0.7f);  // #76 게임을 1초 동안 멈추기
+                lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
                 break;
             
             case MODE_TYPE.LEVEL2:
                 playerLevel = MODE_TYPE.LEVEL3;
                 AudioSource.PlayClipAtPoint(leafObtained, transform.position); // #36 레벨업
-                lobbyManager.StopGame(true, 0.2f);  // #76 게임을 0.2초 동안 멈추기
+                lobbyManager.StopGame(true, false, 0.2f);  // #76 게임을 0.2초 동안 멈추기
 
                 break;
             
@@ -153,6 +161,7 @@ public class PlayerLife : MonoBehaviour
 
                 playerCtrl.groundCheck = firstChild.Find("groundCheck");
                 playerCtrl.anim = firstChild.GetComponent<Animator>();  // #36
+                playerCtrl.sprite = firstChild.GetComponent<SpriteRenderer>();  // #77
 
                 break;
 
@@ -166,6 +175,7 @@ public class PlayerLife : MonoBehaviour
 
                 playerCtrl.groundCheck = secondChild.Find("groundCheck");
                 playerCtrl.anim = secondChild.GetComponent<Animator>(); // #36
+                playerCtrl.sprite = secondChild.GetComponent<SpriteRenderer>();  // #77
 
                 break;
             
@@ -179,6 +189,7 @@ public class PlayerLife : MonoBehaviour
 
                 playerCtrl.groundCheck = thirdChild.Find("groundCheck");
                 playerCtrl.anim = thirdChild.GetComponent<Animator>();  // #36
+                playerCtrl.sprite = thirdChild.GetComponent<SpriteRenderer>();  // #77
 
                 break;
         }
@@ -213,7 +224,7 @@ public class PlayerLife : MonoBehaviour
 
     void StopFireball() // #75 플레이어 주위의 Fireball 찾아서 멈추게 하기 위한 목적 ========================================
     {
-        Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, bombRadius);    
+        Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, stopRadius);    
         foreach(Collider2D coll in colls)
         {   
             Rigidbody2D rbody = coll.GetComponent<Rigidbody2D>();

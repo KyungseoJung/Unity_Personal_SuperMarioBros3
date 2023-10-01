@@ -8,6 +8,7 @@ using UnityEngine.UI;                       // #35
 
 public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, 목숨, 남은 시간) UI 관리하는 클래스 생성
 {
+    private PlayerCtrl playerCtrl;          // #77 spriteRenderer 접근 목적
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
     public Text txtLife;                    // #61 생명 표시
@@ -19,10 +20,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public bool gameOver = false;           // #75 
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
+    private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
 
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
-
     IEnumerator enumerator;
 
     void Start()
@@ -43,10 +44,25 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
             if(Time.realtimeSinceStartup > gameRestartTime)
             {
-                PlayGameAfterDelay();
+                ReleaseStopState();
                 stopForAMoment = false;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Return))    // #77 엔터 키 누르면 Pause
+        {
+            if(pauseGame)   // 이미 일시정지 한 상태라면 - 멈춘 상태 풀기
+            {
+                ReleaseStopState();
+                pauseGame = false; 
+
+            }
+            else    // 일시정지 하지 않은 상태라면 - 일시정지 적용하기
+            {
+                StopGame(false, true);   
+                pauseGame = true; 
+            }
+        }    
 
     }
 
@@ -133,7 +149,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         gameOver = false;                   // #73 fix
     }
 
-    public void StopGame(bool _replay, float _timer)   // #76 게임 멈춤
+    public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 멈춤   // #77 게임 일시정지
     {
         Time.timeScale = 0;
 
@@ -145,16 +161,78 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             Debug.Log("//#76-2 gameRestartTime : " + gameRestartTime);    
 
             stopForAMoment = true;   
-            // StartCoroutine(PlayGameAfterDelay(_timer)); // 게임이 아예 멈춘 후이기 때문에, Invoke로 하면 실행이 안돼
+            // StartCoroutine(ReleaseStopState(_timer)); // 게임이 아예 멈춘 후이기 때문에, Invoke로 하면 실행이 안돼
+        }
+
+        if(_pause)  // #77
+        {
+            HideCharacters(true);  
         }
     }
 
-    void PlayGameAfterDelay() // #76 게임 시작 - 멈춘 것 풀기
+    void ReleaseStopState() // #76 게임 시작 - 멈춘 것 풀기
     {
-        Debug.Log("//#76 게임 재시작");
-
+        Debug.Log("//#76 멈춘 상태 풀기");
+        HideCharacters(false);
         // yield return new WaitForSeconds(_timer); 
         Time.timeScale = 1;
+    }
+
+    void HideCharacters(bool _hide)   // #77 캐릭터들(MainPlayer, Enemy) 숨기기 or 드러내기
+    {
+    // 플레이어의 spriteRenderer 접근 - 레벨마다 지정되는 SpriteRenderer가 다르기 때문에, playerCtrl로 접근하는 것================================
+        if(playerCtrl == null)
+            playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+
+        switch(_hide)
+        {
+            case true :     // 숨기기
+                playerCtrl.sprite.sortingLayerName = "Default";
+                break;
+            case false :    // 드러내기
+                playerCtrl.sprite.sortingLayerName = "Character";
+                break;
+        }
+
+    // Enenmy의 spriteRenderer 접근 ================================
+        GameObject[] enemyObjs =  GameObject.FindGameObjectsWithTag("Enemy");
+
+        switch(_hide)
+        {
+            case true :     // 숨기기
+                foreach(GameObject obj in enemyObjs)
+                {
+                    obj.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+                }
+                break;
+            case false :    // 드러내기
+                foreach(GameObject obj in enemyObjs)
+                {
+                    obj.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingLayerName = "Character";
+                }
+                break;
+        }
+    // EnenmyWeapon의 spriteRenderer 접근 ================================
+        GameObject[] weaponObjs =  GameObject.FindGameObjectsWithTag("EnemyWeapon");
+
+        if(weaponObjs != null)
+        {
+            switch(_hide)
+            {
+                case true :     // 숨기기
+                    foreach(GameObject obj in weaponObjs)
+                    {
+                        obj.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+                    }
+                    break;
+                case false :    // 드러내기
+                    foreach(GameObject obj in weaponObjs)
+                    {
+                        obj.GetComponent<SpriteRenderer>().sortingLayerName = "EnemyWeapon";
+                    }
+                    break;
+            }
+        }
     }
 
     // public void StopGame(bool _replay, float _timer)    // #76
@@ -175,7 +253,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     //         {
     //             if(stopTimer > _timer)
     //             {
-    //                 PlayGameAfterDelay();
+    //                 ReleaseStopState();
     //                 yield break;
     //             }
     //             stopTimer += Time.deltaTime;
@@ -185,7 +263,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     //     }
     // }
 
-    // void PlayGameAfterDelay() // #76 게임 시작 - 멈춘 것 풀기
+    // void ReleaseStopState() // #76 게임 시작 - 멈춘 것 풀기
     // {
     //     Debug.Log("//#76 게임 재시작");
     //     Time.timeScale = 1;
