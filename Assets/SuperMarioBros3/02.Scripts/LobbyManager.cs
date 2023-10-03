@@ -24,6 +24,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
+    public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     IEnumerator enumerator;
 
     void Start()
@@ -31,6 +32,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.LoadScene("scStage1");        
     
         timeLeftFloat = 300f;                    // #50 남은 시간 - 첫 시작은 300초
+
+        if(pauseWindow.activeSelf)              // #77 PAUSE 윈도우 창 꺼진 채로 시작하도록
+            pauseWindow.SetActive(false);   
     }
 
     void Update()
@@ -166,6 +170,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
         if(_pause)  // #77
         {
+            pauseWindow.SetActive(true);    
             HideCharacters(true);  
         }
     }
@@ -173,6 +178,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     void ReleaseStopState() // #76 게임 시작 - 멈춘 것 풀기
     {
         Debug.Log("//#76 멈춘 상태 풀기");
+        pauseWindow.SetActive(false);  
         HideCharacters(false);
         // yield return new WaitForSeconds(_timer); 
         Time.timeScale = 1;

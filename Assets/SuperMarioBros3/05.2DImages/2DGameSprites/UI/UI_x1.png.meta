@@ -19,7 +19,7 @@ TextureImporter:
     second: numeric-1
   - first:
       213: -2362546393044874952
-    second: UI_x1_5
+    second: alphabet-E
   - first:
       213: 2377535002010702045
     second: UI_x1_6
@@ -67,7 +67,7 @@ TextureImporter:
     second: UI_x1_20
   - first:
       213: -3760343629821038317
-    second: UI_x1_21
+    second: alphabet-A
   - first:
       213: 3810550454325273238
     second: UI_x1_22
@@ -91,7 +91,7 @@ TextureImporter:
     second: UI_x1_28
   - first:
       213: -8330181274938894212
-    second: UI_x1_29
+    second: alphabet-S
   - first:
       213: -4516419147442902689
     second: UI_x1_30
@@ -405,13 +405,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_5
+      name: alphabet-E
       rect:
         serializedVersion: 2
         x: 71
-        y: 159
-        width: 9
-        height: 11
+        y: 162
+        width: 8
+        height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -741,7 +741,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_21
+      name: alphabet-A
       rect:
         serializedVersion: 2
         x: 215
@@ -909,13 +909,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_x1_29
+      name: alphabet-S
       rect:
         serializedVersion: 2
-        x: 101
+        x: 108
         y: 146
-        width: 16
-        height: 9
+        width: 8
+        height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -956,7 +956,7 @@ TextureImporter:
         serializedVersion: 2
         x: 145
         y: 146
-        width: 12
+        width: 8
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
