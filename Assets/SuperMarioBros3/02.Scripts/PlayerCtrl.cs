@@ -468,10 +468,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {
         if(col.gameObject.tag == "EnemyHeadCheck")   
         {
-            // Debug.Log("//#30 Enemy의 머리 밟음");
+            Debug.Log("//#30 Enemy의 머리 밟음");
             if(!col.gameObject.GetComponentInParent<EnemyLife>().beStepped) //  아직 beStepped가 true가 아니라면
             {
-                // Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
+                Debug.Log("//#15 플레이어가 Enemy 머리 밟음");
                 col.gameObject.GetComponentInParent<EnemyLife>().beStepped = true;
             }
 
@@ -567,9 +567,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {
         if(col.gameObject.tag == "Enemy" && !holdingShell)  // #65 거북 껍질을 들고 있지 않을 때 - 다른 Enemy와 부딪힌다면, 플레이어가 다침
         {
-            Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
             if(! col.gameObject.GetComponent<EnemyLife>().beStepped)    // 일반 거북 껍질에 닿아도 플레이어가 GetHurt 되지 않도록
+            {
+                Debug.Log("//#17 플레이어가 Enemy랑 부딪힘. 다침");
                 playerLife.GetHurt();
+            }    
         }
         else if(col.gameObject.tag == "Enemy" && holdingShell)  // #65 플레이어가 거북 껍질을 들고 있을 때 - 다른 Enemy와 부딪힌다면, 그 Enemy가 죽음
         {

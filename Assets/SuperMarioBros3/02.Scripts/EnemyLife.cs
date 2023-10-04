@@ -119,6 +119,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         if(other.gameObject.tag == "Player")    // #11
         {
+            Debug.Log("//#16 fix Enemy가 Player와 부딪힘");
 
             switch(enemyCtrl.enemyType) // #16 등껍질 차는 건, 꼭 적의 머리쪽을 밟지 않아도 되기 때문에 // 아래 if(beStepped) 문보다 먼저 실행되어야 중복 실행 방지 가능 - 밟자마자 등껍질이 날라가는 현상
             {              
@@ -162,6 +163,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             break;
                         }
                         Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp"); // #34 변경 - 날개 없는 거북 밟아도 플레이어 위로 Bounce 되도록
+                        Debug.Log("#16 fix: beStepped : " + beStepped); // #34 변경 - 날개 없는 거북 밟아도 플레이어 위로 Bounce 되도록
+
                         playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
 
                         IsDieByBeingTrampled();               // #15 등껍질로 변신
@@ -169,6 +172,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                     break;
 
                 case EnemyCtrl.ENEMY_TYPE.SHELL :   // #16 등껍질 밟았을 때 
+                    Debug.Log("//#16 fix Shell이 Player와 부딪힘");
 
                     if(playerCtrl.pressingX)    // #64 만약 X를 누르고 있는 상태였다면 - 거북 껍질 들어야지
                     {
@@ -192,7 +196,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                         Debug.Log("//#16 왼쪽으로 차기");
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
-                    gameObject.tag = "ShellWeapon"; // #58 태그 변경
+                    Invoke("TurnToWeapon", 0.3f);   // #16 fix : 바로 Weapon으로 바뀌면, 발로 차는 동시에 플레이어가 다침
                     // enemystate = ENEMY_STATE.DIE;  //#9 리팩터링 -> #34 fix: 바로 DIE 처리하면, 거북 껍질 안 날라가(EnemyCtrl의 FixedUpdate) -> 소멸되기 직전에 DIE처리해주자
                     IsDieByBeingTrampled();
                     break;
@@ -210,6 +214,13 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     }
 
+    private void TurnToWeapon()
+    {
+        Debug.Log("//#59 // #16 fix : 무기로 바뀜");
+
+        gameObject.tag = "ShellWeapon"; // #58 태그 변경
+        beStepped = false;    // 무기로 바뀌어서 이제 거북 껍질에 닿으면 - PlayerCtrl에서는 GetHurt() 실행됨
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Debug.Log("//#57 트리거 발생");

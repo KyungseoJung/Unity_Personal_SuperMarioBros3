@@ -203,8 +203,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 if(kickShell)
                     rBody.velocity = new Vector2(enemyDir * kickSpeed, rBody.velocity.y);   // #16 한쪽 방향으로 날라가도록
                     // Debug.Log("//#16 속도 : " + rBody.velocity);
-                if(enemyLife.beStepped) // #59
-                    Invoke("TurnToWeapon", 0.2f);   // 옆에서 민 다음에 무기로 바뀌도록 - 옆으로 미는 순간 플레이어가 다치는 걸 방지 
+                // #16 fix -> EnemyLife.cs로 코드 이동 // if(enemyLife.beStepped) // #59
+                //     Invoke("TurnToWeapon", 0.5f);   // 옆에서 민 다음에 무기로 바뀌도록 - 옆으로 미는 순간 플레이어가 다치는 걸 방지 
                 break;
             case ENEMY_TYPE.FLOWER : 
                 if((transform.position.y > destPos.y -1.5) && hideInPipe) // #57 어느정도 올라와있다면
@@ -516,10 +516,10 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         CheckDirection(ENEMY_TYPE.GOOMBA);  // #70 날아다니는 굼바가 플레이어 따라다니도록
     }
 
-    void TurnToWeapon() //#59
-    {
-        Debug.Log("//#59 무기로 바뀜");
-        enemyLife.beStepped = false;    // 무기로 바뀌어서 이제 거북 껍질에 닿으면 - PlayerCtrl에서는 GetHurt() 실행됨
-    }
+    // void TurnToWeapon() //#59    // #16 fix : EnemyLife.cs로 코드 이동
+    // {
+    //     Debug.Log("//#59 무기로 바뀜");
+    //     enemyLife.beStepped = false;    // 무기로 바뀌어서 이제 거북 껍질에 닿으면 - PlayerCtrl에서는 GetHurt() 실행됨
+    // }
 
 }
