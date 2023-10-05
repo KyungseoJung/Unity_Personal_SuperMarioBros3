@@ -9,6 +9,7 @@ using UnityEngine.UI;                       // #35
 public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, 목숨, 남은 시간) UI 관리하는 클래스 생성
 {
     private PlayerCtrl playerCtrl;          // #77 spriteRenderer 접근 목적
+    private Music music;                    // #77 일시정지 할 때, BGM 멈추도록
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
     public Text txtLife;                    // #61 생명 표시
@@ -27,6 +28,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     IEnumerator enumerator;
 
+    void Awake()
+    {
+        music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();
+    }
     void Start()
     {
         SceneManager.LoadScene("scStage1");        
@@ -172,6 +177,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         {
             pauseWindow.SetActive(true);    
             HideCharacters(true);  
+            music.MusicPauseStart();    // #77 BGM 일시 정지 시작
         }
     }
 
@@ -180,6 +186,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         Debug.Log("//#76 멈춘 상태 풀기");
         pauseWindow.SetActive(false);  
         HideCharacters(false);
+        music.MusicPauseEnd();    // #77 BGM 일시 정지 종료
         // yield return new WaitForSeconds(_timer); 
         Time.timeScale = 1;
     }

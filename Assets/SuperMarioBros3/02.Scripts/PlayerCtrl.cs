@@ -498,7 +498,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                     obj.GetComponent<Block>().TurnsIntoCoin();  // #27 현재 존재하는 FRAGILE 블록들은 모두 코인으로 변하도록
                 }
 
-                music.SelectAnItemMusicOn();    // #72
+                music.PushPButtonMusicOn();    // #72
             }
         }
 

@@ -33,8 +33,18 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.clip = audioClips[0];
         gameMusicArr.Play();
     }
+    
+    public void MusicPauseStart() // #77 BGM 일시 정지 시작
+    {
+        gameMusicArr.Pause();
+    }
 
-    public void SelectAnItemMusicOn()   // #72
+    public void MusicPauseEnd() // #77 BGM 일시 정지 종료
+    {
+        gameMusicArr.Play();
+    }
+
+    public void PushPButtonMusicOn()   // #72
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[2];
