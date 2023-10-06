@@ -517,6 +517,7 @@ MonoBehaviour:
   - {fileID: 1598931879}
   powerIndicator: {fileID: 953390897}
   pauseWindow: {fileID: 491259503}
+  pausingSFX: {fileID: 8300000, guid: 2f168840a17394641803f2b9438040b2, type: 3}
 --- !u!1 &332894049
 GameObject:
   m_ObjectHideFlags: 0

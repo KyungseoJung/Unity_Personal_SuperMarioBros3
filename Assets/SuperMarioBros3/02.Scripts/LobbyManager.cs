@@ -26,6 +26,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
+
+    public AudioClip pausingSFX; // #77 pausingSFX (일시정지 할 때)
+
     IEnumerator enumerator;
 
     void Awake()
@@ -64,11 +67,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             {
                 ReleaseStopState();
                 pauseGame = false; 
-
             }
             else    // 일시정지 하지 않은 상태라면 - 일시정지 적용하기
             {
+                AudioSource.PlayClipAtPoint(pausingSFX, transform.position);    // 일시정지 효과음 - StopGame 이후에 실행하면, 시간이 아예 멈춰버린 후이기 때문에, 효과음이 아예 적용되지 않을 때가 있음
                 StopGame(false, true);   
+
                 pauseGame = true; 
             }
         }    
