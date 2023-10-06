@@ -40,7 +40,7 @@ public class PlayerLife : MonoBehaviour
     private Vector3 downPos;
     private float moveTimer = 0f;
     private float upTimer = 2f;
-    private float downTimer = 13f;
+    private float downTimer = 6f;               // #74 fix: 떨어지는 시간을 더 짧게 해서, Restart도 빠르게 실행되도록
 
     AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);   // 커브 처리를 이용해 업 다운 적용
     public Sprite deadPlayer;                   // #74 레벨1에서 GetHurt로 플레이어가 죽을 때의 이미지 
@@ -210,11 +210,11 @@ public class PlayerLife : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
         startPos = transform.position;
 
-        upPos = startPos;
+        upPos = startPos;   // 죽었을 때의 해당 위치
         upPos.y += 2f;
 
-        downPos = startPos;
-        downPos.y = -20f;
+        downPos = startPos; // 죽었을 때의 해당 위치
+        downPos.y = -8f;    // #74 fix: -20까지 갈 필요 없겠다 -> -8로 변경
 
         StartCoroutine(PlayerUpDown()); // #74
 
