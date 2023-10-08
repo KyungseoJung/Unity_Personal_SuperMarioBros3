@@ -17,6 +17,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
     private float delayTime;                // #76 n초 후에 게임 재시작 할 건지 나타내는 타이머
     private float gameRestartTime;          
+    private float originalTime;             // #77 기존 Time.timeScale
     private int timeLeftInt;                // #50 표시 목적 int형 변수
 
     public bool gameOver = false;           // #75 
@@ -43,6 +44,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
         if(pauseWindow.activeSelf)              // #77 PAUSE 윈도우 창 꺼진 채로 시작하도록
             pauseWindow.SetActive(false);   
+
+        originalTime = Time.timeScale;          // #77
     }
 
     void Update()
@@ -192,7 +195,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         HideCharacters(false);
         music.MusicPauseEnd();    // #77 BGM 일시 정지 종료
         // yield return new WaitForSeconds(_timer); 
-        Time.timeScale = 1;
+        Time.timeScale = originalTime;
     }
 
     void HideCharacters(bool _hide)   // #77 캐릭터들(MainPlayer, Enemy) 숨기기 or 드러내기
