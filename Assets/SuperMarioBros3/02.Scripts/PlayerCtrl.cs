@@ -38,6 +38,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     // public bool steppingOnEnemy;         // #11 적 밟았는지 확인   -> // #15로 변경
     // public bool pushPButton;                // #27 P버튼 밟았는지 체크   // #72 사용 안 해서 주석 처리
     public Transform groundCheck;           // 땅 밟았는지 체크
+    public GameObject headCheck;            // #75 
 
     private bool fallDown;                  // 지금 추락하고 있는지 체크
 
@@ -106,6 +107,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();    // #53 BGM 설정
 
         groundCheck = firstChild.Find("groundCheck");   // 0번째 자식 오브젝트의 자식들 중에서 groundCheck를 찾기   // 레벨 바꿀 때, 이 값도 변경해야 할 듯
+        headCheck = firstChild.Find("headCheck").gameObject;       // #75
 
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();    // 오브젝트 이름도 LobbyManager이기 때문에
         followCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FollowCamera>();    // #44

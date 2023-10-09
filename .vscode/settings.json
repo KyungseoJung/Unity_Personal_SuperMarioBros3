@@ -52,7 +52,8 @@
         "temp/":true,
         "Temp/":true
     },
-    "omnisharp.path": "C:\\Program Files\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin"
-    // "msbuildToolsVersion": "auto"
+    "omnisharp.path": "C:\\Program Files\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin",
+    "msbuildToolsVersion": "auto"
+    
 
 }

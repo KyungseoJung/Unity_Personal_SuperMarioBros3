@@ -160,6 +160,7 @@ public class PlayerLife : MonoBehaviour
                 firstChild.gameObject.SetActive(true);  
 
                 playerCtrl.groundCheck = firstChild.Find("groundCheck");
+                playerCtrl.headCheck = firstChild.Find("headCheck").gameObject;    // #75
                 playerCtrl.anim = firstChild.GetComponent<Animator>();  // #36
                 playerCtrl.sprite = firstChild.GetComponent<SpriteRenderer>();  // #77
 
@@ -174,6 +175,7 @@ public class PlayerLife : MonoBehaviour
                 secondChild.gameObject.SetActive(true);
 
                 playerCtrl.groundCheck = secondChild.Find("groundCheck");
+                playerCtrl.headCheck = firstChild.Find("headCheck").gameObject;    // #75
                 playerCtrl.anim = secondChild.GetComponent<Animator>(); // #36
                 playerCtrl.sprite = secondChild.GetComponent<SpriteRenderer>();  // #77
 
@@ -188,6 +190,7 @@ public class PlayerLife : MonoBehaviour
                 thirdChild.gameObject.SetActive(true);  
 
                 playerCtrl.groundCheck = thirdChild.Find("groundCheck");
+                playerCtrl.headCheck = firstChild.Find("headCheck").gameObject;    // #75
                 playerCtrl.anim = thirdChild.GetComponent<Animator>();  // #36
                 playerCtrl.sprite = thirdChild.GetComponent<SpriteRenderer>();  // #77
 
@@ -200,7 +203,7 @@ public class PlayerLife : MonoBehaviour
     {
     // #75
         this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 
-
+        playerCtrl.headCheck.GetComponent<BoxCollider2D>().enabled = false;    // #75 플레이어의 headCheck의 콜라이더도 비활성화 - 블록과 충돌처리 일어나지 않도록
         lobbyManager.gameOver = true;       // 게임 오버 true 설정
 
         music.PlayerDie();              // #76

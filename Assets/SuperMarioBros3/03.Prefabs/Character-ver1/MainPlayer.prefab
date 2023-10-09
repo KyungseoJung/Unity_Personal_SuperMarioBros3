@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  sprite: {fileID: 0}
   playerTailObj: {fileID: 0}
   dirRight: 1
   pressingX: 0
@@ -82,10 +83,10 @@ MonoBehaviour:
   hurtClip: {fileID: 8300000, guid: cdd74e6f822f606418a14d296b856487, type: 3}
   mushroomObtained: {fileID: 8300000, guid: e5cadf45e0de11449a8c0ba39efb1811, type: 3}
   leafObtained: {fileID: 8300000, guid: 9c6c11dce1b050a47a0d533899821c7c, type: 3}
-  downedClip: {fileID: 8300000, guid: cba2bdb0e528d7e458cfc126fd747963, type: 3}
-  playerDieClip: {fileID: 8300000, guid: 8363183034d30934994b25b240ccfd05, type: 3}
   deadPlayer: {fileID: 6139344502573663971, guid: 56bdf32f9e898d84c8ad34d52b729917,
     type: 3}
+  sortingName: 
+  sortingOrder: 0
 --- !u!50 &1031772047837095219
 Rigidbody2D:
   serializedVersion: 4
