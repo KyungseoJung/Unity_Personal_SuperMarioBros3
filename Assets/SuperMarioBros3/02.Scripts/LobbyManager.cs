@@ -165,7 +165,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         gameOver = false;                   // #73 fix
     }
 
-    public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 멈춤   // #77 게임 일시정지
+    public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지
     {
         Time.timeScale = 0;
 
@@ -178,6 +178,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
             stopForAMoment = true;   
             // StartCoroutine(ReleaseStopState(_timer)); // 게임이 아예 멈춘 후이기 때문에, Invoke로 하면 실행이 안돼
+            music.MusicPauseStart();    // #76 fix BGM 일시 정지 시작
+
         }
 
         if(_pause)  // #77
