@@ -160,6 +160,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public void RestartGame()   // #73 플레이어 죽었을 때
     {
         SceneManager.LoadScene("scStage1"); // 씬 새로 시작
+        SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
+
 
         timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
         gameOver = false;                   // #73 fix
