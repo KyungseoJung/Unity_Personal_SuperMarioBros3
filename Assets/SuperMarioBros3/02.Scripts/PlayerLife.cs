@@ -110,7 +110,7 @@ public class PlayerLife : MonoBehaviour
         ChangeLevel();      // #36 레벨 변경될 때 고려되는 요인들 변경
     }
 
-    void ReturnToNormal()   // Invoke로 호출
+    void ReturnToNormal()   // Invoke로 호출 - IDLE 상태로 돌아오기
     {   
         playerState = MODE_STATE.IDLE;
     }
@@ -123,6 +123,8 @@ public class PlayerLife : MonoBehaviour
                 playerLevel = MODE_TYPE.LEVEL2;
                 AudioSource.PlayClipAtPoint(mushroomObtained, transform.position); // #36 레벨업
                 lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
+
+                Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
                 break;
             
             case MODE_TYPE.LEVEL2:
@@ -130,12 +132,12 @@ public class PlayerLife : MonoBehaviour
                 AudioSource.PlayClipAtPoint(leafObtained, transform.position); // #36 레벨업
                 lobbyManager.StopGame(true, false, 0.2f);  // #76 게임을 0.2초 동안 멈추기
 
+                Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
                 break;
             
             case MODE_TYPE.LEVEL3:
                 break;
         }
-        ChangeLevel();
     }
 
     public void ChangeLevel()   // #36 레벨 변경 - 콜라이더 y길이(1<->1.6), 해당 오브젝트만 켜기, 그라운드체크 재설정 
