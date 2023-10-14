@@ -138,7 +138,10 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                     playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
                     break;
                 case ITEM_TYPE.LEAF:
-                    AudioSource.PlayClipAtPoint(itemObstainedClip[1], transform.position);  // 나뭇잎 획득 사운드
+                    if(playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)
+                        AudioSource.PlayClipAtPoint(itemObstainedClip[0], transform.position);  // #37 나뭇잎 먹더라도, 레벨3 상태라면, 버섯 획득 사운드 실행되도록
+                    else
+                        AudioSource.PlayClipAtPoint(itemObstainedClip[1], transform.position);  // 나뭇잎 획득 사운드
                     playerLife.LevelUp(); // 레벨업 (이 함수 내에서 동시에 상태도 변경됨)
                     break;
                 case ITEM_TYPE.GREENMUSHROOM : // #60
