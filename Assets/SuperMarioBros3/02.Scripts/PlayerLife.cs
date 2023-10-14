@@ -97,17 +97,19 @@ public class PlayerLife : MonoBehaviour
             case MODE_TYPE.LEVEL2 : 
                 playerLevel = MODE_TYPE.LEVEL1;
                 lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
+                Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
 
                 break;
             case MODE_TYPE.LEVEL3 : 
                 playerLevel = MODE_TYPE.LEVEL2;
                 lobbyManager.StopGame(true, false, 0.2f);  // #76 게임을 0.2초 동안 멈추기
+                Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
 
                 break;
         }
         AudioSource.PlayClipAtPoint(hurtClip, transform.position);
 
-        ChangeLevel();      // #36 레벨 변경될 때 고려되는 요인들 변경
+        // ChangeLevel();      // #36 레벨 변경될 때 고려되는 요인들 변경
     }
 
     void ReturnToNormal()   // Invoke로 호출 - IDLE 상태로 돌아오기

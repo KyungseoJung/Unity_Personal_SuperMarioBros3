@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 909, y: 321}
   m_MaxSize: {x: 22005, y: 10021}
   vertical: 1
-  controlID: 53
+  controlID: 150
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 909, y: 321}
   m_MaxSize: {x: 22005, y: 10021}
   vertical: 0
-  controlID: 54
+  controlID: 151
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1056,18 +1056,18 @@ MonoBehaviour:
     m_ExpandedIDs: ffffffff0000000062390000c63c0000c83c0000ca3c0000cc3c0000ce3c0000d03c0000d23c0000d43c0000d63c0000d83c0000da3c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PlayerLife
-      m_OriginalName: PlayerLife
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 13040
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 
