@@ -124,15 +124,18 @@ public class PlayerLife : MonoBehaviour
             case MODE_TYPE.LEVEL1:
                 playerLevel = MODE_TYPE.LEVEL2;
                 AudioSource.PlayClipAtPoint(mushroomObtained, transform.position); // #36 레벨업
-                lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
+                playerCtrl.anim.SetTrigger("LevelUp");  // #36 게임 일시정지 하기 전에 실행해야 제대로 작동하는 것처럼 보임
 
+                lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
                 Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
                 break;
             
             case MODE_TYPE.LEVEL2:
                 playerLevel = MODE_TYPE.LEVEL3;
                 AudioSource.PlayClipAtPoint(leafObtained, transform.position); // #36 레벨업
-                lobbyManager.StopGame(true, false, 0.2f);  // #76 게임을 0.2초 동안 멈추기
+                playerCtrl.anim.SetTrigger("LevelUp");  // #36 게임 일시정지 하기 전에 실행해야 제대로 작동하는 것처럼 보임
+
+                lobbyManager.StopGame(true, false, 0.5f);  // #76 게임을 0.5초 동안 멈추기
 
                 Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
                 break;
