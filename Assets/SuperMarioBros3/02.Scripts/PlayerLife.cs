@@ -100,6 +100,7 @@ public class PlayerLife : MonoBehaviour
 
                 lobbyManager.StopGame(true, false, 0.7f);  // #76 게임을 1초 동안 멈추기
                 Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
+                AudioSource.PlayClipAtPoint(hurtClip, transform.position);
 
                 break;
             case MODE_TYPE.LEVEL3 : 
@@ -108,10 +109,10 @@ public class PlayerLife : MonoBehaviour
 
                 lobbyManager.StopGame(true, false, 0.5f);  // #76 게임을 0.5초 동안 멈추기
                 Invoke("ChangeLevel", 0.3f);  // #36 LobbyManager의 stopForAMoment가 false가 되고 나서 레벨업 진행되도록 - 약간의 차이를 주기
+                AudioSource.PlayClipAtPoint(leafObtained, transform.position);  // #17 레벨 다운 효과음 - (레벨3에서 레벨다운 되는 건,잎 획득 효과음과 같은 효과음)
 
                 break;
         }
-        AudioSource.PlayClipAtPoint(hurtClip, transform.position);
 
         // ChangeLevel();      // #36 레벨 변경될 때 고려되는 요인들 변경
     }
