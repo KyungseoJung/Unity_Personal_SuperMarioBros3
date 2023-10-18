@@ -211,7 +211,7 @@ public class PlayerLife : MonoBehaviour
 
     }
     
-    void PlayerDie()
+    public void PlayerDie()     // #78 Zone.cs 에서 접근
     {
     // #75
         this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 

@@ -73,6 +73,7 @@
     <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerCtrl.cs" />
     <Compile Include="Assets\SuperMarioBros3\02.Scripts\PlayerLife.cs" />
     <Compile Include="Assets\SuperMarioBros3\02.Scripts\Teleport.cs" />
+    <Compile Include="Assets\SuperMarioBros3\02.Scripts\Zone.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
