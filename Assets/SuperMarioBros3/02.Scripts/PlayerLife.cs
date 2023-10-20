@@ -33,8 +33,9 @@ public class PlayerLife : MonoBehaviour
     private Vector2 lifeScale;
 // #36 레벨 변경시
     private BoxCollider2D boxCollider2D;        // #36
-    
+
 // #74 플레이어 레벨 1에서 GetHurt해서 죽을 때
+    private Rigidbody2D Rbody;                  // #78  플레이어 죽으면 Rbody 끄기 - 중력을 0으로 만들어서
     private Vector3 startPos;
     private Vector3 upPos;     
     private Vector3 downPos;
@@ -55,6 +56,7 @@ public class PlayerLife : MonoBehaviour
         music = GameObject.Find("Music").GetComponent<Music>();    // #73
 
         boxCollider2D = GetComponent<BoxCollider2D>();  // #36
+        Rbody = GetComponent<Rigidbody2D>();            // #78
     }
 
     void Start()
@@ -211,7 +213,7 @@ public class PlayerLife : MonoBehaviour
 
     }
     
-    public void PlayerDie()     // #78 Zone.cs 에서 접근
+    public void PlayerDie(bool enterDieZone = false)     // #78 Zone.cs 에서 접근   
     {
     // #75
         this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 
@@ -220,18 +222,28 @@ public class PlayerLife : MonoBehaviour
 
         music.PlayerDie();              // #76
 
-    // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
-        playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
-        startPos = transform.position;
+        
+        if(enterDieZone)    // #78 enterDieZone = true이면 플레이어 위치 고정되도록
+        {
+            Rbody.gravityScale = 0;
+            Rbody.velocity = new Vector2(0f, 0f);    // 떨어질 때 가속도 적용되지 않도록 - 그냥 DieZone 위치 안에 머물게 하기
+            Invoke("GameRestart", downTimer);        // Die Zone에 들어간 후, n초 뒤에 게임 재시작하도록 - 재시작 시간은 downTimer와 동일하게 
+        }
+        else    // #78 enterDieZone = false이면 PlayerUpDown 실행되도록
+        {
+            // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+            playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+            startPos = transform.position;
 
-        upPos = startPos;   // 죽었을 때의 해당 위치
-        upPos.y += 2f;
+            upPos = startPos;   // 죽었을 때의 해당 위치
+            upPos.y += 2f;
 
-        downPos = startPos; // 죽었을 때의 해당 위치
-        downPos.y = -8f;    // #74 fix: -20까지 갈 필요 없겠다 -> -8로 변경
+            downPos = startPos; // 죽었을 때의 해당 위치
+            downPos.y = -8f;    // #74 fix: -20까지 갈 필요 없겠다 -> -8로 변경
 
-        StartCoroutine(PlayerUpDown()); // #74
+            StartCoroutine(PlayerUpDown()); // #74
+        }
 
         StopFireball(); // #75
     }
@@ -278,4 +290,8 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
+    void GameRestart()
+    {
+        lobbyManager.RestartGame(); // #73
+    }
 }

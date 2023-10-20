@@ -23,7 +23,7 @@ public class Zone : MonoBehaviour
                 break;
             case ZONE_TYPE.DIE:
                 if ((col.gameObject.tag == "Player") && (!lobbyManager.gameOver))   // #78 게임 오버 연속으로 실행되지 않도록 gameOver bool형 체크
-                    col.gameObject.GetComponent<PlayerLife>().PlayerDie();          // #78 플레이어가 DIE ZONE에 들어가면 - 플레이어 죽도록
+                    col.gameObject.GetComponent<PlayerLife>().PlayerDie(true);          // #78 플레이어가 DIE ZONE에 들어가면 - 플레이어 죽도록
                 break;
         }
         
