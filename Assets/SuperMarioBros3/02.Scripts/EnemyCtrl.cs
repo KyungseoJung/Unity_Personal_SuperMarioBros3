@@ -173,7 +173,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         if(lobbyManager.gameOver)   // #75 만약 게임오버 상태라면 - Enemy 움직임 멈추도록
         {
-            Debug.Log("//#75 EnemyCtrl - FixedUpdate에서 게임 오버 확인");
+            //Debug.Log("//#75 EnemyCtrl - FixedUpdate에서 게임 오버 확인");
 
             if((anim != null) && (anim.enabled))   // Enemy3의 경우 anim이 없기 때문에 에러 방지 목적으로 anim!=null 조건 추가
             {

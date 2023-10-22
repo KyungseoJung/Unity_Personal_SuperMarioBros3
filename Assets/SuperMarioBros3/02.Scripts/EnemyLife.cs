@@ -126,7 +126,9 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                 case EnemyCtrl.ENEMY_TYPE.GOOMBA : 
                     if(beStepped)  // #15 만약 플레이어가 Enemy의 머리를 밟은 거라면
                     {
-                        if(enemyCtrl.wingsType == EnemyCtrl.WINGS_TYPE.YES) // #34 밟았는데, 그게 날개 달린 거북이었다면
+                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
+
+                        if (enemyCtrl.wingsType == EnemyCtrl.WINGS_TYPE.YES) // #34 밟았는데, 그게 날개 달린 거북이었다면
                         {
                             AudioSource.PlayClipAtPoint(squishClip, transform.position);  // #71 Enemy 밟는 소리
 
@@ -134,14 +136,14 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
                             Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp");
-                            playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
 
-                            beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
+                            Invoke("TurnToNotBeStepped", 0.3f);//beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
+                                                               //바로 beStepped = false로 바꾸면, 플레이어가 GetHurt 할 수 있음                            break;
 
                             break;
                         }
                         // Debug.Log("#11 플레이어가 Enemy 머리 밟음");    
-                        playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
+                        //playerCtrl.BounceUp(); // #16 Enemy의 머리 밟으면 플레이어는 약간 위로 튀어오르기 - Shell을 밟았을 땐 튀어오르지 않음   // #16 리팩토링: PlayerCtrl 변수 사용
                         enemystate = ENEMY_STATE.DIE;  //#9 리팩터링
                         IsDieByBeingTrampled();            // #19 죽었을 때 효과
                     }
@@ -158,8 +160,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                             anim.SetBool("Fly", false);                     // 날아다니는 애니메이션 취소
 
 
-                            beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
-
+                            Invoke("TurnToNotBeStepped", 0.3f);  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
+                                                                 //바로 beStepped = false로 바꾸면, 플레이어가 GetHurt 할 수 있음
                             break;
                         }
                         Debug.Log("#11 #16보완 플레이어가 Enemy 머리 밟음 - 위로 BounceUp"); // #34 변경 - 날개 없는 거북 밟아도 플레이어 위로 Bounce 되도록
@@ -221,6 +223,12 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         gameObject.tag = "ShellWeapon"; // #58 태그 변경
         beStepped = false;    // 무기로 바뀌어서 이제 거북 껍질에 닿으면 - PlayerCtrl에서는 GetHurt() 실행됨
     }
+
+    private void TurnToNotBeStepped()
+    {
+        beStepped = false;  // #34 날개 달린 Enemy의 beStpped =false로 해서 완전히 원래 거북으로 돌아가도록
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Debug.Log("//#57 트리거 발생");

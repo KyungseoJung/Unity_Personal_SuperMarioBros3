@@ -55,7 +55,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         if(stopForAMoment)
         {
 
-            Debug.Log("//#76-2 Time.realtimeSinceStartup : " + Time.realtimeSinceStartup);    
+            //Debug.Log("//#76-2 Time.realtimeSinceStartup : " + Time.realtimeSinceStartup);    
 
             if(Time.realtimeSinceStartup > gameRestartTime)
             {
