@@ -125,7 +125,12 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
+        if (col.gameObject.tag == "Cliff")   // #10 fix 절벽부분에서 이동 방향 바꾸도록 - Ground Layer는 잘 인식을 못하는 것 같아서
+        {
+            Flip();
+        }
+
+        if (col.gameObject.tag == "Player")    // #30 플레이어가 아이템을 먹으면 점수 UI 등장
         {
             // Debug.Log("//#30 플레이어와 부딪힘");
             ShowPointUi(itemType);                      // 점수 UI 표시

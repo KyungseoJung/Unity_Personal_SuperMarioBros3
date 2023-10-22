@@ -243,7 +243,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 if(col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
                     || col.gameObject.tag == "FragileBlock")    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
                 {
-                    Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘");
+                    Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘: " + col.gameObject.name);
                     Flip();
 
                     if(kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
