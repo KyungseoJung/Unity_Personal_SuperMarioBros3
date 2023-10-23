@@ -240,17 +240,17 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                 // if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
                 //     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
-                if(col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
+                if (col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
                     || col.gameObject.tag == "FragileBlock")    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
                 {
                     Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘: " + col.gameObject.name);
                     Flip();
 
-                    if(kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
+                    if (kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
                     {
                         Debug.Log("//#64 보완 : kickShell 확인됨");
 
-                        if(col.gameObject.transform.position.x < this.transform.position.x)
+                        if (col.gameObject.transform.position.x < this.transform.position.x)
                         {
                             rBody.AddForce(Vector2.right * 50f);    // 너무 무거워서 안 튕기는 상황을 방지하기 위함
                             Debug.Log("//#16 //#64 보완 : 오른쪽으로 튕겨");
@@ -262,7 +262,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                         }
                     }
                 }
-
+                else if (col.gameObject.tag == "Player")    // #17 feat 플레이어 GetHurt 함(PlayerCtrl.cs)과 동시에 Enemy도 이동 방향 바꾸도록
+                {
+                    Flip();
+                }
+                    
                 break;
 
     // #25 보완 : 아래 코드는 Block.cs에서 실행되도록 - 그 방식이 더 적합하다고 생각 - 하나하나 col에 접근하는 것보다는, 처음부터 Block.cs에서 실행하는 게 낫지
