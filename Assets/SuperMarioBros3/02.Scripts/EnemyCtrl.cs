@@ -239,9 +239,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.SHELL : // #25 보완
 
                 // if(Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Obstacle"))
-                //     || Physics2D.Linecast(transform.position, frontCheck.position, 1<<LayerMask.NameToLayer("Ground")))
-                if (col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
-                    || col.gameObject.tag == "FragileBlock")    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
+                    if(Physics2D.Linecast(transform.position, frontCheck.position, 1 << LayerMask.NameToLayer("Ground"))
+                    || (col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
+                    || col.gameObject.tag == "FragileBlock")    )    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
                 {
                     Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘: " + col.gameObject.name);
                     Flip();
