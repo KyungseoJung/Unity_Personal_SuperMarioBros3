@@ -209,7 +209,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
         }        
 
-        if(other.gameObject.tag == "ShellWeapon")   // #58
+        if(other.gameObject.tag == "ShellWeapon")   // #58 튕겨다니는 거북 껍질에 맞을 때
         {
             HitByShell(other.gameObject.transform.position);    // 함수 인자 : 거북 껍질의 위치
         }
@@ -406,7 +406,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
     }
 
-    public void HitByShell(Vector3 _pos)   // #58 튕겨다니는 거북 껍질에 맞을 때    // #65 public 변환
+    public void HitByShell(Vector3 _pos)   // #58 Enemy가 거북 껍질 or 다른 Enemy에 맞아서 다치는 상황    // #65 public 변환
     {
         Debug.Log("// #58 " + gameObject + " - Enemy가 거북 껍질에 맞음");
         
@@ -447,7 +447,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         Vector3 theScale = transform.localScale;
         switch(enemyCtrl.enemyType) 
         {              
-            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바가 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+            case EnemyCtrl.ENEMY_TYPE.GOOMBA :  // 굼바가 껍질에 맞았을 때 : 꼬리로 맞자마자 죽음
                 
             // 상태 뒤집기
                 theScale.y *= -1;
@@ -462,28 +462,27 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
 
                 break;
             
-            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북이 꼬리에 맞았을 때 : 꼬리에 맞자마자 죽지는 않고, 거북 등 껍질만 뒤집혀 있음/ 위로 튕겼다가 아래로 떨어짐
-                Debug.Log("//#57 거북 꼬리에 맞음");
+            case EnemyCtrl.ENEMY_TYPE.TURTLE :  // 거북이 껍질에 맞았을 때 : 꼬리에 맞자마자 죽지는 않고, 거북 등 껍질만 뒤집혀 있음/ 위로 튕겼다가 아래로 떨어짐
+                Debug.Log("//#58 거북이가 다른 거북의 껍질에 맞음");
             // 상태 뒤집기
                 theScale.y *= -1;
                 transform.localScale = theScale;
             // 콜라이더 없애기
                 boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
-
-                ChangeTurtleToShell();
+                beStepped= true;                   // #58 fix: 플레이어가 거북 껍질과 부딪혀도 다치지 않도록
+                ChangeTurtleToShell(true);
 
                 break;
 
-            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 등껍질이 플레이어의 꼬리에 맞았을 때 : 그 모습 그대로 잠깐 위로 튕겼다가 아래로 떨어짐. 탄성 약간 O
+            case EnemyCtrl.ENEMY_TYPE.SHELL :   // 등껍질이 껍질에 맞았을 때 : 그 모습 그대로 잠깐 위로 튕겼다가 아래로 떨어짐. 탄성 약간 O
             // 상태 뒤집기
                 theScale.y *= -1;
                 transform.localScale = theScale;
             // 콜라이더 없애기
                 boxCollider2D.enabled = false;      // 콜라이더 비활성화 - 땅으로 꺼지도록
-
                 break;
 
-            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 꼬리에 맞았을 때 : 꼬리로 맞자마자 죽음
+            case EnemyCtrl.ENEMY_TYPE.FLOWER :  // 꽃이 껍질에 맞았을 때 : 껍질에 맞자마자 죽음
 
                 // enemystate = ENEMY_STATE.DIE;    // #62 이미 함수 내 맨 위에서 DIE 처리 했음
 
@@ -525,7 +524,7 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         Instantiate(bombUi, bombPos, Quaternion.identity);
     }
 
-    private void ChangeTurtleToShell()  
+    private void ChangeTurtleToShell(bool _turtleDie = false)  
     {
         body = transform.GetChild(0).gameObject;
         trampledBody = transform.GetChild(2).gameObject;
@@ -536,7 +535,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
         // size.y = 0.7f;
         // boxCollider2D.size = size;
         boxCollider2D.enabled = false;      // #16 보완 : 위 코드 주석하고, 써클 콜라이더 이용하기
-        circleCollider2D.enabled = true;    
+        if(!_turtleDie) // #58 fix: _turtleDie = true이면 거북 껍질 바로 죽도록 - 그대로 바로 콜라이더 없이 지하로 떨어지도록
+            circleCollider2D.enabled = true;    
 
         enemyCtrl.enemyType = EnemyCtrl.ENEMY_TYPE.SHELL;   // #16 밟으면 상태 변화
 
