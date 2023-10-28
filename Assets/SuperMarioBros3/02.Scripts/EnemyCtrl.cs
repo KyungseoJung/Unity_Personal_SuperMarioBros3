@@ -344,19 +344,20 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
         while(true && (!lobbyManager.gameOver))  // 올라가도 될 때에만 올라가도록   // #75
         {
-            if(!canMovingUp)       // 움직이면 안 되는 상태라면 코루틴 아예 종료
-            {
-                yield return new WaitForSeconds(0.5f);
-                moveTimer = 0f;
+            // #14 fix: 아래 코드가 필요 없다고 판단 - ShootFireball에서만 조건으로 적용시키자
+            //if(!canMovingUp)       // 움직이면 안 되는 상태라면 코루틴 아예 종료
+            //{
+            //    yield return new WaitForSeconds(0.5f);
+            //    moveTimer = 0f;
 
-                flowerDownEnumerator = FlowerDown();       
-                StartCoroutine(flowerDownEnumerator);      // 다시 내려가도록
+            //    flowerDownEnumerator = FlowerDown();       
+            //    StartCoroutine(flowerDownEnumerator);      // 다시 내려가도록
 
-                if(isMovingUp)  // #12 보완 : 올라오고 있지 않음을 체크
-                    isMovingUp = false; 
+            //    if(isMovingUp)  // #12 보완 : 올라오고 있지 않음을 체크
+            //        isMovingUp = false; 
 
-                yield break;    // 현재 코루틴 종료
-            }
+            //    yield break;    // 현재 코루틴 종료
+            //}
 
             // Debug.Log("#12 업 함수 실행" + moveTimer + "// isMoving은 true? : " + isMoving);
             if(moveTimer < upDownTimer)
@@ -387,8 +388,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     IEnumerator FlowerDown()    // #12 꽃 - 밑으로 내려가기
     {
-        ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
-
+        if (canMovingUp)   // #14 fix 플레이어가 Flower Enmey가 들어있는 파이프 가까이 있으면 파이어볼 쏘지 않도록
+        {
+            ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
+            yield return null;
+        }
         Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
 
         while(true && (!lobbyManager.gameOver)) // #75
