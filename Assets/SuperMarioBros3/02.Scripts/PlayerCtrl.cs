@@ -587,7 +587,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                 transform.GetChild(3).GetComponent<EnemyLife>().PlayerReleasing();  // 
             }
         }
-        else if(col.gameObject.tag == "EnemyWeapon")    // #14
+        else if((col.gameObject.tag == "EnemyWeapon") || col.gameObject.tag == "ShellWeapon")    // #14 #58 튕겨다니는 거북 껍질에 맞을 때 - 플레이어도 다치도록
         {
             Destroy(col.gameObject);    // 파이어볼 자체 소멸
             Debug.Log("//#14 플레이어가 파이어볼에 맞아서 다침");
