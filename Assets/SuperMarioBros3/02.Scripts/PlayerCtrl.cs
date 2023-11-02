@@ -518,6 +518,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         {
             col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!
             music.LevelCompleted(); // 게임 종료 BGM
+            lobbyManager.gameOver = true;   // #58
+            Invoke("ChangeSceneToHome", 3.0f);
         }
     }
 
@@ -607,6 +609,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     }
 
+    private void ChangeSceneToHome()
+    {
+        lobbyManager.LevelCompleted();  // #53
+    }
     public void BounceUp() // #16 약간 위로 튀어오르기 - 예 : 몬스터 밟았을 때
     {
         Rbody.AddForce(Vector2.up * bounceJump);

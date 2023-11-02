@@ -50,7 +50,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     void Update()
     {        
-        CheckTimeLeft();                    // #50 남은 시간 체크
+        if(!gameOver)
+            CheckTimeLeft();                    // #50 남은 시간 체크 // #53 gameOver인 상태에서는 시간 흘러가지 않도록
 
         if(stopForAMoment)
         {
@@ -159,12 +160,21 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void RestartGame()   // #73 플레이어 죽었을 때
     {
-        SceneManager.LoadScene("scStage1"); // 씬 새로 시작
         SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
+                                            // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
+        SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
 
         timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
         gameOver = false;                   // #73 fix
+    }
+
+    public void LevelCompleted()    // #53 레벨 성공
+    {
+        SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
+                                                    // Unity개인프로젝트 - 공부_화면전환 내용 중
+                                                    // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
+        SceneManager.LoadScene("scHome"); // Home 씬으로 이동
     }
 
     public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SuperMarioBros3/01.Scenes/scStage1.unity
     guid: 5bde8775a7b71dc479389f0dde6b13d3
+  - enabled: 1
+    path: Assets/SuperMarioBros3/01.Scenes/scHome.unity
+    guid: f3283c67cf30f5f4297f5c5592c3c180
   m_configObjects: {}
