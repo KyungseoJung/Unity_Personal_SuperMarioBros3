@@ -27,6 +27,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
+    public GameObject btnGameStart;         // #53 게임 시작 버튼
 
     public AudioClip pausingSFX; // #77 pausingSFX (일시정지 할 때)
 
@@ -38,7 +39,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     }
     void Start()
     {
-        SceneManager.LoadScene("scStage1");        
+        //SceneManager.LoadScene("scStage1");       // #53 버튼 눌러야 scHome씬부터 실행하도록
     
         timeLeftFloat = 300f;                    // #50 남은 시간 - 첫 시작은 300초
 
@@ -174,7 +175,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
                                                     // Unity개인프로젝트 - 공부_화면전환 내용 중
                                                     // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
-        SceneManager.LoadScene("scHome"); // Home 씬으로 이동
+        SceneManager.LoadScene("scStage1");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록
     }
 
     public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지
@@ -267,6 +268,13 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
                     break;
             }
         }
+    }
+
+    public void StartGame()    // #53 게임 시작하기
+    {
+        btnGameStart.SetActive(false);
+        SceneManager.LoadScene("scStage1");
+        music.GameStart();      // 게임 기본 BGM 시작
     }
 
     // public void StopGame(bool _replay, float _timer)    // #76

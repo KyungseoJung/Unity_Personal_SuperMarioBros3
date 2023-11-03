@@ -22,7 +22,7 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.loop = true;   // #51 보완
     }
 
-    void Start()
+    public void GameStart() // #53 LobbyManager.cs에서 btnGameStart 버튼 누르면 실행되도록
     {
         MainMusicOn();
     }
