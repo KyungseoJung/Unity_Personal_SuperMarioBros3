@@ -161,8 +161,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void RestartGame()   // #73 플레이어 죽었을 때
     {
-        SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
-                                            // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
+        //SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
+        // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
+        music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
         SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
 
@@ -175,7 +176,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
                                                     // Unity개인프로젝트 - 공부_화면전환 내용 중
                                                     // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
-        SceneManager.LoadScene("scStage1");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록
+        SceneManager.LoadScene("scHome");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록
     }
 
     public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지
