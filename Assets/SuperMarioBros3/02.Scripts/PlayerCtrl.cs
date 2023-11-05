@@ -208,8 +208,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             if(playMaxRunClip && !isFlying)      // X키 안누르고 있고 && 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
             {
-                playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-                playerAudioSource.Stop();   
+                StopMaxRunClip();
             }
 
             if( anim.GetBool("RunFast") )  // #55 빠르게 달리는 애니메이션 설정 해제
@@ -378,8 +377,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
         if((h*Rbody.velocity.x < normalRunSpeed) && playMaxRunClip && !isFlying) // 속도 느려졌고, 날고 있는 상태도 아닌데, 빨리 달릴 때 클립 나오고 있다면
         {
-            playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
-            playerAudioSource.Stop();
+            StopMaxRunClip();   // #40 fix
         }
 
         if( (h*Rbody.velocity.x < normalRunSpeed) && (anim.GetBool("RunFast")) )  // #55 빠르게 달리는 애니메이션 설정 해제
@@ -519,6 +517,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!
             music.LevelCompleted(); // 게임 종료 BGM
             lobbyManager.gameOver = true;   // #58
+
+            StopMaxRunClip();   // #40 fix
             Invoke("ChangeSceneToHome", 3.0f);
         }
     }
@@ -755,5 +755,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         playerAudioSource.clip = _clip;
         playerAudioSource.volume = _volume;        // 소리 너무 커.. 줄이자..
         playerAudioSource.Play();
+    }
+
+    public void StopMaxRunClip()    // #40 fix : 함수로 따로 만들어버림
+    {
+        playMaxRunClip = false; // #40 빨리 달릴 때 효과음 중단
+        playerAudioSource.Stop();
     }
 }
