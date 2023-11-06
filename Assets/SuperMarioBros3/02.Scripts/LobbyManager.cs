@@ -176,7 +176,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
                                                     // Unity개인프로젝트 - 공부_화면전환 내용 중
                                                     // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
-        SceneManager.LoadScene("scOpen");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록 -> #53 fix: scOpen으로 이동하도록
+        SceneManager.LoadScene("scLobby");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록 -> #53 fix: scOpen으로 이동하도록 -> # 53 fix: scHome으로 이동하도록
+        btnGameStart.SetActive(true);               // #53 fix: 버튼 다시 활성화
+
     }
 
     public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지
@@ -275,6 +277,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         btnGameStart.SetActive(false);
         SceneManager.LoadScene("scStage1");
+
         music.GameStart();      // 게임 기본 BGM 시작
     }
 
