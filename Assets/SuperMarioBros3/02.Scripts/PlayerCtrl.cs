@@ -248,14 +248,14 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(lobbyManager.gameOver)           // #75
             return;
 
-        if(transform.position.x < -6.65)    // #8 맵 기준으로 왼쪽 맨 끝까지 갈 수 없도록
-        {
-            playerPos = transform.position;
-            playerPos.x = -6.65f;
-            transform.position = playerPos;
+        //if(transform.position.x < -6.65)    // #8 맵 기준으로 왼쪽 맨 끝까지 갈 수 없도록 // #8 fix: 이동 제한 - 스크립트가 아닌 오브젝트(BoxCollider2D)로 하기
+        //{
+        //    playerPos = transform.position;
+        //    playerPos.x = -6.65f;
+        //    transform.position = playerPos;
 
-            Rbody.velocity = new Vector2(0f, Rbody.velocity.y);    // #40 맨 끝에 도달하면 속도 0으로 떨어지도록
-        }
+        //    Rbody.velocity = new Vector2(0f, Rbody.velocity.y);    // #40 맨 끝에 도달하면 속도 0으로 떨어지도록
+        //}
 
         if(transform.position.y > 18)    // #42 갈 수 있는 범위 제한
         {
