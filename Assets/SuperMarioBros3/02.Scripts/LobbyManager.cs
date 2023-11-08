@@ -279,6 +279,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.LoadScene("scStage1");
 
         music.GameStart();      // 게임 기본 BGM 시작
+        gameOver = false        // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
+
     }
 
     // public void StopGame(bool _replay, float _timer)    // #76
