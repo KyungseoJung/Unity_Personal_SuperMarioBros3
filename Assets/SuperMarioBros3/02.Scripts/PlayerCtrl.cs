@@ -519,7 +519,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             lobbyManager.gameOver = true;   // #58
 
             StopMaxRunClip();   // #40 fix
-            Invoke("ChangeSceneToHome", 3.0f);
+            Invoke("GameClear", 3.0f);
         }
     }
 
@@ -609,7 +609,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     }
 
-    private void ChangeSceneToHome()
+    private void GameClear()    // #53 함수 이름만 변경(함수의 역할이 달라져서) ChangeSceneToHome -> GameClear 
     {
         lobbyManager.LevelCompleted();  // #53
     }

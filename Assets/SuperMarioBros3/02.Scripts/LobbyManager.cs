@@ -13,6 +13,18 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
     public Text txtLife;                    // #61 생명 표시
+    
+    public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
+    
+    public Sprite[] SpritefinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
+    /*
+    0: Flower
+    1: Mushroom
+    2: Star
+    */
+
+    private Goal.GOAL_ITEM_TYPE finalGetItemType;
+    
 
     private float timeLeftFloat;            // #50 계산(측정) 목적 float형 변수
     private float delayTime;                // #76 n초 후에 게임 재시작 할 건지 나타내는 타이머
@@ -28,6 +40,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼
+    public GameObject[] gameClearUIObjs;     // #53 Goal 지점 게임 클리어 UI - 총 3개
+    /*
+    [0]: 1번째 줄 텍스트
+    [1]: 2번째 줄 텍스트
+    [2]: Goal 지점 획득 이미지
+    */
 
     public AudioClip pausingSFX; // #77 pausingSFX (일시정지 할 때)
 
@@ -45,6 +63,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
         if(pauseWindow.activeSelf)              // #77 PAUSE 윈도우 창 꺼진 채로 시작하도록
             pauseWindow.SetActive(false);   
+        
+        foreach(GameObject obj in gameClearUIObjs)  // #53 첫 시작할 땐, 비활성화
+        {
+            if(obj.activeSelf)
+                obj.SetActive(false);
+        }
 
         originalTime = Time.timeScale;          // #77
     }
@@ -173,14 +197,38 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void LevelCompleted()    // #53 레벨 성공
     {
+        Invoke("ShowClearUIFirst", 1.0f);
+        Invoke("ShowClearUISecond", 2.0f);
+        Invoke("ShowClearUIThird", 3.0f);
+        Invoke("MoveToLobbyScene", 4.0f);
+    }
+
+    private void ShowClearUIFirst()
+    {
+        Debug.Log("//#53 ShowClearUIFirst");
+        gameClearUIObjs[0].SetActive(true);
+    }
+    private void ShowClearUISecond()
+    {
+        Debug.Log("//#53 ShowClearUISecond");
+        gameClearUIObjs[1].SetActive(true);
+    }
+    private void ShowClearUIThird()
+    {
+        Debug.Log("//#53 ShowClearUIThird");
+        // 획득 이미지 나타나게 하기
+    }
+
+    private void MoveToLobbyScene()
+    {
+        Debug.Log("//#53 MoveToLobbyScene");
+
         SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
                                                     // Unity개인프로젝트 - 공부_화면전환 내용 중
                                                     // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
         SceneManager.LoadScene("scLobby");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록 -> #53 fix: scOpen으로 이동하도록 -> # 53 fix: scHome으로 이동하도록
         btnGameStart.SetActive(true);               // #53 fix: 버튼 다시 활성화
-
     }
-
     public void StopGame(bool _replay, bool _pause, float _timer = 0f)   // #76 게임 잠시 멈춤   // #77 게임 일시정지
     {
         Time.timeScale = 0;
@@ -273,16 +321,21 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
     }
 
-    public void StartGame()    // #53 게임 시작하기
+    public void StartGame()    // #53 게임 시작하기 - btnGameStart에 연결
     {
         btnGameStart.SetActive(false);
         SceneManager.LoadScene("scStage1");
 
         music.GameStart();      // 게임 기본 BGM 시작
-        gameOver = false        // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
+        gameOver = false;        // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
 
     }
 
+    public void GetFinalItem(Goal.GOAL_ITEM_TYPE _type)  // #53 Goal 지점에 도착 - 획득한 FinalGetItem 이미지 띄우기
+    {
+        finalGetItemType = _type;
+
+    }
     // public void StopGame(bool _replay, float _timer)    // #76
     // {
     //     StartCoroutine(StopGameIEnumerator(true, _timer));
