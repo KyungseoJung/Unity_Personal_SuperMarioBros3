@@ -197,6 +197,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void LevelCompleted()    // #53 레벨 성공
     {
+        // Debug.Log("//#53 fix LobbyManager.cs: LevelCompleted 함수 실행");
+
         Invoke("ShowClearUIFirst", 1.0f);
         Invoke("ShowClearUISecond", 2.0f);
         Invoke("ShowClearUIThird", 3.0f);

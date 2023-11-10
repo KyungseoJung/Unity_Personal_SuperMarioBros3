@@ -512,11 +512,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
         }
     
-        if(col.gameObject.tag == "Goal")    // #53
+        if((col.gameObject.tag == "Goal") && (!lobbyManager.gameOver))    // #53    // #53 fix: 중복 실행되는 문제 해결 - gameOver가 false일 때에만 실행되도록 제한
         {
+            lobbyManager.gameOver = true;   // #58
+
+            // Debug.Log("//#53 fix Goal 지점 도달");
             col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!
             music.LevelCompleted(); // 게임 종료 BGM
-            lobbyManager.gameOver = true;   // #58
 
             StopMaxRunClip();   // #40 fix
             Invoke("GameClear", 3.0f);
@@ -611,6 +613,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     private void GameClear()    // #53 함수 이름만 변경(함수의 역할이 달라져서) ChangeSceneToHome -> GameClear 
     {
+        // Debug.Log("//#53 fix PlayerCtrl.cs: GameClear 함수 실행");
+
         lobbyManager.LevelCompleted();  // #53
     }
     public void BounceUp() // #16 약간 위로 튀어오르기 - 예 : 몬스터 밟았을 때
