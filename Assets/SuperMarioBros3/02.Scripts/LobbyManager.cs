@@ -16,7 +16,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
     
-    public Sprite[] SpritefinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
+    public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
     /*
     0: Flower
     1: Mushroom
@@ -202,7 +202,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         Invoke("ShowClearUIFirst", 1.0f);
         Invoke("ShowClearUISecond", 2.0f);
         Invoke("ShowClearUIThird", 3.0f);
-        Invoke("MoveToLobbyScene", 4.0f);
+        Invoke("MoveToLobbyScene", 5.0f);   // #53 로비씬 이동 타이밍 늦추기
     }
 
     private void ShowClearUIFirst()
@@ -218,7 +218,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private void ShowClearUIThird()
     {
         Debug.Log("//#53 ShowClearUIThird");
-        // 획득 이미지 나타나게 하기
+        gameClearUIObjs[2].SetActive(true); // 획득 이미지 나타나게 하기
     }
 
     private void MoveToLobbyScene()
@@ -343,7 +343,18 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void GetFinalItem(Goal.GOAL_ITEM_TYPE _type)  // #53 Goal 지점에 도착 - 획득한 FinalGetItem 이미지 띄우기
     {
-        finalGetItemType = _type;
+        switch(_type)
+        {
+            case Goal.GOAL_ITEM_TYPE.FLOWER:
+                ImgFinalGet.sprite = SpriteFinalGetItem[0];
+                break;
+            case Goal.GOAL_ITEM_TYPE.STAR:
+                ImgFinalGet.sprite = SpriteFinalGetItem[1];
+                break;
+            case Goal.GOAL_ITEM_TYPE.MUSHROOM:
+                ImgFinalGet.sprite = SpriteFinalGetItem[2];
+                break;
+        }
 
     }
     // public void StopGame(bool _replay, float _timer)    // #76

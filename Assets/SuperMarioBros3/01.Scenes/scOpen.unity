@@ -508,10 +508,10 @@ MonoBehaviour:
   txtTimeLeft: {fileID: 584919739}
   txtLife: {fileID: 332894051}
   ImgFinalGet: {fileID: 1825229717}
-  finalGetItems:
+  SpriteFinalGetItem:
   - {fileID: -150824587440181479, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
-  - {fileID: -6572485832591124366, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
   - {fileID: -5677630128732763714, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
+  - {fileID: -6572485832591124366, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
   gameOver: 0
   fastIndicator:
   - {fileID: 2072097379}
@@ -3099,7 +3099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -35, y: 35}
+  m_AnchoredPosition: {x: -80.4, y: 35}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1825229717
