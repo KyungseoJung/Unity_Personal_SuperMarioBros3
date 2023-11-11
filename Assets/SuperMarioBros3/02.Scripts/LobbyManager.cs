@@ -40,7 +40,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼
-    public GameObject[] gameClearUIObjs;     // #53 Goal 지점 게임 클리어 UI - 총 3개
+    public GameObject[] gameClearUIObjs;    // #53 Goal 지점 게임 클리어 UI - 총 3개
     /*
     [0]: 1번째 줄 텍스트
     [1]: 2번째 줄 텍스트
@@ -228,6 +228,14 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.UnloadSceneAsync("scStage1");    // 비동기 방식 - 현재의 씬만 이렇게 Unload 할 수 있음
                                                     // Unity개인프로젝트 - 공부_화면전환 내용 중
                                                     // 비동기 방식은 씬 전환이 완료되기 전에도 다른 작업을 수행할 수 있으므로 유저 경험을 향상시킬 수 있다
+
+        foreach(GameObject obj in gameClearUIObjs)  // #53 fix : 로비 화면으로 이동하기 전, UI 오브젝트 안 보이도록 비활성화 
+        {
+            Debug.Log("//#53 fix: " + obj + "비활성화");
+            if(obj.activeSelf)
+                obj.SetActive(false);
+        }
+
         SceneManager.LoadScene("scLobby");         // Home 씬으로 이동 -> #53 scStage1으로 이동하도록 -> #53 fix: scOpen으로 이동하도록 -> # 53 fix: scHome으로 이동하도록
         btnGameStart.SetActive(true);               // #53 fix: 버튼 다시 활성화
     }
