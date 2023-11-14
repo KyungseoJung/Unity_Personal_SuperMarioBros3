@@ -2529,6 +2529,7 @@ Transform:
   - {fileID: 8057054347945494338}
   - {fileID: 1506811531}
   - {fileID: 833831678}
+  - {fileID: 766884363115594975}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13817,7 +13818,7 @@ PrefabInstance:
     - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
         type: 3}
@@ -18265,6 +18266,12 @@ Transform:
   m_Father: {fileID: 1500932958}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &766884363115594975 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178526047297048386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1031772049348712449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18369,6 +18376,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4eda048d9ed84a04c98f6a5686a851ce, type: 3}
+--- !u!1001 &1178526047297048386
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 272019281}
+    m_Modifications:
+    - target: {fileID: 1945117922903002012, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy3-noattack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 105.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945117922903002013, guid: 2316187ddb3c7ae43834a4ea4d5972dc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2316187ddb3c7ae43834a4ea4d5972dc, type: 3}
 --- !u!1001 &1190452020425679785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18859,6 +18935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 1
   wingsType: 1
+  attackType: 1
   enemyDir: -1
   moveSpeed: 0
   frontCheck: {fileID: 0}

@@ -82,7 +82,7 @@ TextureImporter:
     second: enemy_25
   - first:
       213: -6096776313456823178
-    second: enemy_26
+    second: enemy3_1-noattack
   - first:
       213: -1869164478038423500
     second: enemy2_4
@@ -130,7 +130,7 @@ TextureImporter:
     second: enemy_41
   - first:
       213: -5843136092794344701
-    second: enemy_42
+    second: enemy3_2-noattack
   - first:
       213: -4775434347972606009
     second: enemy4_4
@@ -1044,7 +1044,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_26
+      name: enemy3_1-noattack
       rect:
         serializedVersion: 2
         x: 7
@@ -1380,7 +1380,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_42
+      name: enemy3_2-noattack
       rect:
         serializedVersion: 2
         x: 7

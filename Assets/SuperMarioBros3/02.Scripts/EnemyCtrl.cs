@@ -9,9 +9,12 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 // 몬스터 종류
     public enum ENEMY_TYPE {GOOMBA = 1, TURTLE, SHELL, FLOWER};
     public enum WINGS_TYPE {YES = 1, NO};    // 날개 달려 있는지
+    public enum ATTACK_TYPE {YES = 1, NO};    // #14 꽃 Enemy - 파이어볼 쏘는지, 안 쏘는지
+
 
     public ENEMY_TYPE enemyType;
     public WINGS_TYPE wingsType;
+    public ATTACK_TYPE attackType = ATTACK_TYPE.YES;  // #14 추가 : 디폴트는 YES
     // #19 죽은 후 상태에 따른 함수 실행
     private EnemyLife enemyLife;
     // #34 몬스터 애니메이션
@@ -107,7 +110,11 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 startPos = transform.position;  // #12 시작 위치, 도착 위치 설정
                 destPos = transform.position;
-                destPos.y += 2.3f;
+                if(attackType == ATTACK_TYPE.YES)
+                    destPos.y += 2.3f;
+                else                            // #14 파이어볼 안 쏘는 꽃 Enemy는 상대적으로 짧아 - 더 낮은 높이까지만 올라와도 됨
+                    destPos.y += 2f;
+
                 moveSpeed = 3f;                 // #14 파이어볼 속도
                 
                 flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
@@ -212,8 +219,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 else if((transform.position.y < destPos.y -1.5) && !hideInPipe)   // #57 어느정도 내려갔다면
                     hideInPipe = true;
 
-
-                CheckDirection(ENEMY_TYPE.FLOWER);       // #13 바라보는 방향 (좌/우)(위/아래) 체크
+                if(attackType == ATTACK_TYPE.YES)       // #14 추가: 파이어볼 쏘는 꽃 Enemy라면
+                    CheckDirection(ENEMY_TYPE.FLOWER);       // #13 바라보는 방향 (좌/우)(위/아래) 체크
                 break;
         }
 
@@ -390,7 +397,8 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     {
         if (canMovingUp)   // #14 fix 플레이어가 Flower Enmey가 들어있는 파이프 가까이 있으면 파이어볼 쏘지 않도록
         {
-            ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
+            if(attackType == ATTACK_TYPE.YES)      // #14 추가
+                ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
             yield return null;
         }
         Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
