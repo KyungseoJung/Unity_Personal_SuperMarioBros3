@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -250,7 +250,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                     || (col.gameObject.tag == "Obstacle"    // #64 보완 : Tag 방식으로 변경// 너무 빠르게 부딪히고 튕겨서 Linecast를 잘 못 가져오는 것 같아서
                     || col.gameObject.tag == "FragileBlock")    )    // #34 추가: FragileBlock에 부딪혀도 Flip해야지
                 {
-                    Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘: " + col.gameObject.name);
+                    // Debug.Log("//#64 보완 : 장애물, 땅에 부딪힘: " + col.gameObject.name);
                     Flip();
 
                     if (kickShell)   // #16 보완 : 발로 차인 거북 껍질이라면, 장애물에 부딪혔을 때 튕겨나가도록 AddForce 해주기 - 장애물에 끼는 일이 없도록
@@ -347,7 +347,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     }
     IEnumerator FlowerUp() // #12 꽃 - 위로 올라오기
     {
-        Debug.Log("//#12 보완 : 꽃 Enemy 올라온다");
+        // Debug.Log("//#12 보완 : 꽃 Enemy 올라온다");
 
         while(true && (!lobbyManager.gameOver))  // 올라가도 될 때에만 올라가도록   // #75
         {
@@ -401,7 +401,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
             yield return null;
         }
-        Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
+        // Debug.Log("//#12 보완 : 꽃 Enemy 내려간다");
 
         while(true && (!lobbyManager.gameOver)) // #75
         {
@@ -503,7 +503,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
         switch(_type)
         {
             case ENEMY_TYPE.GOOMBA :
-                Debug.Log("//#69 굼바 낮게 점프");
+                // Debug.Log("//#69 굼바 낮게 점프");
 
                 rBody.AddForce(Vector2.up * goombaJumpForce);
                 // grounded = false;   // 점프 1번 한 후에는 false로 - 이미 Update 문에서 실행함
@@ -511,7 +511,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
                 break;
 
             case ENEMY_TYPE.TURTLE :
-                Debug.Log("//#33 거북 점프");
+                // Debug.Log("//#33 거북 점프");
 
                 rBody.AddForce(Vector2.up * turtleJumpForce);
                 // grounded = false;   // 점프 1번 한 후에는 false로
@@ -524,7 +524,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
     void JumpHigh() // #69 높게 점프하기 - 날개 달린 굼바의 경우에만 해당
     {
-        Debug.Log("//#69 굼바 높게 점프");
+        // Debug.Log("//#69 굼바 높게 점프");
 
         rBody.AddForce(Vector2.up * goombaJumpForce * 4);   // 평소보다 2배는 높게 점프하도록
         jumpNum = 0;    // 다시 초기화 - 다시 낮게 뛰기 시작하도록
