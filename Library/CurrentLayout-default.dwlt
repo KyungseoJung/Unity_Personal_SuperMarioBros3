@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 638
-  m_MinSize: {x: 875, y: 492}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -194,7 +194,7 @@ MonoBehaviour:
   - {fileID: 17}
   - {fileID: 18}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_MinSize: {x: 276, y: 292}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 139
+  controlID: 145
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -471,16 +471,16 @@ MonoBehaviour:
   m_ShowContextualTools: 0
   m_WindowGUID: 59ebb247504ddac46ae7eb2bbec12c94
   m_Gizmos: 1
-  m_SceneIsLit: 1
+  m_SceneIsLit: 0
   m_SceneLighting: 1
   m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 102.60399, y: -5.415493, z: -0.51572895}
+    m_Target: {x: 105.158615, y: -5.4904127, z: -0.12394923}
     speed: 2
-    m_Value: {x: 102.60399, y: -5.415493, z: -0.51572895}
+    m_Value: {x: 103.72205, y: -4.88077, z: -0.5147705}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_SceneViewState:
     showFog: 1
     showMaterialUpdate: 1
-    showSkybox: 1
+    showSkybox: 0
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -530,7 +530,7 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.4653
+    m_Target: 3.584018
     speed: 2
     m_Value: 6.4653
   m_Ortho:
@@ -602,6 +602,7 @@ MonoBehaviour:
     - {fileID: 3426155258211323331, guid: 688d91fbd245ad948a2e810adc426b26, type: 2}
     - {fileID: 2267996805794125080, guid: 5b48d3c483befd849bf282faf5f0b4fa, type: 2}
     - {fileID: 7200982558413556441, guid: b3dc6919850fe81498ce4b6ba782972b, type: 2}
+    - {fileID: 4146161963853235661, guid: df4c523ef90efd744b6f9177d01fe3cc, type: 2}
     m_ValueSerializationHelper:
     - e00: 0.5476511
       e01: 0
@@ -875,11 +876,27 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
+    - e00: 0.49137843
+      e01: 0
+      e02: 0
+      e03: 52.174522
+      e10: 0
+      e11: 0.49137843
+      e12: 0
+      e13: 82.993065
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: c4d5295f437548641bb2f18707358488,
+  m_AnimatorController: {fileID: 9100000, guid: df4c523ef90efd744b6f9177d01fe3cc,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 9078261940286477293, guid: c4d5295f437548641bb2f18707358488,
+  - m_Target: {fileID: 4146161963853235661, guid: df4c523ef90efd744b6f9177d01fe3cc,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -948,9 +965,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 105b0000
+      m_SelectedIDs: e8390000
       m_LastClickedID: 0
-      m_ExpandedIDs: f8f9ffff58fbfffff43f0000
+      m_ExpandedIDs: fef9ffffcc3f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1012,7 +1029,8 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/SuperMarioBros3/07.Etc/Controllers
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -1024,7 +1042,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 7a430000
     m_LastClickedID: 17274
-    m_ExpandedIDs: 0000000090390000e8390000663d0000683d00006a3d00006c3d00006e3d0000703d0000723d0000743d0000763d0000783d00007a3d00007c3d00007e3d0000803d0000
+    m_ExpandedIDs: 0000000090390000ea390000703d0000723d0000743d0000763d0000783d00007a3d00007c3d00007e3d0000803d0000823d0000843d0000863d0000883d00008a3d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1049,10 +1067,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 60}
+    scrollPos: {x: 0, y: 1295.501}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000090390000e8390000663d0000683d00006a3d00006c3d00006e3d0000703d0000723d0000743d0000763d0000783d00007a3d00007c3d00007e3d0000803d0000
+    m_ExpandedIDs: ffffffff0000000090390000ea390000723d0000743d0000763d00007e3d0000803d0000823d0000883d00008a3d0000263f0000283f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
