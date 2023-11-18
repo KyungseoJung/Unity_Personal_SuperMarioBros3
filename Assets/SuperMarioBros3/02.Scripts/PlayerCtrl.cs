@@ -15,7 +15,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private GameObject playerTailObj;       // #56 레벨3 플레이어 꼬리 오브젝트
     public bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)   // #64 EnemyLife에서 사용하기 위해 공개 범위 변경
 
-    private float slowMoveForce = 10f;      // #75 Goal 지점에 도달 후 계속 오른쪽으로 걷도록
+    private float slowMoveForce = 3f;      // #75 Goal 지점에 도달 후 계속 오른쪽으로 걷도록
     private float moveForce = 30f;          // 이동 속도 (50 > 20)
     private float maxSpeed = 5f;            // 달리기 가속도. 최고 속도
 
@@ -249,6 +249,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         if(lobbyManager.gameOver)           // #75
         {
             Debug.Log("//#75 계속 오른쪽으로 가도록");
+            if(!dirRight)   // #75 오른쪽 바라보고 달리도록
+                Flip();
+
             // Rbody.AddForce(Vector2.right * slowMoveForce);  
             Rbody.velocity = new Vector2(slowMoveForce, Rbody.velocity.y);  // #75 Goal 지점에 닿아서 게임 종료되면, 오른쪽으로 쭉 달리도록
             return;
