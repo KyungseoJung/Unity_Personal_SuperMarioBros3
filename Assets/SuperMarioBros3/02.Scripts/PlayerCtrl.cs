@@ -254,6 +254,9 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             // Rbody.AddForce(Vector2.right * slowMoveForce);  
             Rbody.velocity = new Vector2(slowMoveForce, Rbody.velocity.y);  // #75 Goal 지점에 닿아서 게임 종료되면, 오른쪽으로 쭉 달리도록
+            anim.SetFloat("RunSpeed", slowMoveForce);   // #75 달리는 애니메이션 적용되도록
+            anim.SetFloat("JumpSpeed", 0f);             // 점프 애니메이션 작동하지 않도록 - 달리는 애니메이션이 실행 안 되게 하는 요인 중 하나여서
+
             return;
         }
 
