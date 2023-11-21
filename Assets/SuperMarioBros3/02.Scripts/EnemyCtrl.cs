@@ -185,7 +185,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             if((anim != null) && (anim.enabled))   // Enemy3의 경우 anim이 없기 때문에 에러 방지 목적으로 anim!=null 조건 추가
             {
                 anim.enabled = false;   // #75
-                Debug.Log("//#75 EnemyCtrl - anim 멈춰");
+                // Debug.Log("//#75 EnemyCtrl - anim 멈춰");
             }    
 
             return;

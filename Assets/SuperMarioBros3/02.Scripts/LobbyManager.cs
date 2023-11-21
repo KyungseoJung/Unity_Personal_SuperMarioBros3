@@ -15,8 +15,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Text txtLife;                    // #61 생명 표시
     
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
-    
+    public Image[] imgItemBoxes;           // #53 Goal 지점에서 획득한 아이템 띄우는 박스
+
     public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
+    public Sprite[] SpriteItemBox;          // #53 Goal 지점의 아이템 박스들 종류별로
     /*
     0: Flower
     1: Mushroom
@@ -31,6 +33,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private float gameRestartTime;          
     private float originalTime;             // #77 기존 Time.timeScale
     private int timeLeftInt;                // #50 표시 목적 int형 변수
+    private int getItemNum=0;               // #53 현재까지 획득한 아이템 개수 - 우측 하단 아이템 박스 중 몇 번째에 이미지 띄울지 선택 목적 
 
     public bool gameOver = false;           // #75 
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
@@ -356,7 +359,34 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
                 break;
         }
 
+        AddItemBoxImage(_type); // #53 추가
+
     }
+
+    private void AddItemBoxImage(Goal.GOAL_ITEM_TYPE _type) // #53
+    {
+        if(getItemNum>2)    // 아이템 박스는 총 3개뿐이므로
+            return;
+            
+        Debug.Log("//#53 "+ (getItemNum + 1) + "번째 박스에 이미지 추가");
+
+        switch(_type)
+        {
+            case Goal.GOAL_ITEM_TYPE.FLOWER:
+                imgItemBoxes[getItemNum].sprite = SpriteItemBox[0];
+                break;
+            case Goal.GOAL_ITEM_TYPE.STAR:
+                imgItemBoxes[getItemNum].sprite = SpriteItemBox[1];
+                break;
+            case Goal.GOAL_ITEM_TYPE.MUSHROOM:
+                imgItemBoxes[getItemNum].sprite = SpriteItemBox[2];
+                break;
+        }
+         
+        getItemNum++;   // 획득한 아이템 개수 1 증가
+    }
+
+
     // public void StopGame(bool _replay, float _timer)    // #76
     // {
     //     StartCoroutine(StopGameIEnumerator(true, _timer));

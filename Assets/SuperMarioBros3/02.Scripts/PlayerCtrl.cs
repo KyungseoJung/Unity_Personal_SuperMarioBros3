@@ -248,7 +248,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     {   
         if(lobbyManager.gameOver)           // #75
         {
-            Debug.Log("//#75 계속 오른쪽으로 가도록");
+            // Debug.Log("//#75 계속 오른쪽으로 가도록");
             if(!dirRight)   // #75 오른쪽 바라보고 달리도록
                 Flip();
 
