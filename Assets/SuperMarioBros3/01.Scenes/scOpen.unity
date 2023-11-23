@@ -509,9 +509,9 @@ MonoBehaviour:
   txtLife: {fileID: 332894051}
   ImgFinalGet: {fileID: 1825229717}
   imgItemBoxes:
-  - {fileID: 1245787096}
-  - {fileID: 2008212586}
-  - {fileID: 1704917220}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   SpriteFinalGetItem:
   - {fileID: -150824587440181479, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
   - {fileID: -5677630128732763714, guid: c7ff41ea06e5b04479c38250b06fcf3c, type: 3}
@@ -535,6 +535,7 @@ MonoBehaviour:
   - {fileID: 1983862123}
   - {fileID: 936659272}
   - {fileID: 1825229715}
+  objBottomBox2: {fileID: 797832431}
   pausingSFX: {fileID: 8300000, guid: 2f168840a17394641803f2b9438040b2, type: 3}
 --- !u!1 &332894049
 GameObject:

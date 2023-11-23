@@ -44,6 +44,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼
     public GameObject[] gameClearUIObjs;    // #53 Goal 지점 게임 클리어 UI - 총 3개
+    public Transform objBottomBox2;         // #53 fix 코드 범용적으로 이용하기 위함
     /*
     [0]: 1번째 줄 텍스트
     [1]: 2번째 줄 텍스트
@@ -57,6 +58,11 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     void Awake()
     {
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();
+
+    // #53 fix imgItemBoxes를 좀 더 범용적인 코드로 변경하기
+        PopulateArrayWithChildren(objBottomBox2);
+
+
     }
     void Start()
     {
@@ -384,6 +390,18 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
          
         getItemNum++;   // 획득한 아이템 개수 1 증가
+    }
+
+    private void PopulateArrayWithChildren(Transform parent)
+    {
+        imgItemBoxes = new Image[parent.childCount];    
+
+        int index=0;
+        foreach(Transform child in parent)
+        {
+            imgItemBoxes[index] = child.GetComponent<Image>();
+            index++;
+        }
     }
 
 
