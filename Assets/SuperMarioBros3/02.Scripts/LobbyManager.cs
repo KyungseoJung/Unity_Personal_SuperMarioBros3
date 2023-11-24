@@ -15,7 +15,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Text txtLife;                    // #61 생명 표시
     
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
-    public Image[] imgItemBoxes;           // #53 Goal 지점에서 획득한 아이템 띄우는 박스
+    [SerializeField] 
+    private Image[] imgItemBoxes;           // #53 Goal 지점에서 획득한 아이템 띄우는 박스
 
     public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
     public Sprite[] SpriteItemBox;          // #53 Goal 지점의 아이템 박스들 종류별로
@@ -40,11 +41,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
 
     public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
-    public GameObject powerIndicator;       // #41 속도 표시계 (P글자. 파워)
+    public GameObject powerFastIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼
     public GameObject[] gameClearUIObjs;    // #53 Goal 지점 게임 클리어 UI - 총 3개
     public Transform objBottomBox2;         // #53 fix 코드 범용적으로 이용하기 위함
+    public Transform objFastIndicators;     // #41 fix 코드 범용적으로 이용하기 위함
     /*
     [0]: 1번째 줄 텍스트
     [1]: 2번째 줄 텍스트
@@ -59,9 +61,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<Music>();
 
-    // #53 fix imgItemBoxes를 좀 더 범용적인 코드로 변경하기
-        PopulateArrayWithChildren(objBottomBox2);
-
+    
+        PopulateImageArrayWithChildren(objBottomBox2);      // #53 fix imgItemBoxes를 범용적인 코드로 변경하기
+        PopulateObjectArrayWithChildren(objFastIndicators); // #41 fix objFastIndicators를 범용적인 코드로 변경하기
 
     }
     void Start()
@@ -157,9 +159,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
 
         if(_max)    
-            powerIndicator.SetActive(true);     // 최고 속도로 달리고 있다면, 활성화
+            powerFastIndicator.SetActive(true);     // 최고 속도로 달리고 있다면, 활성화
         else
-            powerIndicator.SetActive(false);    // 최고 속도가 아니라면, 비활성화
+            powerFastIndicator.SetActive(false);    // 최고 속도가 아니라면, 비활성화
     }
 
     public void SetSpeedDown()
@@ -176,7 +178,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {   
         yield return new WaitForSeconds(0.5f);  // 0.5초 후 속도표시계가 천천히 꺼지기 시작하도록
 
-        powerIndicator.SetActive(false);    
+        powerFastIndicator.SetActive(false);    
         
         for(int i=5; i>=0; i--)
         {
@@ -392,7 +394,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         getItemNum++;   // 획득한 아이템 개수 1 증가
     }
 
-    private void PopulateArrayWithChildren(Transform parent)
+    private void PopulateImageArrayWithChildren(Transform parent)   // #53 fix
     {
         imgItemBoxes = new Image[parent.childCount];    
 
@@ -400,6 +402,18 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         foreach(Transform child in parent)
         {
             imgItemBoxes[index] = child.GetComponent<Image>();
+            index++;
+        }
+    }
+
+    private void PopulateObjectArrayWithChildren(Transform parent)  // #41 fix
+    {
+        fastIndicator = new GameObject[parent.childCount];
+
+        int index = 0;
+        foreach(Transform child in parent)
+        {
+            fastIndicator[index] = child.gameObject;
             index++;
         }
     }

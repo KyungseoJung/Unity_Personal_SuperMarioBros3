@@ -378,7 +378,6 @@ RectTransform:
   - {fileID: 1982935631}
   - {fileID: 479035981}
   - {fileID: 544519070}
-  - {fileID: 1676357776}
   m_Father: {fileID: 1544840604}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -522,13 +521,13 @@ MonoBehaviour:
   - {fileID: -8216670962555262600, guid: 2717542d3d35e0140b7be6b91d563018, type: 3}
   gameOver: 0
   fastIndicator:
-  - {fileID: 2072097379}
-  - {fileID: 1803674093}
-  - {fileID: 1463247241}
-  - {fileID: 2658069}
-  - {fileID: 200635492}
-  - {fileID: 1598931879}
-  powerIndicator: {fileID: 953390897}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  powerFastIndicator: {fileID: 953390897}
   pauseWindow: {fileID: 491259503}
   btnGameStart: {fileID: 2115688176}
   gameClearUIObjs:
@@ -536,6 +535,7 @@ MonoBehaviour:
   - {fileID: 936659272}
   - {fileID: 1825229715}
   objBottomBox2: {fileID: 797832431}
+  objFastIndicators: {fileID: 1252917638}
   pausingSFX: {fileID: 8300000, guid: 2f168840a17394641803f2b9438040b2, type: 3}
 --- !u!1 &332894049
 GameObject:
@@ -1685,7 +1685,7 @@ GameObject:
   - component: {fileID: 953390900}
   - component: {fileID: 953390899}
   m_Layer: 5
-  m_Name: power
+  m_Name: power_fast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1702,12 +1702,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1252917638}
-  m_RootOrder: 6
+  m_Father: {fileID: 1544840604}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 122.54999, y: 0}
+  m_AnchoredPosition: {x: 141.49998, y: 0}
   m_SizeDelta: {x: 35, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &953390899
@@ -2042,7 +2042,6 @@ RectTransform:
   - {fileID: 2658070}
   - {fileID: 200635493}
   - {fileID: 1598931880}
-  - {fileID: 953390898}
   m_Father: {fileID: 1544840604}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2534,6 +2533,8 @@ RectTransform:
   m_Children:
   - {fileID: 187487411}
   - {fileID: 1252917638}
+  - {fileID: 1676357776}
+  - {fileID: 953390898}
   m_Father: {fileID: 705088542}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2740,7 +2741,7 @@ GameObject:
   - component: {fileID: 1676357778}
   - component: {fileID: 1676357777}
   m_Layer: 5
-  m_Name: power
+  m_Name: power_slow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2753,12 +2754,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676357775}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 187487411}
-  m_RootOrder: 6
+  m_Father: {fileID: 1544840604}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
