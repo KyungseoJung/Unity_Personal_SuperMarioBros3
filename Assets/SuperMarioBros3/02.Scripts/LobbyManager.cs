@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
     private Image[] imgItemBoxes;           // #53 Goal 지점에서 획득한 아이템 띄우는 박스
 
-    public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
+    // public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
     public Sprite[] SpriteItemBox;          // #53 Goal 지점의 아이템 박스들 종류별로
     /*
     0: Flower
@@ -356,13 +356,13 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         switch(_type)
         {
             case Goal.GOAL_ITEM_TYPE.FLOWER:
-                ImgFinalGet.sprite = SpriteFinalGetItem[0];
+                ImgFinalGet.sprite = SpriteItemBox[0];  // #53 fix: 이미지 변경
                 break;
             case Goal.GOAL_ITEM_TYPE.STAR:
-                ImgFinalGet.sprite = SpriteFinalGetItem[1];
+                ImgFinalGet.sprite = SpriteItemBox[1];
                 break;
             case Goal.GOAL_ITEM_TYPE.MUSHROOM:
-                ImgFinalGet.sprite = SpriteFinalGetItem[2];
+                ImgFinalGet.sprite = SpriteItemBox[2];
                 break;
         }
 
