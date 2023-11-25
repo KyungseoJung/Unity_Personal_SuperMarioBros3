@@ -15,7 +15,6 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public Text txtLife;                    // #61 생명 표시
     
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
-    [SerializeField] 
     private Image[] imgItemBoxes;           // #53 Goal 지점에서 획득한 아이템 띄우는 박스
 
     public Sprite[] SpriteFinalGetItem;          // #53 Goal 지점의 아이템 이미지들 종류별로
@@ -40,7 +39,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
 
-    public GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
+    private GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerFastIndicator;       // #41 속도 표시계 (P글자. 파워)
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼

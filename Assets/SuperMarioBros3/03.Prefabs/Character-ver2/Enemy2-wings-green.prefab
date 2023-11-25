@@ -225,6 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 2
   wingsType: 1
+  attackType: 1
   enemyDir: -1
   moveSpeed: 0
   frontCheck: {fileID: 0}

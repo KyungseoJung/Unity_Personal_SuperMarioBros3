@@ -198,7 +198,8 @@ public class EnemyLife : MonoBehaviour  // #11 적 머리 밟았을 때, 적을 
                         Debug.Log("//#16 왼쪽으로 차기");
                     }
                     enemyCtrl.kickShell = true;     // 한쪽 방향으로 날라가기 - EnemyCtrl 스크립트 내 FixedUpdate 에서 실행
-                    Invoke("TurnToWeapon", 0.3f);   // #16 fix : 바로 Weapon으로 바뀌면, 발로 차는 동시에 플레이어가 다침
+                    Invoke("TurnToWeapon", 0.05f);   // #16 fix : 바로 Weapon으로 바뀌면, 발로 차는 동시에 플레이어가 다침   
+                                                    // #16 fix: 너무 늦게 바뀌면 다른 오브젝트와의 충돌처리가 잘 이루어지지 않는 문제 발생함
                     // enemystate = ENEMY_STATE.DIE;  //#9 리팩터링 -> #34 fix: 바로 DIE 처리하면, 거북 껍질 안 날라가(EnemyCtrl의 FixedUpdate) -> 소멸되기 직전에 DIE처리해주자
                     IsDieByBeingTrampled();
                     break;
