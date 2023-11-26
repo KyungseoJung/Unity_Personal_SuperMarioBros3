@@ -13,6 +13,8 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     private BoxCollider2D boxCollider2D;    // #39 웅크릴 때 콜라이더 크기도 바뀌어야지
     [SerializeField]
     private GameObject playerTailObj;       // #56 레벨3 플레이어 꼬리 오브젝트
+    [SerializeField]
+    private GameObject cliffZone;           // 골 지점에 도착하면 비활성화 할 CliffZone
     public bool dirRight = true;           // 플레이어가 바라보는 방향(오른쪽 : 1, 왼쪽 : -1)   // #64 EnemyLife에서 사용하기 위해 공개 범위 변경
 
     private float slowMoveForce = 3f;      // #75 Goal 지점에 도달 후 계속 오른쪽으로 걷도록
@@ -526,6 +528,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
     
         if((col.gameObject.tag == "Goal") && (!lobbyManager.gameOver))    // #53    // #53 fix: 중복 실행되는 문제 해결 - gameOver가 false일 때에만 실행되도록 제한
         {
+            cliffZone.SetActive(false);     // #53 fix: Goal 지점에 도달하면, 기존 cliffZone 비활성화하기 - 플레이어가 화면 밖으로 갈 수 있도록
             lobbyManager.gameOver = true;   // #58
 
             // Debug.Log("//#53 fix Goal 지점 도달");

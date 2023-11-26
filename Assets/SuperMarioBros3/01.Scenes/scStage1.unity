@@ -7481,6 +7481,7 @@ Transform:
   - {fileID: 1981860424}
   - {fileID: 559617017}
   - {fileID: 1690572282}
+  - {fileID: 1433730109}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11338,6 +11339,87 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1433730108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 876678467}
+    m_Modifications:
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 170.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823881148967562105, guid: 07f448fa407cdb944a817eff7c019fbc,
+        type: 3}
+      propertyPath: m_Name
+      value: CliffZone (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 07f448fa407cdb944a817eff7c019fbc, type: 3}
+--- !u!4 &1433730109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7823881148967562104, guid: 07f448fa407cdb944a817eff7c019fbc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1433730108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1433730110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7823881148967562105, guid: 07f448fa407cdb944a817eff7c019fbc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1433730108}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1434369364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3114711844442998550, guid: 0c19a30f6b5bf5548a75c10c94e18d19,
@@ -18287,7 +18369,7 @@ PrefabInstance:
     - target: {fileID: 1031772047837095214, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.38
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 1031772047837095214, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
@@ -18339,6 +18421,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1031772047837095216, guid: 4eda048d9ed84a04c98f6a5686a851ce,
+        type: 3}
+      propertyPath: cliffZone
+      value: 
+      objectReference: {fileID: 1433730110}
     - target: {fileID: 1031772047837095217, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
       propertyPath: downedClip
