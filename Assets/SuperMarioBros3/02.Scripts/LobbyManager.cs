@@ -229,6 +229,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         Debug.Log("//#53 ShowClearUIThird");
         gameClearUIObjs[2].SetActive(true); // 획득 이미지 나타나게 하기
+
+        StartCoroutine(ConvertTimeToScore()); //#79
     }
 
     private void MoveToLobbyScene()
@@ -367,7 +369,26 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
 
         AddItemBoxImage(_type); // #53 추가
+    }
 
+    IEnumerator ConvertTimeToScore()    // #79 남은 시간(단위:초) -> 점수로 변환 (1초당 50점)
+    {
+        timeLeftInt = (int) timeLeftFloat;  // 일단 정수로 받아오기
+
+        while(true)
+        {
+            // 시간 1초마다 감소하는 코드 =====================
+            if(timeLeftInt>0)
+            {
+                timeLeftInt -= 1;   // 1초씩 데이터 삭감
+                txtTimeLeft.text = timeLeftInt.ToString("D3");  // 남은 시간이 계속 화면에 표시되도록
+            }   
+            // yield return new WaitForSeconds(0.1f); // 0.1초마다 남은 시간 -> 점수로 변환 
+            yield return null;
+
+            // 아래 점수 증가하는 코드 추가 =====================
+
+        }
     }
 
     private void AddItemBoxImage(Goal.GOAL_ITEM_TYPE _type) // #53
