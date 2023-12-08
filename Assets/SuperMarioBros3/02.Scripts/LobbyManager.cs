@@ -375,18 +375,30 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         timeLeftInt = (int) timeLeftFloat;  // 일단 정수로 받아오기
 
-        while(true)
+        while(timeLeftInt >0)
         {
-            // 시간 1초마다 감소하는 코드 =====================
-            if(timeLeftInt>0)
+            
+            if(timeLeftInt/10 >0)   // 시간 10초 이상 남았을 때, 10초씩 감소하는 코드 =====================   
             {
-                timeLeftInt -= 1;   // 1초씩 데이터 삭감
-                txtTimeLeft.text = timeLeftInt.ToString("D3");  // 남은 시간이 계속 화면에 표시되도록
-            }   
-            // yield return new WaitForSeconds(0.1f); // 0.1초마다 남은 시간 -> 점수로 변환 
-            yield return null;
+                print("#79-1 남은시간: " + timeLeftInt);
 
-            // 아래 점수 증가하는 코드 추가 =====================
+                timeLeftInt -= 10;   // 10초씩 시간 삭감
+            // 아래 점수 10점씩 증가하는 코드 추가 =====================
+
+            }   
+            else if(timeLeftInt/10 ==0) // 시간 10초 이하 남았을 때, 1초씩 감소하는 코드 =====================
+            {
+                print("#79-2 남은시간: " + timeLeftInt);
+                
+                timeLeftInt -= 1;   // 1초씩 시간 삭감
+            // 아래 점수 1점씩 증가하는 코드 추가 =====================
+
+            }
+            
+            txtTimeLeft.text = timeLeftInt.ToString("D3");  // 남은 시간이 계속 화면에 표시되도록
+
+            yield return new WaitForSeconds(0.05f); // 0.05초마다 남은 시간 -> 점수로 변환 
+
 
         }
     }
