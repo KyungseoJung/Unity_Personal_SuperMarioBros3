@@ -212,7 +212,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         Invoke("ShowClearUIFirst", 1.0f);
         Invoke("ShowClearUISecond", 2.0f);
         Invoke("ShowClearUIThird", 3.0f);
-        Invoke("MoveToLobbyScene", 5.0f);   // #53 로비씬 이동 타이밍 늦추기
+        Invoke("MoveToLobbyScene", 7.0f);   // #53 로비씬 이동 타이밍 늦추기
     }
 
     private void ShowClearUIFirst()
