@@ -12,7 +12,7 @@ public class Music : MonoBehaviour  // #51
     1 : Level Completed
     2 : SelectAnItem (P버튼 밟았을 때)      // #72
     3 : You.have.died (플레이어 죽었을 때)  // #76
-    4 : 
+    4 : Level Timer Points SFX 
     5 : 
     */
 
@@ -20,6 +20,11 @@ public class Music : MonoBehaviour  // #51
     {
         gameMusicArr = gameObject.AddComponent<AudioSource>(); // 오디오소스 없기 때문에, 추가해서 지정해줘야 함
         gameMusicArr.loop = true;   // #51 보완
+    }
+
+    public void MusicOff()  // #79
+    {
+        gameMusicArr.Stop();
     }
 
     public void GameStart() // #53 LobbyManager.cs에서 btnGameStart 버튼 누르면 실행되도록 
@@ -63,6 +68,15 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.Play();
     }
 
+    public void LevelTimerPoints()  // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
+    {
+        gameMusicArr.Stop();
+        gameMusicArr.clip = audioClips[4];
+        gameMusicArr.loop = true;  
+
+        gameMusicArr.Play();
+   
+    }
     public void PlayerDie()         // #76
     {
         gameMusicArr.Stop();

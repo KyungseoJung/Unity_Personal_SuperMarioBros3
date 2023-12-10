@@ -38,6 +38,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public bool gameOver = false;           // #75 
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
+    private bool levelTimerStart = false;   // #79 남은 타이머 줄어드는 효과음 확인
 
     private GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerFastIndicator;       // #41 속도 표시계 (P글자. 파워)
@@ -375,6 +376,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         timeLeftInt = (int) timeLeftFloat;  // 일단 정수로 받아오기
 
+        if(!levelTimerStart)    // #79 효과음 2번 중복되는 현상 방지
+        {
+            levelTimerStart = true;
+            music.LevelTimerPoints();    
+        }
+
         while(timeLeftInt >0)
         {
             
@@ -398,9 +405,15 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             txtTimeLeft.text = timeLeftInt.ToString("D3");  // 남은 시간이 계속 화면에 표시되도록
 
             yield return new WaitForSeconds(0.05f); // 0.05초마다 남은 시간 -> 점수로 변환 
-
-
         }
+
+        if(levelTimerStart) // #79 효과음 끄기
+        {
+            levelTimerStart = false;
+            music.MusicOff();
+        }
+
+
     }
 
     private void AddItemBoxImage(Goal.GOAL_ITEM_TYPE _type) // #53
