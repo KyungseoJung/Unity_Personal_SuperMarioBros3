@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Music : MonoBehaviour  // #51 
+public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디폴트 1로 맞추기 
 {
 
     public AudioSource gameMusicArr;
@@ -33,10 +33,11 @@ public class Music : MonoBehaviour  // #51
         MainMusicOn();
     }
 
-    public void MainMusicOn()
+    public void MainMusicOn(float _volume = 1f)
     {   
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[0];
+        gameMusicArr.volume = _volume;
         gameMusicArr.Play();
     }
     
@@ -50,37 +51,41 @@ public class Music : MonoBehaviour  // #51
         gameMusicArr.Play();
     }
 
-    public void PushPButtonMusicOn()   // #72
+    public void PushPButtonMusicOn(float _volume = 1f)   // #72
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[2];
+        gameMusicArr.volume = _volume;
         gameMusicArr.Play();
 
         Invoke("MainMusicOn", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록
     }
 
-    public void LevelCompleted()    // #53 게임 성공 종료 BGM
+    public void LevelCompleted(float _volume = 1f)    // #53 게임 성공 종료 BGM
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[1];
+        gameMusicArr.volume = _volume;
         gameMusicArr.loop = false;   // #53 보완 - 게임 종료 시, 나오는 BGM은 LOOP로 반복할 필요 없음.
 
         gameMusicArr.Play();
     }
 
-    public void LevelTimerPoints()  // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
+    public void LevelTimerPoints(float _volume = 1f)  // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[4];
+        gameMusicArr.volume = _volume;
         gameMusicArr.loop = true;  
 
         gameMusicArr.Play();
    
     }
-    public void PlayerDie()         // #76
+    public void PlayerDie(float _volume = 1f)         // #76
     {
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[3];
+        gameMusicArr.volume = _volume;
         gameMusicArr.loop = false;   
 
         gameMusicArr.Play();
