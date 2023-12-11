@@ -379,7 +379,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         if(!levelTimerStart)    // #79 효과음 2번 중복되는 현상 방지
         {
             levelTimerStart = true;
-            music.LevelTimerPoints();    
+            music.LevelTimerPoints(0.3f);   // #79 fix: 효과음 크기 조정
         }
 
         while(timeLeftInt >0)
