@@ -390,19 +390,20 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
                 print("#79-1 남은시간: " + timeLeftInt);
 
                 timeLeftInt -= 10;   // 10초씩 시간 삭감
-            // 아래 점수 10점씩 증가하는 코드 추가 =====================
-
+            // 아래 점수 50점 * 10초씩 증가하는 코드 추가 =====================
+                GameMgr.Mgr.score += 500;    
             }   
             else if(timeLeftInt/10 ==0) // 시간 10초 이하 남았을 때, 1초씩 감소하는 코드 =====================
             {
                 print("#79-2 남은시간: " + timeLeftInt);
                 
                 timeLeftInt -= 1;   // 1초씩 시간 삭감
-            // 아래 점수 1점씩 증가하는 코드 추가 =====================
-
+            // 아래 점수 50점 * 1초씩 증가하는 코드 추가 =====================
+                GameMgr.Mgr.score += 50;
             }
             
             txtTimeLeft.text = timeLeftInt.ToString("D3");  // 남은 시간이 계속 화면에 표시되도록
+            CheckPoint();   // 점수 text로 업데이트
 
             yield return new WaitForSeconds(0.05f); // 0.05초마다 남은 시간 -> 점수로 변환 
         }
