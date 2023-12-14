@@ -225,6 +225,7 @@ public class PlayerLife : MonoBehaviour
         
         if(enterDieZone)    // #78 enterDieZone = true이면 플레이어 위치 고정되도록
         {
+            Debug.Log("//#78 enterDieZone = true");
             Rbody.gravityScale = 0;
             Rbody.velocity = new Vector2(0f, 0f);    // 떨어질 때 가속도 적용되지 않도록 - 그냥 DieZone 위치 안에 머물게 하기
             Invoke("GameRestart", downTimer);        // Die Zone에 들어간 후, n초 뒤에 게임 재시작하도록 - 재시작 시간은 downTimer와 동일하게 

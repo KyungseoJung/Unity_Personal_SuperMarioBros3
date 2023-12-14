@@ -248,7 +248,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
     void FixedUpdate()
     {   
-        if(lobbyManager.gameOver)           // #75
+        if(lobbyManager.gameClear)           // #75 fix
         {
             // Debug.Log("//#75 계속 오른쪽으로 가도록");
             if(!dirRight)   // #75 오른쪽 바라보고 달리도록
@@ -526,10 +526,10 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음
         }
     
-        if((col.gameObject.tag == "Goal") && (!lobbyManager.gameOver))    // #53    // #53 fix: 중복 실행되는 문제 해결 - gameOver가 false일 때에만 실행되도록 제한
+        if((col.gameObject.tag == "Goal") && (!lobbyManager.gameClear))    // #53    // #53 fix: 중복 실행되는 문제 해결 - gameOver가 false일 때에만 실행되도록 제한
         {
             cliffZone.SetActive(false);     // #53 fix: Goal 지점에 도달하면, 기존 cliffZone 비활성화하기 - 플레이어가 화면 밖으로 갈 수 있도록
-            lobbyManager.gameOver = true;   // #58
+            lobbyManager.gameClear = true;   // #58
 
             // Debug.Log("//#53 fix Goal 지점 도달");
             col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!

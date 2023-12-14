@@ -36,6 +36,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private int getItemNum=0;               // #53 현재까지 획득한 아이템 개수 - 우측 하단 아이템 박스 중 몇 번째에 이미지 띄울지 선택 목적 
 
     public bool gameOver = false;           // #75 
+    public bool gameClear = false;          // #75 fix: 게임 오버와 구분하기 위한 변수 - Die Zone에 들어가서 죽는 상황에 게임 클리어 한 경우처럼 플레이어가 움직이는 문제 해결
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
     private bool levelTimerStart = false;   // #79 남은 타이머 줄어드는 효과음 확인
