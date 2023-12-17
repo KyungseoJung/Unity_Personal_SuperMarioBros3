@@ -19,6 +19,7 @@ TagManager:
   - ShellWeapon
   - Item
   - Obstacle
+  - StartEnd
   layers:
   - Default
   - TransparentFX
@@ -40,7 +41,7 @@ TagManager:
   - PlayerHolding
   - Item
   - DeadPlayer
-  - 
+  - StartEndZone
   - 
   - 
   - 
