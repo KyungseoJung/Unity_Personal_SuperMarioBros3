@@ -87,7 +87,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     void Update()
     {        
-        if(!gameOver)
+        if(!gameOver && !gameClear)             // #50  gameOver와 gameClear 모두 false일 때 
             CheckTimeLeft();                    // #50 남은 시간 체크 // #53 gameOver인 상태에서는 시간 흘러가지 않도록
 
         if(stopForAMoment)
