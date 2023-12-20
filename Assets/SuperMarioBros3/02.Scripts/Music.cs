@@ -35,10 +35,16 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
 
     public void MainMusicOn(float _volume = 1f)
     {   
+        Debug.Log("//#72 fix: 문제 검토 - MainMusciOn");
         gameMusicArr.Stop();
         gameMusicArr.clip = audioClips[0];
         gameMusicArr.volume = _volume;
         gameMusicArr.Play();
+    }
+
+    private void PlayMainMusic()    // #72 fix: Parameter(매개변수) 때문에 Invoke로 실행되지 않는 문제 해결
+    {
+        MainMusicOn();
     }
     
     public void MusicPauseStart() // #77 BGM 일시 정지 시작
@@ -58,7 +64,7 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         gameMusicArr.volume = _volume;
         gameMusicArr.Play();
 
-        Invoke("MainMusicOn", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록
+        Invoke("PlayMainMusic", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록
     }
 
     public void LevelCompleted(float _volume = 1f)    // #53 게임 성공 종료 BGM
