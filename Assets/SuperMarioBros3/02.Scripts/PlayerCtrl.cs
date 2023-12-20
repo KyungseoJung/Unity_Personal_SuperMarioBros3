@@ -228,7 +228,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
         {
             Vector2 size = boxCollider2D.size;  // 웅크리니까 콜라이더 크기도 변경
 
-            if(Input.GetKey(KeyCode.DownArrow)) 
+            if(Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))    // #39 fix: 점프는 가능하나, 좌우로 움직이는 건 안돼
             {
                 anim.SetBool("CurlUp", true);
 
