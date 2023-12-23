@@ -24,9 +24,9 @@ public class EnemyMovement : MonoBehaviour
     {
         if(this.transform.position.x - followCamTransform.position.x < 12)  
         // #67 보완: 7.5 -> 12로 변경: 화면에 들어오지 않아도 출발하도록 해서(Enemy가 움직이는 시점인 카메라 위치를 더 넓게) 움직임을 좀 더 자연스럽도록  
-        {
             EnemyMove(true);    // 움직이기 시작
-        }
+        else    // #67: Enemy가 플레이어 화면 멀리 있으면 움직임 멈추도록
+            EnemyMove(false);   // 움직임 멈추도록
     }
 
     void EnemyMove(bool _move)
