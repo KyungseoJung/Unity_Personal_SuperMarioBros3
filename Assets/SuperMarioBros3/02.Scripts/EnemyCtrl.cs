@@ -23,6 +23,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 // 몬스터 이동 ==========================
     public int enemyDir = -1;     // 오른쪽 : 1, 왼쪽 : -1 // 처음엔 왼쪽으로 이동
     public float moveSpeed = 2f;        // 이동 속도
+    float playerDist;               // #14
     private Rigidbody2D rBody;      
     [SerializeField]
     private Transform frontCheck;   // #18 부딪혔을 때 이동 방향 바꾸도록 확인용
@@ -36,7 +37,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
 // 꽃 ==========================
 // #12 꽃 움직임
-    private bool canMovingUp = true;               // 움직여도 되는지 확인용 bool 변수
+    public bool canMovingUp = true;               // 움직여도 되는지 확인용 bool 변수   // #67 fix: EnemyMovement에서 접근 가능하도록 public 설정
     private bool isMovingUp = false;               // #12 위로 움직이고 있는지 확인용
     private bool isMovingDown = false;             // #12 이레러 음직이고 있는지 확인용
     [HideInInspector]
@@ -327,8 +328,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
             case ENEMY_TYPE.FLOWER : 
                 if(col.gameObject.tag == "Player")  // #12 플레이어가 다시 멀어졌으니, 올라오기 다시 시작해라
                 {
+                  if(!canMovingUp) // #67 이미 canMovingUp이 true라면 아래 내용을 실행할 필요가 없음
+                  {
                     // Debug.Log("#12 플레이어가 꽃 멀리 벗어났다");
-
                     flowerUpEnumerator = FlowerUp();        // #12 fix 코루틴 지정
                     flowerDownEnumerator = FlowerDown();    // #12 fix 코루틴 지정
                     
@@ -338,13 +340,16 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
 
                     canMovingUp = true;
                     if(!isMovingUp && !isMovingDown)    // #12 보완 : 꽃이 올라오지도, 내려가지고 않고 있다면 직접 코루틴을 작동시켜주자
-                        StartCoroutine(flowerUpEnumerator);   
- 
+                        StartCoroutine(flowerUpEnumerator);  
+                  }
+
                 }
                 break;
         }
 
     }
+
+
     IEnumerator FlowerUp() // #12 꽃 - 위로 올라오기
     {
         // Debug.Log("//#12 보완 : 꽃 Enemy 올라온다");
@@ -397,7 +402,9 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     {
         if (canMovingUp)   // #14 fix 플레이어가 Flower Enmey가 들어있는 파이프 가까이 있으면 파이어볼 쏘지 않도록
         {
-            if(attackType == ATTACK_TYPE.YES)      // #14 추가
+            playerDist = (transform.position.x - playerTransform.position.x) * (transform.position.x - playerTransform.position.x);
+
+            if((attackType == ATTACK_TYPE.YES) && (playerDist < 8*8 ) )     // #14 추가 // #14 가까이 있을 때에만 파이어볼 쏘도록
                 ShootFireball();                   // #14 내려가기 직전에 파이어볼 쏘기
             yield return null;
         }
@@ -479,7 +486,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     {
         Rigidbody2D fireInstance = Instantiate(fireball, transform.position, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 
-        float playerDist = (transform.position.x - playerTransform.position.x) * (transform.position.x - playerTransform.position.x);
+        playerDist = (transform.position.x - playerTransform.position.x) * (transform.position.x - playerTransform.position.x);
 
 // 삼항 연산자
         shootDist = ( playerDist < (5.5)*(5.5))? 1 : 0.5f;    // 가까운 위치이면 1, 먼 위치이면 1/2
