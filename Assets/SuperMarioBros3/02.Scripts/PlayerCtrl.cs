@@ -144,7 +144,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
 // 하늘 날기 (레벨3)
-        if(Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))  // #42
+        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying)  // #42
         {
             // Debug.Log("//#42 위로! ");
             Rbody.AddForce(Vector2.up * flyForce);
@@ -152,11 +152,11 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             anim.SetTrigger("PressingZ");   // 더 위로 올라가는 애니도 함께 작용
         }
-        if((anim.GetBool("Fly")) && grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)) //#45 날고 있어야 하고, 땅에 닿는데, bool형이 true라면 잠시 애니도 false로 
+        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && (anim.GetBool("Fly")) && grounded && isFlying) //#45 날고 있어야 하고, 땅에 닿는데, bool형이 true라면 잠시 애니도 false로 
         {
             anim.SetBool("Fly", false);
         }
-        else if((!anim.GetBool("Fly")) && !grounded && isFlying && (playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)) // #45 날고 있어야 하고, 땅에도 닿지 않아 있는데, bool형이 false라면 - 날고 있는 애니 true
+        else if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && (!anim.GetBool("Fly")) && !grounded && isFlying) // #45 날고 있어야 하고, 땅에도 닿지 않아 있는데, bool형이 false라면 - 날고 있는 애니 true
         {
             anim.SetBool("Fly", true);
         }
