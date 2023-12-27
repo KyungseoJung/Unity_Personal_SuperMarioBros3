@@ -144,22 +144,26 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             AudioSource.PlayClipAtPoint(jumpClip, transform.position);  // 효과음
         }
 // 하늘 날기 (레벨3)
-        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying)  // #42
+        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3))
         {
-            // Debug.Log("//#42 위로! ");
-            Rbody.AddForce(Vector2.up * flyForce);
-            AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
+            if(Input.GetKeyDown(KeyCode.Z) && !grounded && isFlying)  // #42
+            {
+                // Debug.Log("//#42 위로! ");
+                Rbody.AddForce(Vector2.up * flyForce);
+                AudioSource.PlayClipAtPoint(raccoonTailClip, transform.position);  // 효과음
 
-            anim.SetTrigger("PressingZ");   // 더 위로 올라가는 애니도 함께 작용
+                anim.SetTrigger("PressingZ");   // 더 위로 올라가는 애니도 함께 작용
+            }
+            if((anim.GetBool("Fly")) && grounded && isFlying) //#45 날고 있어야 하고, 땅에 닿는데, bool형이 true라면 잠시 애니도 false로 
+            {
+                anim.SetBool("Fly", false);
+            }
+            else if((!anim.GetBool("Fly")) && !grounded && isFlying) // #45 날고 있어야 하고, 땅에도 닿지 않아 있는데, bool형이 false라면 - 날고 있는 애니 true
+            {
+                anim.SetBool("Fly", true);
+            }
         }
-        if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && (anim.GetBool("Fly")) && grounded && isFlying) //#45 날고 있어야 하고, 땅에 닿는데, bool형이 true라면 잠시 애니도 false로 
-        {
-            anim.SetBool("Fly", false);
-        }
-        else if((playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3) && (!anim.GetBool("Fly")) && !grounded && isFlying) // #45 날고 있어야 하고, 땅에도 닿지 않아 있는데, bool형이 false라면 - 날고 있는 애니 true
-        {
-            anim.SetBool("Fly", true);
-        }
+
 
         //# 44 하늘을 날 때, 날지 않을 때 카메라 위치 조정
         if((isFlying && transform.position.y > 2) && (!isInUnderground) )
@@ -217,12 +221,13 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             if( anim.GetBool("RunFast") )  // #55 빠르게 달리는 애니메이션 설정 해제
                 anim.SetBool("RunFast", false);
         }
-
-        if(Input.GetKey(KeyCode.Z) && ! (anim.GetBool("PressingZ")))     // #45
-            anim.SetBool("PressingZ", true);
-        else if(Input.GetKey(KeyCode.Z) && (anim.GetBool("PressingZ")))
-            anim.SetBool("PressingZ", false);
-
+        if(playerLife.playerLevel == PlayerLife.MODE_TYPE.LEVEL3)   // #45 fix: 노란 경고창 대비
+        {
+            if(Input.GetKey(KeyCode.Z) && ! (anim.GetBool("PressingZ")))     // #45
+                anim.SetBool("PressingZ", true);
+            else if(Input.GetKey(KeyCode.Z) && (anim.GetBool("PressingZ")))
+                anim.SetBool("PressingZ", false);
+        }
 
         if(playerLife.playerLevel != PlayerLife.MODE_TYPE.LEVEL1)   // #39 아래 방향키를 누르고 있는 동안은 웅크리도록 (단, 레벨2, 레벨3에서만)
         {
