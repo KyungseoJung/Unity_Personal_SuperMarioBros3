@@ -18304,7 +18304,7 @@ PrefabInstance:
     - target: {fileID: 1031772047837095214, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1031772047837095214, guid: 4eda048d9ed84a04c98f6a5686a851ce,
         type: 3}
@@ -19766,6 +19766,7 @@ MonoBehaviour:
   enemyDir: -1
   moveSpeed: 0
   frontCheck: {fileID: 0}
+  canMovingUp: 1
   hideInPipe: 1
   destPos: {x: 0, y: 0, z: 0}
   lookingUp: {fileID: 0}

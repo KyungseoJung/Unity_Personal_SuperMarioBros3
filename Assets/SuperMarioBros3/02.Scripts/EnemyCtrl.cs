@@ -128,7 +128,7 @@ public class EnemyCtrl : MonoBehaviour  // #9 몬스터 움직임
     void Update()
     {
         if((enemyLife.enemystate == EnemyLife.ENEMY_STATE.DIE)  //#9 리팩터링
-            || lobbyManager.gameOver)   // #75 만약 게임오버 상태라면 - Enemy 움직임 멈추도록
+            || lobbyManager.gameOver || lobbyManager.gameClear)   // #75 만약 게임오버 상태라면 - Enemy 움직임 멈추도록
             return;
 
 // #33 #69 Enemy 점프 조정 =================================

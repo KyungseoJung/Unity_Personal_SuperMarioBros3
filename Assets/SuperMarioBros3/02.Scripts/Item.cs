@@ -93,6 +93,9 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
 
     void FixedUpdate()
     {
+        if(lobbyManager.gameOver || lobbyManager.gameClear)   // #75 게임 종료 후, 아이템 움직이지 않도록 하기
+            return;
+
         switch(itemType)
         {
             case ITEM_TYPE.MUSHROOM :
