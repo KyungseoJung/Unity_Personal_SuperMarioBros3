@@ -205,7 +205,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
         SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
-
+        CheckLife();                        // #78 남은 생명 확인
         timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
         gameOver = false;                   // #73 fix
     }
