@@ -238,7 +238,25 @@ public class PlayerLife : MonoBehaviour
         {
             // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
             playerCtrl.anim.enabled = false;    // 애니메이션 멈춰서 플레이어 이미지 바뀌도록
-            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+
+            // #50 어느 레벨에서든 플레이어 죽는 이미지가 동일하게 나타나도록
+            Transform firstChild = transform.GetChild(0);   // 자식 오브젝트 위치 중 0번째 자식
+            Transform secondChild = transform.GetChild(1);
+            Transform thirdChild = transform.GetChild(2);
+
+            switch(playerLevel)
+            {
+                case MODE_TYPE.LEVEL1: 
+                    firstChild.GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+                    break;
+                case MODE_TYPE.LEVEL2:
+                    secondChild.GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+                    break;
+                case MODE_TYPE.LEVEL3:
+                    thirdChild.GetComponent<SpriteRenderer>().sprite = deadPlayer;   // 이미지 변경
+                    break;
+            }
+
             startPos = transform.position;
 
             upPos = startPos;   // 죽었을 때의 해당 위치

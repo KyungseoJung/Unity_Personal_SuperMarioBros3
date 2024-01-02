@@ -9,6 +9,7 @@ using UnityEngine.UI;                       // #35
 public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, 목숨, 남은 시간) UI 관리하는 클래스 생성
 {
     private PlayerCtrl playerCtrl;          // #77 spriteRenderer 접근 목적
+    private PlayerLife playerLife;          // #50 플레이어 목숨 접근 목적
     private Music music;                    // #77 일시정지 할 때, BGM 멈추도록
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
@@ -136,12 +137,23 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         {
             timeLeftFloat -= Time.deltaTime;
         }
+        else    // #50 남은 시간이 0보다 작거나 같다면, 플레이어 죽음
+        {
+            if(playerLife == null)
+                playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
+
+            playerLife.PlayerDie();             
+        }
         timeLeftInt = (int) timeLeftFloat;
 
         txtTimeLeft.text = timeLeftInt.ToString("D3");
 
     }
-
+    
+    public void TimeDown()
+    {
+        timeLeftFloat -= 50;
+    }
     public void CheckLife()        // #61
     {
         txtLife.text = GameMgr.Mgr.life.ToString("D1"); // 1자리로 표시
