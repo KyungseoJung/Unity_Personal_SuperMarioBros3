@@ -47,6 +47,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public GameObject pauseWindow;          // #77 일시정지 PAUSE 문구 윈도우
     public GameObject btnGameStart;         // #53 게임 시작 버튼
     public GameObject[] gameClearUIObjs;    // #53 Goal 지점 게임 클리어 UI - 총 3개
+    [SerializeField] private GameObject timeUpWindow;        // #50 남은 시간이 0이 되면 나타나는 TIME-UP 윈도우
     public Transform objBottomBox2;         // #53 fix 코드 범용적으로 이용하기 위함
     public Transform objFastIndicators;     // #41 fix 코드 범용적으로 이용하기 위함
     /*
@@ -76,6 +77,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
         if(pauseWindow.activeSelf)              // #77 PAUSE 윈도우 창 꺼진 채로 시작하도록
             pauseWindow.SetActive(false);   
+        
+        if(timeUpWindow.activeSelf)             // #50 처음에는 오브젝트 숨겨져 있도록
+            timeUpWindow.SetActive(false);
         
         foreach(GameObject obj in gameClearUIObjs)  // #53 첫 시작할 땐, 비활성화
         {
@@ -142,12 +146,17 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             if(playerLife == null)
                 playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
 
-            playerLife.PlayerDie();             
+            playerLife.PlayerDie(false, true);  // #50 bool형 변수 설정: enterDieZone = false, _timeUp = true로 설정해서 함수 실행   
         }
         timeLeftInt = (int) timeLeftFloat;
 
         txtTimeLeft.text = timeLeftInt.ToString("D3");
 
+    }
+    public void ShowTimeUpWindow()
+    {
+        if(!timeUpWindow.activeSelf)
+            timeUpWindow.SetActive(true);
     }
     
     public void TimeDown()
@@ -214,6 +223,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         //SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
         // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
+
+        if(timeUpWindow.activeSelf)             // #50 첫 시작에서는 오브젝트 숨겨져 있도록
+            timeUpWindow.SetActive(false);
+
         music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
         SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 

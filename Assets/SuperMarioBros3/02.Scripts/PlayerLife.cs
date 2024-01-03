@@ -213,7 +213,7 @@ public class PlayerLife : MonoBehaviour
 
     }
     
-    public void PlayerDie(bool enterDieZone = false)     // #78 Zone.cs 에서 접근   
+    public void PlayerDie(bool enterDieZone = false, bool _timeUp = false)     // #78 Zone.cs 에서 접근   
     {
     // #75
         this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 
@@ -265,7 +265,7 @@ public class PlayerLife : MonoBehaviour
             downPos = startPos; // 죽었을 때의 해당 위치
             downPos.y = -8f;    // #74 fix: -20까지 갈 필요 없겠다 -> -8로 변경
 
-            StartCoroutine(PlayerUpDown()); // #74
+            StartCoroutine(PlayerUpDown(_timeUp)); // #74
         }
 
         StopFireball(); // #75
@@ -291,7 +291,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerUpDown()  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+    IEnumerator PlayerUpDown(bool _timeUp)  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
     {
         Debug.Log("// #74 플레이어 업다운 시작");
         while(true)
@@ -303,7 +303,12 @@ public class PlayerLife : MonoBehaviour
             else    // 시간이 모두 지났으면
             {
                 moveTimer = 0f; // 다시 원상복구
-                lobbyManager.RestartGame(); // #73
+                if(_timeUp)
+                {
+                    lobbyManager.ShowTimeUpWindow();  // #50 플레이어 바닥으로 꺼지면 TIME-UP 화면 나타나도록
+                }
+                
+                Invoke("GameRestart", 2f);  // #73 #50
 
                 yield break;    // 코루틴 탈출
             }
