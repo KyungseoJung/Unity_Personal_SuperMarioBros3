@@ -303,6 +303,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         if(_pause)  // #77
         {
             pauseWindow.SetActive(true);    
+            timeUpWindow.SetActive(false);  // #77 일시 정지 하면, TIME-UP UI도 안 보이도록
+
             HideCharacters(true);  
             music.MusicPauseStart();    // #77 BGM 일시 정지 시작
         }
