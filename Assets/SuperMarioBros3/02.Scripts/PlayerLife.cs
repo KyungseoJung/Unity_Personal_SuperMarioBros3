@@ -61,6 +61,7 @@ public class PlayerLife : MonoBehaviour
 
     void Start()
     {
+        lobbyManager.gameStart = true;  //#50 게임 시작했을 때만 남은 시간 줄어들도록
         sortingName = transform.GetChild(0).GetComponent<SpriteRenderer>().sortingLayerName;   
         sortingOrder = transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder;
     }
@@ -219,6 +220,7 @@ public class PlayerLife : MonoBehaviour
         this.gameObject.layer = 19;         // 죽은 플레이어 - 그 어떤 것과도 부딪히지 않도록 
         playerCtrl.headCheck.GetComponent<BoxCollider2D>().enabled = false;    // #75 플레이어의 headCheck의 콜라이더도 비활성화 - 블록과 충돌처리 일어나지 않도록
         lobbyManager.gameOver = true;       // 게임 오버 true 설정
+        lobbyManager.gameStart = false;     // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
         music.PlayerDie();              // #76
 

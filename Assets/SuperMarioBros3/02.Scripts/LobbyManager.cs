@@ -36,6 +36,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private int timeLeftInt;                // #50 표시 목적 int형 변수
     private int getItemNum=0;               // #53 현재까지 획득한 아이템 개수 - 우측 하단 아이템 박스 중 몇 번째에 이미지 띄울지 선택 목적 
 
+    public bool gameStart = false;          // #50 게임 시작했을 때만 남은 시간 줄어들도록
     public bool gameOver = false;           // #75 
     public bool gameClear = false;          // #75 fix: 게임 오버와 구분하기 위한 변수 - Die Zone에 들어가서 죽는 상황에 게임 클리어 한 경우처럼 플레이어가 움직이는 문제 해결
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
@@ -92,7 +93,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     void Update()
     {        
-        if(!gameOver && !gameClear)             // #50  gameOver와 gameClear 모두 false일 때 
+        if(gameStart && !gameOver && !gameClear)             // #50  gameOver와 gameClear 모두 false일 때 // #50 게임 시작했을 때만 남은 시간 줄어들도록
             CheckTimeLeft();                    // #50 남은 시간 체크 // #53 gameOver인 상태에서는 시간 흘러가지 않도록
 
         if(stopForAMoment)
@@ -233,6 +234,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         CheckLife();                        // #78 남은 생명 확인
         timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
         gameOver = false;                   // #73 fix
+        gameStart = true;                   // #50 게임 시작했을 때만 남은 시간 줄어들도록
     }
 
     public void LevelCompleted()    // #53 레벨 성공
@@ -379,7 +381,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         SceneManager.LoadScene("scStage1");
 
         music.GameStart();      // 게임 기본 BGM 시작
-        gameOver = false;        // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
+        gameOver = false;       // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
+        gameStart = true;       // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
     }
 
