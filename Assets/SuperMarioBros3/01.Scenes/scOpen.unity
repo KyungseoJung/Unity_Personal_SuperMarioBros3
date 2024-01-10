@@ -641,6 +641,7 @@ MonoBehaviour:
   - {fileID: -7101299879700743497, guid: 2717542d3d35e0140b7be6b91d563018, type: 3}
   - {fileID: -4212370338833273860, guid: 2717542d3d35e0140b7be6b91d563018, type: 3}
   - {fileID: -8216670962555262600, guid: 2717542d3d35e0140b7be6b91d563018, type: 3}
+  gameStart: 0
   gameOver: 0
   gameClear: 0
   powerFastIndicator: {fileID: 953390897}

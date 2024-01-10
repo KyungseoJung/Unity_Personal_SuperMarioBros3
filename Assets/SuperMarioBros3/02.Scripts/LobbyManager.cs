@@ -42,6 +42,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
     private bool levelTimerStart = false;   // #79 남은 타이머 줄어드는 효과음 확인
+    private bool timeUp = false;            // #50 timeUp 확인용
 
     private GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
     public GameObject powerFastIndicator;       // #41 속도 표시계 (P글자. 파워)
@@ -81,6 +82,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         
         if(timeUpWindow.activeSelf)             // #50 처음에는 오브젝트 숨겨져 있도록
             timeUpWindow.SetActive(false);
+        timeUp = false;                         // #50 처음에는 false로 설정
         
         foreach(GameObject obj in gameClearUIObjs)  // #53 첫 시작할 땐, 비활성화
         {
@@ -144,6 +146,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
         else    // #50 남은 시간이 0보다 작거나 같다면, 플레이어 죽음
         {
+            timeUp = true;  // #50
+
             if(playerLife == null)
                 playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLife>();
 
@@ -222,6 +226,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     public void RestartGame()   // #73 플레이어 죽었을 때
     {
+        timeUp = false;         // #50 timeUp을 원상태로 false로 만들어주기
+        
         //SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
         // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
 
@@ -313,7 +319,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     void ReleaseStopState() // #76 게임 시작 - 멈춘 것 풀기
     {
         Debug.Log("//#76 멈춘 상태 풀기");
-        pauseWindow.SetActive(false);  
+        pauseWindow.SetActive(false); 
+        if(timeUp)          // #50 timeUp 상태라면, PAUSE 풀었을 때 TIME-UP UI 다시 나타나도록 
+            timeUpWindow.SetActive(true);  
+
         HideCharacters(false);
         music.MusicPauseEnd();    // #77 BGM 일시 정지 종료
         // yield return new WaitForSeconds(_timer); 
