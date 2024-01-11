@@ -304,6 +304,8 @@ public class PlayerLife : MonoBehaviour
                 transform.localPosition = Vector3.Lerp(upPos, downPos, curve.Evaluate(moveTimer/downTimer));
             else    // 시간이 모두 지났으면
             {
+                Rbody.constraints = RigidbodyConstraints2D.FreezeAll;   // #74 플레이어 이동하지 않도록 고정
+
                 moveTimer = 0f; // 다시 원상복구
                 if(_timeUp)
                 {
