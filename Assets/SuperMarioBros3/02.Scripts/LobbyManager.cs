@@ -75,7 +75,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         //SceneManager.LoadScene("scStage1");       // #53 버튼 눌러야 scHome씬부터 실행하도록
     
-        timeLeftFloat = 300f;                    // #50 남은 시간 - 첫 시작은 300초
+        // timeLeftFloat = 300f;                    // #50 남은 시간 - 첫 시작은 300초 -> StartGame() 함수에서 설정하도록
 
         if(pauseWindow.activeSelf)              // #77 PAUSE 윈도우 창 꺼진 채로 시작하도록
             pauseWindow.SetActive(false);   
@@ -224,9 +224,24 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         StopCoroutine(enumerator);             
     }
 
+    public void StartGame()    // #53 게임 시작하기 - btnGameStart에 연결
+    {
+        btnGameStart.SetActive(false);
+        SceneManager.LoadScene("scStage1");
+
+        timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
+
+        music.GameStart();      // 게임 기본 BGM 시작
+        gameOver = false;       // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
+        gameClear = false;      // #75 fix: 게임 재시작 후에도 앞으로 계속 달려나가는 에러 고침
+        gameStart = true;       // #50 게임 시작했을 때만 남은 시간 줄어들도록
+
+    }
+
     public void RestartGame()   // #73 플레이어 죽었을 때
     {
-        timeUp = false;         // #50 timeUp을 원상태로 false로 만들어주기
+        if(timeUp)
+            timeUp = false;         // #50 timeUp을 원상태로 false로 만들어주기
         
         //SceneManager.LoadScene("scOpen");   // #73 fix 씬 새로 시작 - scOpen도 새로 로드해야 BGM도 다시 시작함  
         // #53 scOpen 씬부터 불러와야 할 것 같아서 순서 변경
@@ -234,13 +249,15 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         if(timeUpWindow.activeSelf)             // #50 첫 시작에서는 오브젝트 숨겨져 있도록
             timeUpWindow.SetActive(false);
 
-        music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
-        SceneManager.LoadScene("scStage1"); // 씬 새로 시작
+        // music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
+        // SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
         CheckLife();                        // #78 남은 생명 확인
-        timeLeftFloat = 300f;               // 남은 시간 - 첫 시작은 300초
-        gameOver = false;                   // #73 fix
-        gameStart = true;                   // #50 게임 시작했을 때만 남은 시간 줄어들도록
+        // gameOver = false;                   // #73 fix
+        // gameClear = false;                  // #75 fix: 게임 재시작 후에도 앞으로 계속 달려나가는 에러 고침
+        // gameStart = true;                   // #50 게임 시작했을 때만 남은 시간 줄어들도록
+
+        StartGame();    // 위 코드들 모두 주석처리하고, GameStart()를 실행함으로써 코드 간소화
     }
 
     public void LevelCompleted()    // #53 레벨 성공
@@ -384,17 +401,6 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
                     break;
             }
         }
-    }
-
-    public void StartGame()    // #53 게임 시작하기 - btnGameStart에 연결
-    {
-        btnGameStart.SetActive(false);
-        SceneManager.LoadScene("scStage1");
-
-        music.GameStart();      // 게임 기본 BGM 시작
-        gameOver = false;       // #53 fix false 처리 해줘야 Player, Enemy 등 정상적으로 움직임
-        gameStart = true;       // #50 게임 시작했을 때만 남은 시간 줄어들도록
-
     }
 
     public void GetFinalItem(Goal.GOAL_ITEM_TYPE _type)  // #53 Goal 지점에 도착 - 획득한 FinalGetItem 이미지 띄우기
