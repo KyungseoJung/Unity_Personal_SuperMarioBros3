@@ -250,7 +250,7 @@ public class Item : MonoBehaviour   // #4 버섯 #5 나뭇잎
                 Instantiate(pointUi, pointPos, Quaternion.identity);    // #30 1000점
                 break;
             case ITEM_TYPE.GREENMUSHROOM :
-                if(GameMgr.Mgr.life < 5)        // #61 (만약 목숨이 5개 미만이면) 플레이어 생명 추가 +1
+                if(GameMgr.Mgr.life < 4)        // #61 (만약 목숨이 5개 미만이면) 플레이어 생명 추가 +1
                     GameMgr.Mgr.life += 1;          
                 lobbyManager.CheckLife();       // #61 남은 생명 수 체크
                 

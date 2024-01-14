@@ -270,6 +270,11 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         Invoke("MoveToLobbyScene", 7.0f);   // #53 로비씬 이동 타이밍 늦추기
     }
 
+    public void GameCompletelyOver()    // #78 게임 완전히 오버 = 목숨 5개(4개부터 0개일 때까지) 모두 소진
+    {
+        Debug.Log("//#78 추가: 게임 완전히 오버 = 플레이어 목숨 소진");
+    }
+
     private void ShowClearUIFirst()
     {
         Debug.Log("//#53 ShowClearUIFirst");

@@ -224,7 +224,10 @@ public class PlayerLife : MonoBehaviour
 
         music.PlayerDie();              // #76
 
-        GameMgr.Mgr.life -= 1;          // #78 플레이어 목숨 줄어들도록 - lobbyManager.CheckLife();는 나중에 시작하도록       // #78 남은 생명 수 체크
+        if (GameMgr.Mgr.life > 0)
+            GameMgr.Mgr.life -= 1;          // #78 플레이어 목숨 줄어들도록 - lobbyManager.CheckLife();는 나중에 시작하도록       // #78 남은 생명 수 체크
+        else if (GameMgr.Mgr.life <= 0)     // #78 추가: 죽었는데 이미 목숨이 0이하인 상태라면
+            lobbyManager.GameCompletelyOver();
 
         if(enterDieZone)    // #78 enterDieZone = true이면 플레이어 위치 고정되도록
         {

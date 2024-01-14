@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreInfo
 {
     public int score = 0;              // #29 플레이어 획득 점수
-    public int life = 5;               // #61 플레이어 생명 수
+    public int life = 4;               // #61 플레이어 생명 수
 }
 
 
