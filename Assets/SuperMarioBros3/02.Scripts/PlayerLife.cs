@@ -49,6 +49,8 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] private string sortingName;
     [SerializeField] private int sortingOrder;
 
+    private bool haveNoLife = false;    // #78 남아있는 목숨 있는지 확인
+
     void Awake()
     {
         playerCtrl = GetComponent<PlayerCtrl>();
@@ -227,7 +229,11 @@ public class PlayerLife : MonoBehaviour
         if (GameMgr.Mgr.life > 0)
             GameMgr.Mgr.life -= 1;          // #78 플레이어 목숨 줄어들도록 - lobbyManager.CheckLife();는 나중에 시작하도록       // #78 남은 생명 수 체크
         else if (GameMgr.Mgr.life <= 0)     // #78 추가: 죽었는데 이미 목숨이 0이하인 상태라면
-            lobbyManager.GameCompletelyOver();
+        {
+            haveNoLife = true;
+            Debug.Log("//#78 줄어들 목숨 없음 = 완전히 게임 오버 상태");
+        }
+            
 
         if(enterDieZone)    // #78 enterDieZone = true이면 플레이어 위치 고정되도록
         {
@@ -270,7 +276,7 @@ public class PlayerLife : MonoBehaviour
             downPos = startPos; // 죽었을 때의 해당 위치
             downPos.y = -8f;    // #74 fix: -20까지 갈 필요 없겠다 -> -8로 변경
 
-            StartCoroutine(PlayerUpDown(_timeUp)); // #74
+            StartCoroutine(PlayerUpDown(_timeUp, haveNoLife)); // #74 // #78
         }
 
         StopFireball(); // #75
@@ -296,7 +302,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerUpDown(bool _timeUp)  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록
+    IEnumerator PlayerUpDown(bool _timeUp, bool _gameCompletelyOVer = false)  // #74 플레이어 위로 올라갔다가 아래로 떨어지도록 // #78 완전히 게임 오버 상태라면, Restart 되지 않도록
     {
         Debug.Log("// #74 플레이어 업다운 시작");
         while(true)
@@ -314,8 +320,11 @@ public class PlayerLife : MonoBehaviour
                 {
                     lobbyManager.ShowTimeUpWindow();  // #50 플레이어 바닥으로 꺼지면 TIME-UP 화면 나타나도록
                 }
-                
-                Invoke("GameRestart", 2f);  // #73 #50
+
+                if (_gameCompletelyOVer) // #78 완전히 게임 오버 상태라면(목숨 0 상태에서 죽은 거라면), scOpen 화면으로 넘어가도록
+                    lobbyManager.GameCompletelyOver();
+                else
+                    Invoke("GameRestart", 2f);  // #73 #50
 
                 yield break;    // 코루틴 탈출
             }
