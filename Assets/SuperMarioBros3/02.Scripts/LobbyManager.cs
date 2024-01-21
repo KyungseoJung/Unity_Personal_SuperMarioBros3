@@ -13,6 +13,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private Music music;                    // #77 일시정지 할 때, BGM 멈추도록
     public Text txtScore;                   // #35 점수 표시
     public Text txtTimeLeft;                // #50 남은 시간 표시
+    public Text txtCoin;                    // #80 코인 표시
     public Text txtLife;                    // #61 생명 표시
     
     public Image ImgFinalGet;               // #53 UI상에 나타나는 Goal 지점 획득 아이템 이미지
@@ -139,8 +140,9 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     public void CheckPoint()                // #35 점수, 목숨, 코인 확인용 함수 - GameMgr에서 점수 획득할 때마다 실행
     {
         txtScore.text = GameMgr.Mgr.score.ToString("D7");   // 7자리로 표시
-        
         // Debug.Log("#35 포인트 체크");
+        txtCoin.text = GameMgr.Mgr.coin.ToString("D1"); // 1자리로 표시
+        Debug.Log("//#80 획득 코인 수 체크");
     }
 
     private void CheckTimeLeft()    // #50
@@ -173,6 +175,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         timeLeftFloat -= 50;
     }
+
     public void CheckLife()        // #61
     {
         txtLife.text = GameMgr.Mgr.life.ToString("D1"); // 1자리로 표시
@@ -251,6 +254,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             GameMgr.Mgr.life = 4;
             
         CheckLife();    // #78 추가: 남은 목숨 확인
+        CheckPoint();   // #80 점수 및 코인 확인
     }
 
     public void RestartGame()   // #73 플레이어 죽었을 때

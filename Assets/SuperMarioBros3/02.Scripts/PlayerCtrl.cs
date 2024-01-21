@@ -526,6 +526,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
             Destroy(col.gameObject);        // 코인 사라져
             // score += 50;                 // 점수 획득
             GameMgr.Mgr.score += 50;        // #30 점수 획득
+            GameMgr.Mgr.coin += 1;          // #80 코인 하나 증가
             lobbyManager.CheckPoint();      // #35 포인트 확인용
 
             AudioSource.PlayClipAtPoint(coinClip, transform.position);  // 효과음

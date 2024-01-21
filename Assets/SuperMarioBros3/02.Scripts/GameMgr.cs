@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScoreInfo
 {
     public int score = 0;              // #29 플레이어 획득 점수
+    public int coin = 0;               // #80 획득 코인 수
     public int life = 4;               // #61 플레이어 생명 수
 }
 
@@ -42,6 +43,12 @@ public class GameMgr : MonoBehaviour    // #29 플레이어 게임 관리 싱글
     {
         get {return scoreInfo.score; }
         set {scoreInfo.score = value; }
+    }
+
+    public int coin
+    {
+        get {return scoreInfo.coin;}
+        set {scoreInfo.coin = value;}
     }
     
     public int life // #61

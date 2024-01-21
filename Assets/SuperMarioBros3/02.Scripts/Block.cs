@@ -207,6 +207,7 @@ public class Block : MonoBehaviour  // 물음표 블록
                 // Debug.Log("#3 코인 UI 생성 위치 : " + coinPos);
 
                 GameMgr.Mgr.score += 100;
+                GameMgr.Mgr.coin += 1;          // #80 코인 하나 증가
                 lobbyManager.CheckPoint();      // #35 포인트 확인용
 
                 break;
