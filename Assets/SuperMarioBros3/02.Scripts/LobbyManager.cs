@@ -229,7 +229,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         StopCoroutine(enumerator);             
     }
 
-    public void StartGame()    // #53 게임 시작하기 - btnGameStart에 연결
+    public void StartGame(bool _startFromScratch = true)    // #53 게임 시작하기 - btnGameStart 버튼에 연결
     {
         btnGameStart.SetActive(false);
 
@@ -247,6 +247,10 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         gameClear = false;      // #75 fix: 게임 재시작 후에도 앞으로 계속 달려나가는 에러 고침
         gameStart = true;       // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
+        if(_startFromScratch)   // #78 추가: 완전 처음부터 시작하는 거면, 목숨 4로 늘리기
+            GameMgr.Mgr.life = 4;
+            
+        CheckLife();    // #78 추가: 남은 목숨 확인
     }
 
     public void RestartGame()   // #73 플레이어 죽었을 때
@@ -266,12 +270,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         // music.GameStart();                  // #53 fix scOpen 씬 자체를 다시 불러오는 방법 대신, 게임 시작할 때 실행되는 함수들을 직접 실행해주기
         // SceneManager.LoadScene("scStage1"); // 씬 새로 시작
 
-        CheckLife();                        // #78 남은 생명 확인
+        // CheckLife();                        // #78 남은 생명 확인
         // gameOver = false;                   // #73 fix
         // gameClear = false;                  // #75 fix: 게임 재시작 후에도 앞으로 계속 달려나가는 에러 고침
         // gameStart = true;                   // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
-        StartGame();    // 위 코드들 모두 주석처리하고, GameStart()를 실행함으로써 코드 간소화
+        StartGame(false);    // 위 코드들 모두 주석처리하고, GameStart()를 실행함으로써 코드 간소화 // #78 추가: 완전 처음부터 시작하는 건 아니니까, 매개변수 false 넘기기
     }
 
     public void LevelCompleted()    // #53 레벨 성공
@@ -289,6 +293,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         Debug.Log("//#78 추가: 게임 완전히 오버 = 플레이어 목숨 소진");
         MoveToLobbyScene();
         gameOverWindow.SetActive(true);
+
     }
 
     private void ShowClearUIFirst()

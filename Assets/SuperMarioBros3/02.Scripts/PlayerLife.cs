@@ -322,7 +322,10 @@ public class PlayerLife : MonoBehaviour
                 }
 
                 if (_gameCompletelyOVer) // #78 완전히 게임 오버 상태라면(목숨 0 상태에서 죽은 거라면), scOpen 화면으로 넘어가도록
+                {
                     lobbyManager.GameCompletelyOver();
+                    haveNoLife = false; // #78 추가: _gameCompletelyOVer 설정했으니까, bool형 변수 변경하기
+                }    
                 else
                     Invoke("GameRestart", 2f);  // #73 #50
 
