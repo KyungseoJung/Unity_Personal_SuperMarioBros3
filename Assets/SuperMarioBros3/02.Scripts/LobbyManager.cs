@@ -232,7 +232,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         StopCoroutine(enumerator);             
     }
 
-    public void StartGame(bool _startFromScratch = true)    // #53 게임 시작하기 - btnGameStart 버튼에 연결
+    public void StartGame(bool _startFromScratch = true)    // #53 게임 시작하기 - btnGameStart 버튼에 연결(인스펙터 상에서 - 매개변수 true로 설정)
     {
         btnGameStart.SetActive(false);
 
@@ -250,9 +250,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         gameClear = false;      // #75 fix: 게임 재시작 후에도 앞으로 계속 달려나가는 에러 고침
         gameStart = true;       // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
-        if(_startFromScratch)   // #78 추가: 완전 처음부터 시작하는 거면, 목숨 4로 늘리기
-            GameMgr.Mgr.life = 4;
-            
+        if(_startFromScratch)   
+        {
+            GameMgr.Mgr.life = 4;   // #78 추가: 완전 처음부터 시작하는 거면, 목숨 4로 늘리기
+            GameMgr.Mgr.score = 0;  // #80 점수 및 코인 0부터 시작하도록
+            GameMgr.Mgr.coin = 0;
+        }
         CheckLife();    // #78 추가: 남은 목숨 확인
         CheckPoint();   // #80 점수 및 코인 확인
     }
