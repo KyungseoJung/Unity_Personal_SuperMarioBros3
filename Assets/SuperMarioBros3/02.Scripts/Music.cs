@@ -39,6 +39,8 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         gameMusicArr.clip = audioClips[0];
         gameMusicArr.volume = _volume;
         gameMusicArr.Play();
+        gameMusicArr.loop = true;  // #51 메인 뮤직 BGM 반복되도록 설정
+
     }
 
     private void PlayMainMusic()    // #72 fix: Parameter(매개변수) 때문에 Invoke로 실행되지 않는 문제 해결
