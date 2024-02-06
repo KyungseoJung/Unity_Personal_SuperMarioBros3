@@ -43,6 +43,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     private bool stopForAMoment = false;    // #76 게임 중지 여부 확인
     private bool pauseGame = false;         // #77 게임 일시정지 여부 확인
     private bool levelTimerStart = false;   // #79 남은 타이머 줄어드는 효과음 확인
+    private bool notMuchTime = false;       // #81 남은 시간 100 이하
     private bool timeUp = false;            // #50 timeUp 확인용
 
     private GameObject[] fastIndicator;      // #41 속도 표시계 (삼각형) - 6개([0]부터 [5]까지)
@@ -89,6 +90,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
             gameOverWindow.SetActive(false);
 
         timeUp = false;                         // #50 처음에는 false로 설정
+        notMuchTime = false;                    // #81
         
         foreach(GameObject obj in gameClearUIObjs)  // #53 첫 시작할 땐, 비활성화
         {
@@ -147,6 +149,12 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
 
     private void CheckTimeLeft()    // #50
     {
+        if((timeLeftFloat < 100) && !notMuchTime)     // #81 남은 시간 얼마 안 남았을 때, 효과음 및 배경음악 속도 빠르게
+        {
+            music.NotMuchTimeLeft();    
+            notMuchTime = true;
+        }    
+
         if(timeLeftFloat - Time.deltaTime >0)   // 계산 값이 0보다 크다면, 계산 적용~
         {
             timeLeftFloat -= Time.deltaTime;

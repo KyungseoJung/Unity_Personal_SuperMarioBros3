@@ -6,6 +6,7 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
 {
 
     public AudioSource gameMusicArr;
+    public AudioSource soundEffectArr;
     public AudioClip[] audioClips;
     /*
     0 : mainMusic
@@ -13,14 +14,22 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
     2 : SelectAnItem (P버튼 밟았을 때)      // #72
     3 : You.have.died (플레이어 죽었을 때)  // #76
     4 : Level Timer Points SFX 
+    5 : Hurry                             // #81 시간 얼마 안 남았을 때 - 메인 뮤직 빠르게 나오기 전
     */
 
     void Awake()
     {
         gameMusicArr = gameObject.AddComponent<AudioSource>(); // 오디오소스 없기 때문에, 추가해서 지정해줘야 함
+        soundEffectArr = gameObject.AddComponent<AudioSource>(); // 오디오소스 없기 때문에, 추가해서 지정해줘야 함
         gameMusicArr.loop = true;   // #51 보완
     }
-
+    void Update()
+    {
+        if(!soundEffectArr.isPlaying && !gameMusicArr.isPlaying)   // #81 효과음 끝나면, 배경음악 재생
+        {
+            gameMusicArr.Play();
+        }
+    }
     public void MusicOff()  // #79
     {
         gameMusicArr.Stop();
@@ -40,6 +49,16 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         gameMusicArr.volume = _volume;
         gameMusicArr.Play();
         gameMusicArr.loop = true;  // #51 메인 뮤직 BGM 반복되도록 설정
+
+    }
+
+    public void NotMuchTimeLeft(float _volume = 1f) // #81 
+    {
+        gameMusicArr.Stop();
+        soundEffectArr.clip = audioClips[5];
+        soundEffectArr.volume = _volume;
+        soundEffectArr.Play();
+        soundEffectArr.loop = false;  
 
     }
 
