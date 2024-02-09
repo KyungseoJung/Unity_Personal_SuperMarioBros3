@@ -151,7 +151,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
     {
         if((timeLeftFloat < 100) && !notMuchTime)     // #81 남은 시간 얼마 안 남았을 때, 효과음 및 배경음악 속도 빠르게
         {
-            music.NotMuchTimeLeft();    
+            music.SoundEffectMusic(Music.SOUNDEFFECT_TYPE.HURRY);    // #82 music.NotMuchTimeLeft();    
             notMuchTime = true;
         }    
 
@@ -469,7 +469,7 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         if(!levelTimerStart)    // #79 효과음 2번 중복되는 현상 방지
         {
             levelTimerStart = true;
-            music.LevelTimerPoints(0.3f);   // #79 fix: 효과음 크기 조정
+            music.SoundEffectMusic(Music.SOUNDEFFECT_TYPE.LEVELTIMER);  // #82 music.LevelTimerPoints(0.3f);   // #79 fix: 효과음 크기 조정
         }
 
         while(timeLeftInt >0)

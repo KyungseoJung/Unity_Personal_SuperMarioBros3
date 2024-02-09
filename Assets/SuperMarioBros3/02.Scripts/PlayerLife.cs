@@ -224,7 +224,7 @@ public class PlayerLife : MonoBehaviour
         lobbyManager.gameOver = true;       // 게임 오버 true 설정
         lobbyManager.gameStart = false;     // #50 게임 시작했을 때만 남은 시간 줄어들도록
 
-        music.PlayerDie();              // #76
+        music.SoundEffectMusic(Music.SOUNDEFFECT_TYPE.DIE); // #82 music.PlayerDie();              // #76
 
         if (GameMgr.Mgr.life > 0)
             GameMgr.Mgr.life -= 1;          // #78 플레이어 목숨 줄어들도록 - lobbyManager.CheckLife();는 나중에 시작하도록       // #78 남은 생명 수 체크

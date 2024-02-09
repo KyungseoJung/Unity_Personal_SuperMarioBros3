@@ -517,7 +517,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
                     obj.GetComponent<Block>().TurnsIntoCoin();  // #27 현재 존재하는 FRAGILE 블록들은 모두 코인으로 변하도록
                 }
 
-                music.PushPButtonMusicOn();    // #72
+                music.SoundEffectMusic(Music.SOUNDEFFECT_TYPE.SELECTITEM);  // #82 music.PushPButtonMusicOn();    // #72
             }
         }
 
@@ -539,7 +539,7 @@ public class PlayerCtrl : MonoBehaviour //#1 플레이어 컨트롤(움직임 �
 
             // Debug.Log("//#53 fix Goal 지점 도달");
             col.gameObject.GetComponent<Goal>().ReachTheGoal(); // 플레이어가 골 지점에 닿았다!
-            music.LevelCompleted(); // 게임 종료 BGM
+            music.SoundEffectMusic(Music.SOUNDEFFECT_TYPE.LEVELCOMPLETED); // #82 music.LevelCompleted(); // 게임 종료 BGM
 
             StopMaxRunClip();   // #40 fix
             Invoke("GameClear", 3.0f);

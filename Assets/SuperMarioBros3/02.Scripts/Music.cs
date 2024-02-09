@@ -67,18 +67,61 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
 
     }
 
-    public void NotMuchTimeLeft(float _volume = 1f) // #81 
+    public void SoundEffectMusic(SOUNDEFFECT_TYPE _type)    // #82 enum 변수 활용 - 코드 범용화
     {
+        // NotMuchTimeLeft      // #81
+        // PushPButtonMusicOn   // #72
+        // LevelCompleted       // #63 게임 성공 종료 BGM
+        // LevelTimerPoints     // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
+        // PlayerDie            // #76
+
         gameMusicArr.Stop();
-        soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.HURRY];
-        soundEffectArr.volume = _volume;
-        soundEffectArr.loop = false;
+        soundEffectArr.Stop();
+
+        soundEffectArr.clip = audioClips[(int)_type];
+        // soundEffectArr.volume = _volume;
+
+
+        switch(_type)
+        {
+            case SOUNDEFFECT_TYPE.LEVELCOMPLETED:
+            case SOUNDEFFECT_TYPE.DIE:
+            case SOUNDEFFECT_TYPE.HURRY:
+                soundEffectArr.loop = false;
+                break;
+                
+            case SOUNDEFFECT_TYPE.SELECTITEM:
+                soundEffectArr.loop = false;
+                Invoke("StopSoundEffect", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록 -> 이제 Update에서 인식해서 자동으로 메인 뮤직 실행됨
+                break;
+            
+            case SOUNDEFFECT_TYPE.LEVELTIMER:
+                soundEffectArr.volume = 0.3f;
+                soundEffectArr.loop = true;  
+
+                break;
+        }
+
 
         playSoundEffect = true;     // #82
 
         Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.HURRY);
         soundEffectArr.Play();
+
     }
+
+    // public void NotMuchTimeLeft(float _volume = 1f) // #81 
+    // {
+    //     gameMusicArr.Stop();
+    //     soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.HURRY];
+    //     soundEffectArr.volume = _volume;
+    //     soundEffectArr.loop = false;
+
+    //     playSoundEffect = true;     // #82
+
+    //     Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.HURRY);
+    //     soundEffectArr.Play();
+    // }
 
     private void StopSoundEffect()    // #82 효과음 강제 종료 - Invoke로 실행
     {
@@ -99,48 +142,48 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         gameMusicArr.Play();
     }
 
-    public void PushPButtonMusicOn(float _volume = 1f)   // #72
-    {
-        gameMusicArr.Stop();
-        soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.SELECTITEM];
-        soundEffectArr.volume = _volume;
-        soundEffectArr.loop = false;
+    // public void PushPButtonMusicOn(float _volume = 1f)   // #72
+    // {
+    //     gameMusicArr.Stop();
+    //     soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.SELECTITEM];
+    //     soundEffectArr.volume = _volume;
+    //     soundEffectArr.loop = false;
 
-        playSoundEffect = true;     // #82
+    //     playSoundEffect = true;     // #82
 
-        soundEffectArr.Play();
-        Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.SELECTITEM);
+    //     soundEffectArr.Play();
+    //     Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.SELECTITEM);
 
-        Invoke("StopSoundEffect", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록 -> 이제 Update에서 인식해서 자동으로 메인 뮤직 실행됨
-    }
+    //     Invoke("StopSoundEffect", 8.0f);    // 8초 뒤에는 메인 뮤직으로 돌아가도록 -> 이제 Update에서 인식해서 자동으로 메인 뮤직 실행됨
+    // }
 
-    public void LevelCompleted(float _volume = 1f)    // #53 게임 성공 종료 BGM
-    {
-        gameMusicArr.Stop();
-        soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.LEVELCOMPLETED];
-        soundEffectArr.volume = _volume;
-        soundEffectArr.loop = false;   // #53 보완 - 게임 종료 시, 나오는 BGM은 LOOP로 반복할 필요 없음.
+    // public void LevelCompleted(float _volume = 1f)    // #53 게임 성공 종료 BGM
+    // {
+    //     gameMusicArr.Stop();
+    //     soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.LEVELCOMPLETED];
+    //     soundEffectArr.volume = _volume;
+    //     soundEffectArr.loop = false;   // #53 보완 - 게임 종료 시, 나오는 BGM은 LOOP로 반복할 필요 없음.
 
-        playSoundEffect = true;     // #82
-        Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.LEVELCOMPLETED);
+    //     playSoundEffect = true;     // #82
+    //     Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.LEVELCOMPLETED);
 
-        soundEffectArr.Play();
-    }
+    //     soundEffectArr.Play();
+    // }
 
-    public void LevelTimerPoints(float _volume = 1f)  // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
-    {
-        gameMusicArr.Stop();
-        soundEffectArr.Stop();
-        soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.LEVELTIMER];
-        soundEffectArr.volume = _volume;
-        soundEffectArr.loop = true;  
+    // public void LevelTimerPoints(float _volume = 1f)  // #79 남은 시간 -> 점수로 전환되는 효과음 SFX
+    // {
+    //     gameMusicArr.Stop();
+    //     soundEffectArr.Stop();
+    //     soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.LEVELTIMER];
+    //     soundEffectArr.volume = _volume;
+    //     soundEffectArr.loop = true;  
 
-        playSoundEffect = true;     // #82
-        Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.LEVELTIMER);
+    //     playSoundEffect = true;     // #82
+    //     Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.LEVELTIMER);
 
-        soundEffectArr.Play();
+    //     soundEffectArr.Play();
    
-    }
+    // }
 
     // #77 fix: gameMusic.Arr 자체에 접근하기 때문에 - 일시정지가 풀린 후, Main Music을 실행하려면
     // 아예 Main Music이 재시작되는 문제가 있음
@@ -155,18 +198,18 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
 
     //     gameMusicArr.Play();
     // }
-    public void PlayerDie(float _volume = 1f)         // #76
-    {
-        gameMusicArr.Stop();
-        soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.DIE];
-        soundEffectArr.volume = _volume;
-        soundEffectArr.loop = false;   
+    // public void PlayerDie(float _volume = 1f)         // #76
+    // {
+    //     gameMusicArr.Stop();
+    //     soundEffectArr.clip = audioClips[(int)SOUNDEFFECT_TYPE.DIE];
+    //     soundEffectArr.volume = _volume;
+    //     soundEffectArr.loop = false;   
 
-        playSoundEffect = true;     // #82
-        Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.DIE);
+    //     playSoundEffect = true;     // #82
+    //     Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.DIE);
 
-        soundEffectArr.Play();
-    }
+    //     soundEffectArr.Play();
+    // }
 
 
 }
