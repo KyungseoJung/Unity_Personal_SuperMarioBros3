@@ -1928,12 +1928,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMusicArr: {fileID: 0}
+  soundEffectArr: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: 15bbed4f46632a4489e39f41338b7c75, type: 3}
   - {fileID: 8300000, guid: ccfb468c414fb1b44b99d065c149fa2d, type: 3}
   - {fileID: 8300000, guid: ad847c421353f434a919fa7c829a3f3c, type: 3}
   - {fileID: 8300000, guid: 8363183034d30934994b25b240ccfd05, type: 3}
-  - {fileID: 8300000, guid: f9b5e87ccb7f0a74f923bf260c4b1a0e, type: 3}
+  - {fileID: 8300000, guid: f91e235314cd0a94883c7ed20b77613b, type: 3}
   - {fileID: 8300000, guid: aa6a0ed8c1f65d041a773ad538d7acf2, type: 3}
 --- !u!1 &936659272
 GameObject:

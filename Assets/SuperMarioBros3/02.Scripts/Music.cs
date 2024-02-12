@@ -33,6 +33,7 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
 
         gameMusicArr.loop = true;   // #51 보완
     }
+
     void Update()
     {
 
@@ -66,6 +67,11 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         gameMusicArr.loop = true;  // #51 메인 뮤직 BGM 반복되도록 설정
 
     }
+    
+    public void SetMusicSpeed(float _pitch = 1f)    // #81 배경음악 속도 설정
+    {
+        gameMusicArr.pitch = _pitch;  
+    }
 
     public void SoundEffectMusic(SOUNDEFFECT_TYPE _type)    // #82 enum 변수 활용 - 코드 범용화
     {
@@ -86,7 +92,6 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
         {
             case SOUNDEFFECT_TYPE.LEVELCOMPLETED:
             case SOUNDEFFECT_TYPE.DIE:
-            case SOUNDEFFECT_TYPE.HURRY:
                 soundEffectArr.loop = false;
                 break;
                 
@@ -100,12 +105,17 @@ public class Music : MonoBehaviour  // #51 //#51 refactor 사운드 크기 디�
                 soundEffectArr.loop = true;  
 
                 break;
+
+            case SOUNDEFFECT_TYPE.HURRY:
+                soundEffectArr.loop = false;
+                SetMusicSpeed(1.1f);          // #81 배경 음악 속도 빠르게
+                break;
         }
 
 
         playSoundEffect = true;     // #82
 
-        Debug.Log("#82 효과음 종류: "+ (int)SOUNDEFFECT_TYPE.HURRY);
+        Debug.Log("#82 효과음 종류: "+ _type);
         soundEffectArr.Play();
 
     }

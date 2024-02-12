@@ -266,6 +266,8 @@ public class LobbyManager : MonoBehaviour   // #32  각종 사운드, (점수, �
         }
         CheckLife();    // #78 추가: 남은 목숨 확인
         CheckPoint();   // #80 점수 및 코인 확인
+
+        music.SetMusicSpeed();    // #81 처음 배경음악 속도는 1.0f로
     }
 
     public void RestartGame()   // #73 플레이어 죽었을 때
